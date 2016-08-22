@@ -1,5 +1,5 @@
 .caption{
-	-fx-text-fill: #1362b1;	
+	-fx-text-fill: #077caf;	
 	-fx-font-size: 18px;
 	/* -fx-font-weight: bold; */
 	-fx-font-family: 'Material Icons';
@@ -93,7 +93,7 @@
 }
 
 .table-view .column-header-background {
-	-fx-base: #42539d;
+	-fx-base: #077caf;
 	-fx-text-fill: #08c;
 }
 
@@ -122,5 +122,6 @@
 
 .table-view  .table-column {
   -fx-alignment: CENTER-LEFT;
+  -fx-pref-height: 30px;
 }
 

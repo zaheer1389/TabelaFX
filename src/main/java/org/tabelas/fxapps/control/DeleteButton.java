@@ -17,9 +17,9 @@ public class DeleteButton  extends TableCell<Object, String> {
     
     public DeleteButton(){
     	button.setPrefWidth(100);
-    	button.setPrefHeight(22);
+    	button.setPrefHeight(20);
     	//button.getStyleClass().add("btnDelete");
-    	button.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TRASH_ALT).size(20).color(Color.BLUE));
+    	button.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TIMES).size(20).useGradientEffect().useHoverEffect());
     }
 
     //Display button if the row is not empty

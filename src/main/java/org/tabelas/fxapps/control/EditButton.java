@@ -15,9 +15,9 @@ public class EditButton  extends TableCell<Object, String> {
     
     public EditButton(){
     	button.setPrefWidth(100);
-    	button.setPrefHeight(25);
+    	button.setPrefHeight(20);
     	//button.getStyleClass().add("btnEdit");
-    	Glyph image = new Glyph("FontAwesome", FontAwesome.Glyph.PENCIL_SQUARE).size(25).color(Color.PINK);
+    	Glyph image = new Glyph("FontAwesome", FontAwesome.Glyph.PENCIL).size(20);
     	button.setGraphic(image);
     }
 

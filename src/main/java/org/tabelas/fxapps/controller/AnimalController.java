@@ -5,13 +5,18 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -20,6 +25,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
 import org.controlsfx.glyphfont.FontAwesome;
@@ -39,6 +45,7 @@ import org.tabelas.fxapps.util.DialogFactory;
 public class AnimalController implements View{
 
 	private Long id;
+	private int PAGE_SIZE = 20;
 	
     @FXML
     private Button btnSearch;
@@ -80,14 +87,31 @@ public class AnimalController implements View{
     private SplitPane splitPane;
     
     @FXML
+    private HBox navigationBox;
+    
+    @FXML
     void initialize() {
 		// TODO Auto-generated constructor stub
-    	
+    	/*for(int i = 0; i<= 1000; i++){
+    		Animal animal = new Animal();
+    		if(getAnimalByNumber(i+"") == null){
+    			animal.setAnimalNo(i+"");
+    			animal.setOwnerName("Owenr "+i);
+    			animal.setPurchasePrice(new Random().nextDouble());
+    			animal.setPurchaseDate(new Timestamp(new Date().getTime()));
+    			FacadeFactory.getFacade().store(animal);
+    		}
+    	}*/
     	btnSave.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.SAVE));
     	btnCancel.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TIMES));
     	btnSearch.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.SEARCH));
     	
-    	setTable(FacadeFactory.getFacade().list(Animal.class));
+    	List<Animal> data = FacadeFactory.getFacade().list(Animal.class);
+    	setPagePanel(data);
+    	int currentPageIndex = 0;
+    	List<Animal> subList = data.subList(currentPageIndex*PAGE_SIZE, ((currentPageIndex * PAGE_SIZE + PAGE_SIZE <= data.size()) 
+				? currentPageIndex * PAGE_SIZE + PAGE_SIZE : data.size()));
+		setTable(FXCollections.observableArrayList(subList));
 	}
     
     public void setTable(List<Animal> data){
@@ -132,6 +156,77 @@ public class AnimalController implements View{
 		tableView.setItems(FXCollections.observableArrayList(data));
     }
     
+	public void setPagePanel(List<Animal> books){
+		if(navigationBox.getChildren().size() > 0){
+			navigationBox.getChildren().remove(0);
+		}
+		int totalPages = (int) Math.ceil((double)books.size() / (double)PAGE_SIZE);
+		int showFrom = 1;
+		int showTo = totalPages > 10 ? 10 : totalPages;   
+		navigationBox.getChildren().add(getPagination(showFrom, showTo, totalPages));
+		
+	}
+	
+	public HBox getPagination(final int from, final int to, final int totalPages){
+		HBox pagecontainer = new HBox();
+		pagecontainer.setAlignment(Pos.CENTER_RIGHT);
+		
+		Hyperlink prev = new Hyperlink("<<");
+		pagecontainer.getChildren().add(prev);
+		System.out.println("[from = "+from+" , To = "+to+"]");
+		for(int i=from; i<=to; i++){
+			Hyperlink link = new Hyperlink(i+"");
+			link.setId(i+"");
+			pagecontainer.getChildren().add(link);
+			link.setOnAction(new EventHandler<ActionEvent>() {
+				
+				@Override
+				public void handle(ActionEvent arg0) {
+					// TODO Auto-generated method stub
+					int currentPageIndex = Integer.parseInt(((Hyperlink)(arg0.getSource())).getId()) - 1;
+					List<Animal> animals = getAnimalsByBranch();
+					List<Animal> subList = animals.subList(currentPageIndex*PAGE_SIZE, ((currentPageIndex * PAGE_SIZE + PAGE_SIZE <= animals.size()) 
+							? currentPageIndex * PAGE_SIZE + PAGE_SIZE : animals.size()));
+					setTable(FXCollections.observableArrayList(subList));
+				}
+			});
+		}
+		
+		Hyperlink next = new Hyperlink(">>");
+		pagecontainer.getChildren().add(next);
+		
+		prev.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				navigationBox.getChildren().remove(0);
+				int showFrom = from-10 <= 1 ? 1 : from-10;
+				int showTo = showFrom+9 > totalPages ? totalPages : showFrom+9;
+				navigationBox.getChildren().add(getPagination(showFrom, showTo, totalPages));
+			}
+		});
+		
+		next.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				navigationBox.getChildren().remove(0);
+				int showFrom = to+1;
+				int showTo = showFrom+9 > totalPages ? totalPages  : showFrom+9;
+				navigationBox.getChildren().add(getPagination(showFrom, showTo, totalPages));
+			}
+		});
+		
+		if(from <= 1)
+			prev.setDisable(true);
+		if(to >= totalPages)
+			next.setDisable(true);
+		
+		return pagecontainer;
+	}
+    
 	@Override
 	@FXML
 	public void save() {
@@ -158,7 +253,13 @@ public class AnimalController implements View{
 				animal.setPurchasePrice(Double.parseDouble(txtPurchasePrice.getText()));
 				FacadeFactory.getFacade().store(animal);
 				
-				setTable(getAnimalsByBranch());
+				List<Animal> data = getAnimalsByBranch();
+		    	setPagePanel(data);
+		    	int currentPageIndex = 0;
+		    	List<Animal> subList = data.subList(currentPageIndex*PAGE_SIZE, ((currentPageIndex * PAGE_SIZE + PAGE_SIZE <= data.size()) 
+						? currentPageIndex * PAGE_SIZE + PAGE_SIZE : data.size()));
+				setTable(FXCollections.observableArrayList(subList));
+				
 				DialogFactory.showInformationDialog("Animal details saved successfully", null);
 				reset();
 			}
@@ -182,7 +283,9 @@ public class AnimalController implements View{
 	@FXML
 	public void search() {
 		// TODO Auto-generated method stub
-		
+		List<Animal> data = getAnimalsByBranch();
+    	setTable(data);
+    	setPagePanel(data);
 	}
 
 	@Override

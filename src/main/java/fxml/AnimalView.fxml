@@ -83,7 +83,7 @@
                 <Font size="18.0" fx:id="x1" />
               </font>
             </Label>
-                  <TableView fx:id="tableView" layoutX="14.0" prefHeight="500.0" prefWidth="600.0" stylesheets="@../theme/theme.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="130.0">
+                  <TableView fx:id="tableView" layoutX="14.0" prefHeight="500.0" prefWidth="600.0" stylesheets="@../theme/theme.css" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="130.0">
                     <columns>
                       <TableColumn fx:id="colAnimalNo" prefWidth="75.0" text="Animal No" />
                       <TableColumn fx:id="colOwnerName" prefWidth="144.0" text="Owner" />
@@ -93,6 +93,7 @@
                         <TableColumn fx:id="colDelete" prefWidth="50.0" text="Delete" />
                     </columns>
                   </TableView>
+                  <HBox fx:id="navigationBox" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="200.0" styleClass="app-box" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="10.0" />
           </children>
         </AnchorPane>
       </items>
