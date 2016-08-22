@@ -1,0 +1,126 @@
+.caption{
+	-fx-text-fill: #1362b1;	
+	-fx-font-size: 18px;
+	/* -fx-font-weight: bold; */
+	-fx-font-family: 'Material Icons';
+}
+
+.button-dashboard{
+	-fx-pref-height: 30px !important;
+}
+
+.combobox-branch{
+	-fx-pref-height: 30px;
+}
+
+.button{
+	-fx-pref-height: 35px;
+	-fx-padding: 0 16px;
+	-fx-font-weight: 400;
+	-fx-border: 1px solid #1362b1;
+	-fx-text-align: center;
+	-fx-cursor: pointer;
+	-fx-font-size: 13px;
+	-fx-font-family: 'Material Icons';
+}
+
+.radio-button .radio {
+	-fx-background-color: white;
+	-fx-border-color: grey;
+	-fx-border-radius: 10px;
+} 
+
+.radio-button .radio .dot{
+	-fx-mark-highlight-color: #197de1 ;
+  	-fx-mark-color: #197de1 ;
+} 
+
+.date-picker{
+	-fx-pref-height: 30px;
+}
+
+.date-picker-popup > * > .spinner > .button{
+	-fx-max-width: 30px !important;
+	-fx-color: orangered !important;
+}
+
+.text-field{
+	-fx-border-width: 2px;
+	-fx-pref-height: 30px;
+	-fx-padding: 4px 9px;
+	-fx-border-radius: 0px;
+	-fx-font-family: 'Material Icons';
+	/* -fx-background-radius: 0px; */
+}
+
+.split-pane *.split-pane-divider {
+    -fx-padding: 0 1 0 1;
+}
+
+.app-box{
+	-fx-border-color: #ccccff;
+}
+
+.btnComplete {
+	-fx-background-image: url("../images/complete.png");
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: 15px 1px;
+	-fx-background-size: 23px 23px;
+}
+
+.btnEdit {
+	/* -fx-background-image: url("../images/edit.png");
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: 15px 1px;
+	-fx-background-size: 18px 18px; */
+}
+
+.btnDelete {
+	/* -fx-background-image: url("../images/delete.png");
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: 15px 1px;
+	-fx-background-size: 18px 18px; */
+}
+
+
+/**************** Table ******************/
+
+.table-view {
+	-fx-control-inner-background: whitesmoke;
+	-fx-font-size: 12px;
+	-fx-font-family: "Material Icons";
+	-fx-table-header-border-color: transparent;
+}
+
+.table-view .column-header-background {
+	-fx-base: #42539d;
+	-fx-text-fill: #08c;
+}
+
+.table-view .column-header,.table-view .filler {
+	-fx-border-width: 1 1 1 1;
+	-fx-border-color: transparent transparent derive(-fx-base, 80%)
+		transparent;
+}
+
+.table-row-cell {
+	-fx-cell-size: 25px;
+	-fx-alignment: center;
+}
+
+.table-view .column-header .label {
+	-fx-font-size: 12px;
+	/* -fx-font-weight: bold; */
+	-fx-font-family: "Material Icons";
+	-fx-text-fill: #FFFFFF;
+	-fx-alignment: center-left;
+}
+
+.table-view .table-cell .button {
+	-fx-alignment: center;
+}
+
+.table-view  .table-column {
+  -fx-alignment: CENTER-LEFT;
+}
+
