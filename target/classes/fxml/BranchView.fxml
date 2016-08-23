@@ -19,7 +19,7 @@
                         <Font name="System Bold" size="18.0" fx:id="x11" />
                      </font>
                   </Label>
-                  <GridPane minHeight="250.0" vgap="30.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+                  <GridPane fx:id="form" minHeight="250.0" vgap="30.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
                      <children>
                         <Label text="Branch No : ">
                            <font>

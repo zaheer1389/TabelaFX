@@ -24,7 +24,10 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
@@ -35,20 +38,24 @@ import org.tabelas.fxapps.control.DeleteButton;
 import org.tabelas.fxapps.control.EditButton;
 import org.tabelas.fxapps.control.FXOptionPane.Response;
 import org.tabelas.fxapps.enums.DialogType;
-import org.tabelas.fxapps.enums.View;
 import org.tabelas.fxapps.model.Animal;
+import org.tabelas.fxapps.model.Branch;
 import org.tabelas.fxapps.persistence.FacadeFactory;
 import org.tabelas.fxapps.util.AppUtil;
 import org.tabelas.fxapps.util.DialogFactory;
+import org.tabelas.fxapps.view.View;
 
 
 public class AnimalController implements View{
 
 	private Long id;
 	private int PAGE_SIZE = 20;
+	private int currentPageIndex;
+	private int pageFrom;
+	private int pageTo;
 	
     @FXML
-    private Button btnSearch;
+    private Button btnSearch,btnClearSearch;
 
     @FXML
     private TextField txtAnimalNo;
@@ -90,6 +97,9 @@ public class AnimalController implements View{
     private HBox navigationBox;
     
     @FXML
+    private GridPane form;
+    
+    @FXML
     void initialize() {
 		// TODO Auto-generated constructor stub
     	/*for(int i = 0; i<= 1000; i++){
@@ -99,20 +109,42 @@ public class AnimalController implements View{
     			animal.setOwnerName("Owenr "+i);
     			animal.setPurchasePrice(new Random().nextDouble());
     			animal.setPurchaseDate(new Timestamp(new Date().getTime()));
+    			animal.setBranch(App.appcontroller.getBranch());
     			FacadeFactory.getFacade().store(animal);
     		}
     	}*/
+    	
+    	txtPurchasedDate.setConverter(AppUtil.getDatePickerFormatter());
+
     	btnSave.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.SAVE));
     	btnCancel.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TIMES));
     	btnSearch.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.SEARCH));
+    	btnClearSearch.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TIMES));
     	
-    	List<Animal> data = FacadeFactory.getFacade().list(Animal.class);
+    	setKeyboardHandle();
+    	
+    	List<Animal> data = getAnimalsByBranch();
     	setPagePanel(data);
-    	int currentPageIndex = 0;
-    	List<Animal> subList = data.subList(currentPageIndex*PAGE_SIZE, ((currentPageIndex * PAGE_SIZE + PAGE_SIZE <= data.size()) 
-				? currentPageIndex * PAGE_SIZE + PAGE_SIZE : data.size()));
-		setTable(FXCollections.observableArrayList(subList));
 	}
+    
+    public void setKeyboardHandle(){
+    	//Keyboard handling
+    	EventHandler<KeyEvent> keyboard = new EventHandler<KeyEvent>() {
+			
+			@Override
+			public void handle(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				if(arg0.getCode() == KeyCode.ENTER){
+					save();
+				}
+				else if(arg0.getCode() == KeyCode.ESCAPE){
+					reset();
+				}
+			}
+		};
+		form.setOnKeyPressed(keyboard);
+		form.requestFocus();
+    }
     
     public void setTable(List<Animal> data){
     	colAnimalNo.setCellValueFactory(new PropertyValueFactory<Animal, String>("animalNo"));
@@ -121,50 +153,88 @@ public class AnimalController implements View{
 		colPrice.setCellValueFactory(new PropertyValueFactory<Animal, String>("purchasePrice"));
 		 
 		colEdit.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Object, String>, ObservableValue<String>>() {
-			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Object, String> arg0) {
 				// TODO Auto-generated method stub
 				return new SimpleStringProperty(arg0.getValue().toString());
 			}
-		  });
+		});
 	 
 		colEdit.setCellFactory(new Callback<TableColumn<Object, String>, TableCell<Object, String>>() {
-				@Override
-				public TableCell<Object, String> call(TableColumn<Object, String> arg0) {
-					// TODO Auto-generated method stub
-					return new EditButton();
-				}
-	       });
+			@Override
+			public TableCell<Object, String> call(TableColumn<Object, String> arg0) {
+				// TODO Auto-generated method stub
+				final EditButton editButton = new EditButton();
+				editButton.getButton().setOnAction(new EventHandler<ActionEvent>() {
+					
+					@Override
+					public void handle(ActionEvent arg0) {
+						// TODO Auto-generated method stub
+						int selectdIndex = editButton.getRowIndex();
+						Animal animal = tableView.getItems().get(selectdIndex);
+						id = animal.getId();
+						
+						txtAnimalNo.setText(animal.getAnimalNo());
+						txtOwnerName.setText(animal.getOwnerName());
+						txtPurchasePrice.setText(animal.getPurchasePrice()+"");
+						txtPurchasedDate.setValue(AppUtil.toLocalDate(new Date(animal.getPurchaseDate().getTime())));
+					}
+				});
+				return editButton;
+			}
+		});
 		
 		colDelete.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Object, String>, ObservableValue<String>>() {
-				@Override
-				public ObservableValue<String> call(CellDataFeatures<Object, String> arg0) {
-					// TODO Auto-generated method stub
-					return new SimpleStringProperty(arg0.getValue().toString());
-				}
-	      });
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Object, String> arg0) {
+				// TODO Auto-generated method stub
+				return new SimpleStringProperty(arg0.getValue().toString());
+			}
+		});
 		 
 		colDelete.setCellFactory(new Callback<TableColumn<Object, String>, TableCell<Object, String>>() {
+			@Override
+			public TableCell<Object, String> call(TableColumn<Object, String> arg0) {
+				// TODO Auto-generated method stub
+				final DeleteButton deleteButton = new DeleteButton();
+				deleteButton.getButton().setOnAction(new EventHandler<ActionEvent>() {
+					
 					@Override
-					public TableCell<Object, String> call(TableColumn<Object, String> arg0) {
+					public void handle(ActionEvent arg0) {
 						// TODO Auto-generated method stub
-						return new DeleteButton();
+						Response response = DialogFactory.showConfirmationDialog("Do you want to delete this record?", DialogType.YESNOCANCEL, null);
+						if(response == Response.YES){
+							int selectdIndex = deleteButton.getRowIndex();
+							Animal animal = tableView.getItems().get(selectdIndex);
+							FacadeFactory.getFacade().delete(animal);
+							DialogFactory.showInformationDialog("Animal details deleted succssfully", App.appcontroller.stage);
+					    	setPagePanel(getAnimalsByBranch());
+					    	reset();
+						}
+						
 					}
-	      });
+				});
+				
+				return deleteButton;
+			}
+		});
 		
 		tableView.setItems(FXCollections.observableArrayList(data));
     }
     
-	public void setPagePanel(List<Animal> books){
+	public void setPagePanel(List<Animal> data){
 		if(navigationBox.getChildren().size() > 0){
 			navigationBox.getChildren().remove(0);
 		}
-		int totalPages = (int) Math.ceil((double)books.size() / (double)PAGE_SIZE);
-		int showFrom = 1;
-		int showTo = totalPages > 10 ? 10 : totalPages;   
-		navigationBox.getChildren().add(getPagination(showFrom, showTo, totalPages));
+		int totalPages = (int) Math.ceil((double)data.size() / (double)PAGE_SIZE);
+		int pageFrom = 1;
+		int pageTo = totalPages > 10 ? 10 : totalPages;   
+		navigationBox.getChildren().add(getPagination(pageFrom, pageTo, totalPages));
 		
+		int showFrom = currentPageIndex*PAGE_SIZE;
+		int showTo = (showFrom + PAGE_SIZE) <= data.size() ? (showFrom + PAGE_SIZE) : data.size();
+		List<Animal> subList = data.subList(showFrom, showTo);
+		setTable(FXCollections.observableArrayList(subList));
 	}
 	
 	public HBox getPagination(final int from, final int to, final int totalPages){
@@ -173,7 +243,7 @@ public class AnimalController implements View{
 		
 		Hyperlink prev = new Hyperlink("<<");
 		pagecontainer.getChildren().add(prev);
-		System.out.println("[from = "+from+" , To = "+to+"]");
+		System.out.println("[CurrentPageIndex = "+currentPageIndex+",from = "+from+" , To = "+to+"]");
 		for(int i=from; i<=to; i++){
 			Hyperlink link = new Hyperlink(i+"");
 			link.setId(i+"");
@@ -183,10 +253,12 @@ public class AnimalController implements View{
 				@Override
 				public void handle(ActionEvent arg0) {
 					// TODO Auto-generated method stub
-					int currentPageIndex = Integer.parseInt(((Hyperlink)(arg0.getSource())).getId()) - 1;
-					List<Animal> animals = getAnimalsByBranch();
-					List<Animal> subList = animals.subList(currentPageIndex*PAGE_SIZE, ((currentPageIndex * PAGE_SIZE + PAGE_SIZE <= animals.size()) 
-							? currentPageIndex * PAGE_SIZE + PAGE_SIZE : animals.size()));
+					currentPageIndex = Integer.parseInt(((Hyperlink)(arg0.getSource())).getId()) - 1;
+					List<Animal> data = getAnimalsByBranch();
+					int showFrom = currentPageIndex*PAGE_SIZE;
+					int showTo = (showFrom + PAGE_SIZE) <= data.size() ? (showFrom + PAGE_SIZE) : data.size();
+					System.err.println("[from:"+showFrom+",to:"+showTo+"]");
+					List<Animal> subList = data.subList(showFrom, showTo);
 					setTable(FXCollections.observableArrayList(subList));
 				}
 			});
@@ -255,11 +327,7 @@ public class AnimalController implements View{
 				
 				List<Animal> data = getAnimalsByBranch();
 		    	setPagePanel(data);
-		    	int currentPageIndex = 0;
-		    	List<Animal> subList = data.subList(currentPageIndex*PAGE_SIZE, ((currentPageIndex * PAGE_SIZE + PAGE_SIZE <= data.size()) 
-						? currentPageIndex * PAGE_SIZE + PAGE_SIZE : data.size()));
-				setTable(FXCollections.observableArrayList(subList));
-				
+		    	
 				DialogFactory.showInformationDialog("Animal details saved successfully", null);
 				reset();
 			}
@@ -276,6 +344,7 @@ public class AnimalController implements View{
     	txtPurchasedDate.setValue(null);
     	txtPurchasePrice.setText("");
     	txtOwnerName.setText("");
+    	txtSearchAnimalNo.setText("");
     	txtAnimalNo.requestFocus();
 	}
 
@@ -283,8 +352,22 @@ public class AnimalController implements View{
 	@FXML
 	public void search() {
 		// TODO Auto-generated method stub
+		if(txtSearchAnimalNo.getText().length() == 0){
+    		DialogFactory.showErrorDialog("Please enter animal no to search records", null);
+    		txtSearchAnimalNo.requestFocus();
+    		return;
+    	}
+		List<Animal> data = getAnimalsByNumber(txtSearchAnimalNo.getText());
+		currentPageIndex = 0;
+    	setPagePanel(data);
+	}
+	
+	@Override
+	@FXML
+	public void resetSearch() {
+		reset();
+		
 		List<Animal> data = getAnimalsByBranch();
-    	setTable(data);
     	setPagePanel(data);
 	}
 
@@ -327,6 +410,15 @@ public class AnimalController implements View{
 		return FacadeFactory.getFacade().list(queryStr, parameters);
 	}
 
+	public static List<Animal> getAnimalsByNumber(String no) {
+		String queryStr = "Select a from Animal as a where a.branch = :bid "
+				+ "and a.animalNo = :no order by a.id desc";
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("bid", App.appcontroller.getBranch());
+		parameters.put("no", no);
+		return FacadeFactory.getFacade().list(queryStr, parameters);
+	}
+	
 	public static Animal getAnimalByNumber(String no) {
 		String queryStr = "Select a from Animal as a where a.branch = :bid "
 				+ "and a.animalNo = :no order by a.id desc";

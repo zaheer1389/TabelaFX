@@ -179,6 +179,18 @@ public class AppController implements EventHandler<ActionEvent>{
 			showView("/fxml/AnimalView.fxml");
 			lblPageCaption.setText("Manage Animals");
 		}
+		else if(event.getSource() == menuItemAnimal_Lactation){
+			showView("/fxml/LactationView.fxml");
+			lblPageCaption.setText("Manage Lactations");
+		}
+		else if(event.getSource() == menuItemAnimal_Service){
+			showView("/fxml/ServiceView.fxml");
+			lblPageCaption.setText("Manage Animal Services");
+		}
+		else if(event.getSource() == menuItemAnimal_MilkWeight){
+			showView("/fxml/MilkWeightView.fxml");
+			lblPageCaption.setText("Manage Animal Milk Weights");
+		}
 	}
     
     public void showView(String fxml){

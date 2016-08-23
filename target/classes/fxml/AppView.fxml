@@ -51,7 +51,7 @@
                <children>
                   <HBox alignment="CENTER_LEFT" minHeight="40.0" spacing="30.0" style="-fx-background-color: #abcfcf;">
                      <children>
-                        <ComboBox fx:id="cbBranch" editable="true" layoutX="15.0" onAction="#changeBranch" prefWidth="200.0" promptText="Select Branch" styleClass="combobox-branch" />
+                        <ComboBox fx:id="cbBranch" editable="false" layoutX="15.0" onAction="#changeBranch" prefWidth="200.0" promptText="Select Branch" styleClass="combobox-branch" />
                         <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                         <Label fx:id="lblPageCaption" minWidth="150.0" styleClass="caption" text="Dashboard" />
                         <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />

@@ -1,4 +1,4 @@
-package org.tabelas.fxapps.view;
+package org.tabelas.fxapps.enums;
 
 public enum AnimalServiceResult {
 	PREGNANT,EMPTY;

@@ -17,7 +17,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 
 import org.controlsfx.glyphfont.FontAwesome;
@@ -27,12 +30,12 @@ import org.tabelas.fxapps.control.DeleteButton;
 import org.tabelas.fxapps.control.EditButton;
 import org.tabelas.fxapps.control.FXOptionPane.Response;
 import org.tabelas.fxapps.enums.DialogType;
-import org.tabelas.fxapps.enums.View;
 import org.tabelas.fxapps.model.Animal;
 import org.tabelas.fxapps.model.Branch;
 import org.tabelas.fxapps.persistence.FacadeFactory;
 import org.tabelas.fxapps.util.AppUtil;
 import org.tabelas.fxapps.util.DialogFactory;
+import org.tabelas.fxapps.view.View;
 
 public class BranchController implements View{
 
@@ -69,21 +72,43 @@ public class BranchController implements View{
     private SplitPane splitPane;
     
     @FXML
+    private GridPane form;
+    
+    @FXML
     void initialize() {
 		// TODO Auto-generated constructor stub
+    	txtBranchNo.requestFocus();
+    	
     	btnSave.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.SAVE));
     	btnCancel.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TIMES));
     	
+    	setKeyboardHandle();
     	setTable(FacadeFactory.getFacade().list(Branch.class));
 	}
+    
+    public void setKeyboardHandle(){
+    	//Keyboard handling
+    	EventHandler<KeyEvent> keyboard = new EventHandler<KeyEvent>() {
+			
+			@Override
+			public void handle(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				if(arg0.getCode() == KeyCode.ENTER){
+					save();
+				}
+				else if(arg0.getCode() == KeyCode.ESCAPE){
+					reset();
+				}
+			}
+		};
+		form.setOnKeyPressed(keyboard);
+		form.requestFocus();
+    }
     
     public void setTable(List<Branch> data){
     	
     	colBranchNo.setCellValueFactory(new PropertyValueFactory<Branch, String>("id"));
-    	//colBranchNo.setCellFactory(getCellFactory());
-    	
-		colBranchName.setCellValueFactory(new PropertyValueFactory<Branch, String>("branchName"));
-		//colBranchName.setCellFactory(getCellFactory());
+    	colBranchName.setCellValueFactory(new PropertyValueFactory<Branch, String>("branchName"));
 		
 		colEdit.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Object, String>, ObservableValue<String>>() {
 			
@@ -157,23 +182,6 @@ public class BranchController implements View{
 		
 		tableView.setItems(FXCollections.observableArrayList(data));
     }
-   
-    /*
-     public Callback<TableColumn<Branch, String>,TableCell<Branch, String>> getCellFactory(){
-    	return new Callback<TableColumn<Branch,String>, TableCell<Branch,String>>() {
-
-			@Override
-			public TableCell<Branch, String> call(
-					TableColumn<Branch, String> arg0) {
-				// TODO Auto-generated method stub
-				 TableCell<Branch, String> tc = new TableCell<Branch, String>();
-		         tc.setAlignment(Pos.CENTER_LEFT);
-		         tc.setText(arg0.getText());
-		         return tc;
-			}
-    		
-		};
-    }*/
     
 	@Override
 	@FXML
@@ -219,11 +227,19 @@ public class BranchController implements View{
 		txtBranchNo.setText("");
 		txtBranchName.setText("");
 		txtBranchNo.setDisable(false);
+		txtBranchNo.requestFocus();
 	}
 
 	@Override
 	public void search() {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	@FXML
+	public void resetSearch() {
+		reset();
 		
 	}
 

@@ -8,9 +8,9 @@
     
     <class>org.tabelas.fxapps.model.Branch</class>
     <class>org.tabelas.fxapps.model.Animal</class>
-    <!-- <class>org.tabelas.fxapps.model.Lactation</class>
+    <class>org.tabelas.fxapps.model.Lactation</class>
     <class>org.tabelas.fxapps.model.AnimalService</class>
-    <class>org.tabelas.fxapps.model.AnimalMilkWeight</class> -->
+    <class>org.tabelas.fxapps.model.AnimalMilkWeight</class>
     
     <properties>
       <!-- <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

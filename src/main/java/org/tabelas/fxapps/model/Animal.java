@@ -138,6 +138,10 @@ public class Animal extends AbstractPojo implements Serializable{
 		this.soldPrice = soldPrice;
 	}
 	
-	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return getAnimalNo();
+	}
 
 }
