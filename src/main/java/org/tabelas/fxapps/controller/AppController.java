@@ -24,6 +24,7 @@ import javafx.util.StringConverter;
 
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.Glyph;
+import org.tabelas.fxapps.App;
 import org.tabelas.fxapps.model.Branch;
 import org.tabelas.fxapps.persistence.FacadeFactory;
 import org.tabelas.fxapps.util.DialogFactory;
@@ -114,11 +115,13 @@ public class AppController implements EventHandler<ActionEvent>{
     	}
     	
     	updateBranchList();
+    	showDashboard();
     }
     
     @FXML
     public void showDashboard(){
-    	
+    	showView("/fxml/DashboardView.fxml");
+    	lblPageCaption.setText("Dashboard");
     }
     
     @FXML
