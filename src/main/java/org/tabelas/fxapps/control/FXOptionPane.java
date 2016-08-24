@@ -18,6 +18,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import org.controlsfx.glyphfont.FontAwesome;
+import org.controlsfx.glyphfont.Glyph;
 import org.tabelas.fxapps.App;
 import org.tabelas.fxapps.enums.DialogType;
 
@@ -95,9 +97,10 @@ public class FXOptionPane {
 	    final Dialog dial = new Dialog( title, owner, scene,  image);
 	    
 	    Button okButton = new Button( "OK" );
+	    okButton.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.CHECK));
 	    okButton.setAlignment( Pos.CENTER );
 	    okButton.setPadding(new Insets(0,20,0,0));
-	    okButton.setPrefHeight(25);
+	    okButton.setMinHeight(25);
 	    okButton.setOnAction( new EventHandler<ActionEvent>() {
 	        @Override public void handle( ActionEvent e ) {
 	            dial.close();
@@ -155,9 +158,10 @@ public class FXOptionPane {
 	    final Dialog dial = new Dialog( title, owner, scene,  image);
 	    
 	    Button okButton = new Button( "OK" );
+	    okButton.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.CHECK));
 	    okButton.setAlignment( Pos.CENTER );
 	    okButton.setPadding(new Insets(0,20,0,0));
-	    okButton.setPrefHeight(25);
+	    okButton.setMinHeight(25);
 	    okButton.setOnAction( new EventHandler<ActionEvent>() {
 	        @Override public void handle( ActionEvent e ) {
 	            dial.close();
@@ -207,6 +211,8 @@ public class FXOptionPane {
 	    final Dialog dial = new Dialog( title, owner, scene, "/images/dialog-information.png" );
 	    
 	    Button yesButton = new Button( "Yes" );
+	    yesButton.setMinHeight(25);
+	    yesButton.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.CHECK));
 	    yesButton.setOnAction( new EventHandler<ActionEvent>() {
 	        @Override public void handle( ActionEvent e ) {
 	            dial.close();
@@ -215,6 +221,8 @@ public class FXOptionPane {
 	    } );
 	    
 	    Button noButton = new Button( "No" );
+	    noButton.setMinHeight(25);
+	    noButton.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.BAN));
 	    noButton.setOnAction( new EventHandler<ActionEvent>() {
 	        @Override public void handle( ActionEvent e ) {
 	            dial.close();
@@ -223,6 +231,8 @@ public class FXOptionPane {
 	    } );
 	    
 	    Button cancelButton = new Button( "Cancel" );
+	    cancelButton.setMinHeight(25);
+	    cancelButton.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TIMES));
 	    cancelButton.setOnAction( new EventHandler<ActionEvent>() {
 	        @Override public void handle( ActionEvent e ) {
 	            dial.close();
@@ -235,7 +245,7 @@ public class FXOptionPane {
 	    buttons.setSpacing( 10 );	   
 	    buttons.getChildren().addAll( yesButton, noButton, cancelButton);
 	    buttons.setPadding(new Insets(0,20,0,0));
-	    buttons.setPrefHeight(35);
+	    buttons.setPrefHeight(55);
 	    
 	    HBox msg = new HBox();
 	    msg.setSpacing( 5 );

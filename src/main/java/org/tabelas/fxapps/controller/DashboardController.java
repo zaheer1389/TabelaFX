@@ -67,13 +67,13 @@ public class DashboardController {
     		Map<String, Object> map = new HashMap<>();
 			//map.put("branchName",  App.appcontroller.getBranch().getBranchName());
 			InputStream is3 = getClass().getResourceAsStream("/reports/SalvageAnimalReport2.jasper");
-			ReportManager.showReport(is3, map, "Salvage Due Animal List");
+			ReportManager.showReport("/reports/SalvageAnimalReport2.jrxml", map, "Salvage Due Animal List");
     	}
     	else if(event.getSource() == btnPrintServiceDueList){
     		Map<String, Object> map = new HashMap<>();
 			//map.put("branchName",  App.appcontroller.getBranch().getBranchName());
 			InputStream is3 = getClass().getResourceAsStream("/reports/ServiceDueReport2.jasper");
-			ReportManager.showReport(is3, map, "Service Due Animal List");
+			ReportManager.showReport("/reports/ServiceDueReport2.jrxml", map, "Service Due Animal List");
     	}
     }
     

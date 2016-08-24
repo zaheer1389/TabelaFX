@@ -166,7 +166,7 @@ public class AnimalServiceReportDialog extends VBox{
 					map.put("toDate", AppUtil.toUtilDate(txtToDate.getValue()));
 					map.put("queryStr", queryStr);
 					InputStream is3 = getClass().getResourceAsStream("/reports/AnimalServiceList2.jasper");
-					ReportManager.showReport(is3, map, "Animal Service Report");
+					ReportManager.showReport("/reports/AnimalServiceList2.jrxml", map, "Animal Service Report");
 					
 					
 				} catch (Exception e) {
