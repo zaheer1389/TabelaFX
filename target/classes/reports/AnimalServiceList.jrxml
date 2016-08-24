@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AnimalServiceList" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6b5ddf50-d7c8-4fa6-a922-9fadcf5a7e91">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="bid" class="java.lang.Long"/>
+	<parameter name="bname" class="java.lang.String"/>
+	<parameter name="fromDate" class="java.util.Date"/>
+	<parameter name="toDate" class="java.util.Date"/>
+	<parameter name="queryStr" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[$P!{queryStr}]]>
+	</queryString>
+	<field name="ID" class="java.lang.Object"/>
+	<field name="ArrivalDate" class="java.lang.Object"/>
+	<field name="CONSISTENCYVERSION" class="java.lang.Object"/>
+	<field name="CowingDate" class="java.lang.Object"/>
+	<field name="CurrentLactation" class="java.lang.Object"/>
+	<field name="DepartureDate" class="java.lang.Object"/>
+	<field name="DepartureVehicleNo" class="java.lang.Object"/>
+	<field name="VehicleNo" class="java.lang.Object"/>
+	<field name="AnimalId" class="java.lang.Object"/>
+	<field name="AddedDate" class="java.lang.Object"/>
+	<field name="GenderNo" class="java.lang.Object"/>
+	<field name="Remarks" class="java.lang.Object"/>
+	<field name="Result" class="java.lang.Object"/>
+	<field name="ServiceDate" class="java.lang.Object"/>
+	<field name="LactationId" class="java.lang.Object"/>
+	<field name="AnimalNo" class="java.lang.Object"/>
+	<field name="BuyerName" class="java.lang.Object"/>
+	<field name="OwnerName" class="java.lang.Object"/>
+	<field name="PurchaseDate" class="java.lang.Object"/>
+	<field name="PurchasePrice" class="java.lang.Object"/>
+	<field name="Sold" class="java.lang.Object"/>
+	<field name="SoldDate" class="java.lang.Object"/>
+	<field name="SoldPrice" class="java.lang.Object"/>
+	<field name="BranchId" class="java.lang.Object"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="68" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="22" uuid="fb1562a7-596b-4459-95cd-7da08887bbea"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Animal Service Report]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="22" width="555" height="19" uuid="42a38d18-23f9-4ddc-bb48-06896a3e47c2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{bname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="41" width="553" height="22" uuid="d02bcee1-5bd4-4d22-9bbf-53478d6247a5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Service report from "+new SimpleDateFormat("dd-MMM-yyyy").format($P{fromDate})
++" to "+new SimpleDateFormat("dd-MMM-yyyy").format($P{toDate})]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="1" width="72" height="20" uuid="3f9889fb-c96a-48a7-9724-87b439ede816"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Animal No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="75" y="1" width="95" height="20" uuid="5ea1f5c7-3450-4e27-8cb0-f6602e651f04"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ArrivalDate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="175" y="1" width="115" height="20" uuid="4559308d-f353-4af5-b4f7-7d6c18ef41a2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ServiceDate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="295" y="1" width="80" height="20" uuid="7a345185-3e1a-4008-8e2f-eada35c8de69"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Result]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="1" width="180" height="20" uuid="a542131d-c117-403e-835b-7c06c1dd4dc8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Remarks]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="297124cf-7a92-42b8-9911-72d70864ee50"/>
+			</line>
+			<line>
+				<reportElement x="0" y="20" width="555" height="1" uuid="4ccacfee-efa6-442b-9000-8e73de72b3d2"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="0" width="71" height="20" uuid="342c13d4-3c1f-4466-8a58-c830ae29623f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{AnimalNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="75" y="0" width="95" height="20" uuid="b1046729-c155-4c0d-b332-e91725eb6e52"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMM-yyyy").format($F{ArrivalDate})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="175" y="0" width="115" height="20" uuid="73a31d87-8342-44b3-829b-9f56a8e583ff"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMM-yyyy").format($F{ServiceDate})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="295" y="0" width="80" height="20" uuid="7349d7a4-ede7-4ce7-a532-9c94fe8b6539"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Result} != null ? $F{Result} : "Awaiting"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="375" y="0" width="180" height="20" uuid="decfb430-5d37-4a8a-9f99-a095835b3556"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Remarks} != null ? new String($F{Remarks},"UTF-8") : "No remarks"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="0" y="20" width="555" height="1" uuid="7d2779cb-81cb-4bdd-a656-13ccc9c80a9f"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="21" splitType="Stretch">
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss">
+				<reportElement x="0" y="1" width="290" height="20" uuid="341719b7-b552-4342-a05c-6c3c7ef18bf5"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Report generated on - "+new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="435" y="1" width="80" height="20" uuid="c9cab26f-5185-4b94-a6c5-5bb104798da2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="1" width="40" height="20" uuid="e7ebcb72-79c2-4c01-941d-003b2c9c223e"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

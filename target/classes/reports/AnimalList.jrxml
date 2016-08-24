@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e97a7671-bf4a-4d2e-a9a6-2605c20f1675">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="bid" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="bname" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[Select * From Animal
+where BranchId = $P{bid}]]>
+	</queryString>
+	<field name="ID" class="java.lang.Object"/>
+	<field name="AddedDate" class="java.lang.Object"/>
+	<field name="AnimalNo" class="java.lang.Object"/>
+	<field name="BuyerName" class="java.lang.Object"/>
+	<field name="CONSISTENCYVERSION" class="java.lang.Object"/>
+	<field name="OwnerName" class="java.lang.Object"/>
+	<field name="PurchaseDate" class="java.lang.Object"/>
+	<field name="PurchasePrice" class="java.lang.Object"/>
+	<field name="Sold" class="java.lang.Object"/>
+	<field name="SoldDate" class="java.lang.Object"/>
+	<field name="SoldPrice" class="java.lang.Object"/>
+	<field name="BranchId" class="java.lang.Object"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="67" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="29" uuid="46d1dc4d-cc5a-4d71-a864-4efd90961552"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Animal List]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="33" width="555" height="20" uuid="d0f164b2-9c98-4938-a714-bf48f5b2e8df"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{bname}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="18" y="2" width="100" height="20" uuid="4422cc9b-3dda-45f4-ac07-0b60ab8f9b4c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Animal No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="2" width="113" height="20" uuid="467fb320-30ff-4c24-899f-fe0eb66fdeff"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Purchase Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="277" y="2" width="95" height="20" uuid="985d100c-6fb8-43fb-abca-cf8290b51118"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Purchase Price]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="417" y="2" width="126" height="20" uuid="ec4a18dd-f6bd-4003-a5a6-a0c5caab0219"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Owner Name]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="0e6493b0-1e73-46ca-b7a8-1b9ae5f44ea5"/>
+			</line>
+			<line>
+				<reportElement x="0" y="24" width="555" height="1" uuid="0384d7fe-8411-4991-bf81-490e4d4adb6d"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="18" y="0" width="100" height="19" uuid="0e919d79-2f35-408f-a00c-821e4a60ff93"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{AnimalNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="0" width="113" height="19" uuid="0f2e453d-9590-4b46-b07f-2b992bdfd2e2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMM-yyyy").format($F{PurchaseDate})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="277" y="0" width="95" height="19" uuid="8a2fbffd-07b3-4d0b-8b73-51246633bac1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{PurchasePrice}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="417" y="0" width="126" height="19" uuid="6f237b91-d115-43dc-9fb2-6e67b934d174"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{OwnerName}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="19" width="555" height="1" uuid="8f1d66ab-e63f-4bdd-bf9a-5c3109ea9fd2"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss">
+				<reportElement x="0" y="0" width="243" height="20" uuid="1c0b04e6-d39f-4f56-b05b-6fa9f7311219"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Report generated on - "+new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="434" y="0" width="80" height="20" uuid="a1ce4727-0cb5-4415-9185-7bf046e2e26e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="514" y="0" width="40" height="20" uuid="439be163-31e2-45de-b723-a368bf694271"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="413" y="0" width="141" height="20" uuid="77bdef77-bc23-44e5-86d3-3d821238fb2d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Animal - "+$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

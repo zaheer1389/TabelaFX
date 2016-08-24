@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="600.0" prefWidth="900.0" stylesheets="@../theme/theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.tabelas.fxapps.controller.MilkWeightController">
+  <children>
+    <SplitPane fx:id="splitPane" dividerPositions="0.35" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <items>
+            <AnchorPane fx:id="leftPane">
+               <children>
+                  <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" styleClass="caption" text="Add/Edit Milk Weight Record" textAlignment="CENTER" textFill="#1689e0" wrapText="false" AnchorPane.leftAnchor="50.0">
+                     <font>
+                        <Font name="System Bold" size="18.0" fx:id="x11" />
+                     </font>
+                  </Label>
+                  <GridPane fx:id="form" minHeight="250.0" vgap="30.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+                     <children>
+                        <Label text="Animal No : ">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                        <Label text="Milk Weight Date : " GridPane.rowIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                        <Label text="Weight : " GridPane.rowIndex="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                        <TextField fx:id="txtResult" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <children>
+                              <Button fx:id="btnSave" mnemonicParsing="false" onAction="#save" text="Save" />
+                              <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#reset" text="Cancel" />
+                           </children>
+                        </HBox>
+                        <ComboBox fx:id="cbAnimal" prefWidth="150.0" GridPane.columnIndex="1" />
+                        <DatePicker fx:id="txtObservedDate" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+        <AnchorPane fx:id="rightPane">
+          <children>
+                  <Label layoutX="14.0" layoutY="14.0" styleClass="caption" text="Search  Milk Weight Records" textFill="#1689e0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="40.0" prefHeight="50.0" prefWidth="600.0" spacing="20.0" styleClass="app-box" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="10.0">
+                     <children>
+                        <TextField fx:id="txtSearchAnimalNo" promptText="Enter Animal No" />
+                        <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#search" text="Search" />
+                        <Button fx:id="btnClearSearch" mnemonicParsing="false" onAction="#resetSearch" text="Clear" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </HBox>
+            <Label alignment="CENTER" layoutX="14.0" layoutY="100.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" styleClass="caption" text="Animal  Milk Weight Records" textAlignment="CENTER" textFill="#1689e0" wrapText="false">
+              <font>
+                <Font size="18.0" fx:id="x1" />
+              </font>
+            </Label>
+                  <TableView fx:id="tableView" layoutX="14.0" prefHeight="500.0" prefWidth="600.0" stylesheets="@../theme/theme.css" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="130.0">
+                    <columns>
+                      <TableColumn fx:id="colAnimalNo" prefWidth="75.0" text="Animal No" />
+                      <TableColumn fx:id="colObservedDate" prefWidth="144.0" text="Milk Weight Date" />
+                        <TableColumn fx:id="colWeight" minWidth="6.0" prefWidth="115.0" text="Weight(Ltrs)" />
+                        <TableColumn fx:id="colEdit" minWidth="0.0" prefWidth="45.0" text="Edit" />
+                        <TableColumn fx:id="colDelete" prefWidth="50.0" text="Delete" />
+                    </columns>
+                  </TableView>
+                  <HBox fx:id="navigationBox" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="200.0" styleClass="app-box" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="10.0" />
+          </children>
+        </AnchorPane>
+      </items>
+    </SplitPane>
+  </children>
+</VBox>
