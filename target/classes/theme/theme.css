@@ -125,3 +125,37 @@
   -fx-pref-height: 30px;
 }
 
+/* .menu-bar {
+	-fx-background-color: #19bc9c ;	
+    -fx-border-width: 0px 0px 3px 0px;
+    -fx-border-color: #FFF;
+}
+
+.context-menu{
+	-fx-background-color: #19bc9c;
+}
+
+.menu:hover,.menu:focused,.menu:showing{
+	-fx-background-color: #49c9b0; 	 
+}
+
+.menu-item:focused {
+	-fx-background-color: #49c9b0;
+	-fx-border-width: 0px 0px 0px 3px;
+    -fx-border-color: #FFF;
+}
+
+.menu .label,.context-menu .menu-item .label{
+	-fx-font-size: 13px;
+	-fx-font-weight: bold;
+	-fx-font-family: 'Material Icons';
+	-fx-text-fill: #FFFFFF;
+	-fx-padding-left: 4px;
+	-fx-padding-right: 4px;
+}
+
+.context-menu .menu-item .label{
+	-fx-text-fill: #FFFFFF;
+} */
+
+

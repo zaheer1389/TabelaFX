@@ -205,7 +205,7 @@ public class AppController implements EventHandler<ActionEvent>{
 			map.put("bid", App.appcontroller.getBranch().getId());
 			map.put("bname",  App.appcontroller.getBranch().getBranchName());
 			InputStream is3 = getClass().getResourceAsStream("/reports/AnimalList.jasper");
-			ReportManager.showReport(is3, map, "Animal List");
+			ReportManager.showReport("/reports/AnimalList.jrxml", map, "Animal List");
 		}
 		else if(event.getSource() == menuItemReport_Animal_DetailedReport){
 			new LactationReportDialog().showDialog();

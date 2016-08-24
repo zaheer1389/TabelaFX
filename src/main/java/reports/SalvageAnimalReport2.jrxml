@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version last-->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="600" pageHeight="842" columnWidth="560" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e97a7671-bf4a-4d2e-a9a6-2605c20f1675">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -59,21 +60,16 @@ ORDER BY l.id desc LIMIT 1]]>
 		</band>
 	</background>
 	<title>
-		<band height="40" splitType="Stretch">
+		<band height="22" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<staticText>
 				<reportElement mode="Opaque" x="0" y="0" width="560" height="22" forecolor="#FFFFFF" backcolor="#0099FF" uuid="d979ab40-9ac2-489a-8571-306c5c89ee60"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font size="18" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font size="16" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Salvage Due Animal List]]></text>
 			</staticText>
-			<textField>
-				<reportElement mode="Opaque" x="0" y="22" width="560" height="18" forecolor="#FFFFFF" backcolor="#0099FF" uuid="c9c9398b-9759-4afb-a4f2-0982d86c1e6d"/>
-				<textElement textAlignment="Center">
-					<font size="13" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{branchName}]]></textFieldExpression>
-			</textField>
 		</band>
 	</title>
 	<columnHeader>

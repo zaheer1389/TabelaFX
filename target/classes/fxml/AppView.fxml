@@ -10,7 +10,7 @@
 
 <VBox fx:id="approot" prefHeight="600.0" prefWidth="900.0" stylesheets="@../theme/theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.tabelas.fxapps.controller.AppController">
   <children>
-    <MenuBar fx:id="menuBar" minHeight="30.0" VBox.vgrow="NEVER">
+    <MenuBar fx:id="menuBar" minHeight="25.0" VBox.vgrow="NEVER">
       <menus>
         <Menu fx:id="menuFile" mnemonicParsing="false" text="File">
           <items>
