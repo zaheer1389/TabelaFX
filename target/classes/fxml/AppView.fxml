@@ -10,7 +10,7 @@
 
 <VBox fx:id="approot" prefHeight="600.0" prefWidth="900.0" stylesheets="@../theme/theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.tabelas.fxapps.controller.AppController">
   <children>
-    <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
+    <MenuBar fx:id="menuBar" minHeight="30.0" VBox.vgrow="NEVER">
       <menus>
         <Menu fx:id="menuFile" mnemonicParsing="false" text="File">
           <items>
@@ -33,14 +33,15 @@
                   <Menu fx:id="menuItemReport_Animal_List" mnemonicParsing="false" text="Animal">
                     <items>
                       <MenuItem fx:id="menuItemReport_Animal_List" mnemonicParsing="false" text="Animal List" />
-                        <MenuItem fx:id="menuItemReport_Animal_DetailedReport" mnemonicParsing="false" text="Detailed Report" />
+                        <MenuItem fx:id="menuItemReport_Animal_DetailedReport" mnemonicParsing="false" text="Lactation Detailed Report" />
+                        <MenuItem fx:id="menuItemReport_Animal_ServiceReport" mnemonicParsing="false" text="Animal Service" />
                     </items>
                   </Menu>
                </items>
             </Menu>
         <Menu fx:id="menuHelp" mnemonicParsing="false" text="Help">
           <items>
-            <MenuItem fx:id="menuItemHelp_Help" mnemonicParsing="false" text="About TabelaFX" />
+            <MenuItem fx:id="menuItemHelp_Help" mnemonicParsing="false" text="Help Manual" />
           </items>
         </Menu>
       </menus>

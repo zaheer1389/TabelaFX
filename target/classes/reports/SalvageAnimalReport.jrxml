@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CustomerReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="556deede-c97c-4e85-9a61-54655e3b2716">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="mysql/tabelas"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="600" pageHeight="842" columnWidth="560" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e97a7671-bf4a-4d2e-a9a6-2605c20f1675">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<style name="Arial_Bold_14" fontName="Arial" fontSize="14"/>
+	<style name="Arial_Bold_24" fontName="Arial" fontSize="24"/>
+	<style name="Arial_Bold_12" fontName="Arial" fontSize="12"/>
 	<parameter name="branchName" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[Select * From Animal a, Lactation l, AnimalService s
@@ -43,128 +45,180 @@ ORDER BY l.id desc LIMIT 1]]>
 	<field name="ServiceDate" class="java.lang.Object"/>
 	<field name="LactationId" class="java.lang.Object"/>
 	<background>
-		<band splitType="Stretch"/>
+		<band height="822" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="0" width="560" height="812" uuid="12a90c11-1316-4d73-aaf9-7796a7850033"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</frame>
+		</band>
 	</background>
 	<title>
-		<band height="49" splitType="Stretch">
-			<property name="local_mesure_unitheight" value="pixel"/>
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		<band height="40" splitType="Stretch">
 			<staticText>
-				<reportElement x="3" y="0" width="552" height="22" uuid="3094e692-d0b6-4267-9621-2ea43628d470">
-					<property name="local_mesure_unitheight" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unity" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="18" isBold="true"/>
+				<reportElement mode="Opaque" x="0" y="0" width="560" height="22" forecolor="#FFFFFF" backcolor="#0099FF" uuid="d979ab40-9ac2-489a-8571-306c5c89ee60"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="18" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<text><![CDATA[Salvage Due Aniaml List]]></text>
+				<text><![CDATA[Salvage Due Animal List]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="3" y="20" width="552" height="20" uuid="6523ba28-484c-450a-a6ff-3f182c3c3cf3"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="14" isBold="true"/>
+				<reportElement mode="Opaque" x="0" y="22" width="560" height="18" forecolor="#FFFFFF" backcolor="#0099FF" uuid="c9c9398b-9759-4afb-a4f2-0982d86c1e6d"/>
+				<textElement textAlignment="Center">
+					<font size="13" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{branchName}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<columnHeader>
-		<band height="20">
-			<line>
-				<reportElement x="0" y="0" width="555" height="1" uuid="1d808dec-d0e1-408a-95a0-12e8b5a9f175"/>
-			</line>
+		<band height="27" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="1" width="184" height="19" backcolor="#FFFFFF" uuid="6e54d1f7-26f6-4851-8270-0dfc66ae35ad"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="12" isBold="true"/>
-					<paragraph leftIndent="5" rightIndent="5"/>
+				<reportElement style="Arial_Bold_12" x="10" y="7" width="135" height="20" uuid="4422cc9b-3dda-45f4-ac07-0b60ab8f9b4c"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Animal No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="184" y="1" width="190" height="19" backcolor="#FFFFFF" uuid="afdae94a-8c5e-41a9-820b-1b51adc12e7e"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="12" isBold="true"/>
-					<paragraph leftIndent="5" rightIndent="5"/>
+				<reportElement style="Arial_Bold_12" x="280" y="7" width="135" height="20" uuid="467fb320-30ff-4c24-899f-fe0eb66fdeff"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<text><![CDATA[Departure Date]]></text>
+				<text><![CDATA[Departure  Date]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="374" y="1" width="181" height="19" backcolor="#FFFFFF" uuid="6a4199e9-8af6-4c59-bd07-f3e848666b20"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="12" isBold="true"/>
-					<paragraph leftIndent="5" rightIndent="5"/>
+				<reportElement style="Arial_Bold_12" x="415" y="7" width="135" height="20" uuid="985d100c-6fb8-43fb-abca-cf8290b51118"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Expected Arrival Date]]></text>
 			</staticText>
-			<line>
-				<reportElement x="0" y="19" width="555" height="1" uuid="0cfc60d7-9918-4356-b927-1ef5675605e3"/>
-			</line>
+			<staticText>
+				<reportElement style="Arial_Bold_12" x="145" y="7" width="135" height="20" uuid="efa6b800-d065-45a7-b378-0ba63b3e81a2"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Pregnant Date]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20">
+		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement mode="Opaque" x="0" y="0" width="184" height="20" backcolor="#FFFFFF" uuid="dfb6f684-d028-404a-adea-27765d1acdaf"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="11"/>
-					<paragraph leftIndent="5" rightIndent="5"/>
+				<reportElement x="10" y="0" width="135" height="20" uuid="0e919d79-2f35-408f-a00c-821e4a60ff93"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{AnimalNo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[""+$F{AnimalNo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="184" y="0" width="190" height="20" backcolor="#FFFFFF" uuid="b9e31d7d-b95a-4d07-9be4-21cb24a31008"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="11"/>
-					<paragraph leftIndent="5" rightIndent="5"/>
+				<reportElement x="280" y="0" width="135" height="20" uuid="0f2e453d-9590-4b46-b07f-2b992bdfd2e2"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMMMMM-yyyy").format($F{DepartureDate})]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="374" y="0" width="181" height="20" backcolor="#FFFFFF" uuid="26500780-17c1-4a30-bc97-2f26f822a0f4"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="11"/>
-					<paragraph leftIndent="5" rightIndent="5"/>
+				<reportElement x="415" y="0" width="135" height="20" uuid="8a2fbffd-07b3-4d0b-8b73-51246633bac1"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMMMMM-yyyy").format(new java.util.Date((Long)$F{ServiceDate}+(320L*24*60*60*1000)))]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="0" y="19" width="555" height="1" uuid="06421863-7b83-42cd-a2b7-89856ac32a24"/>
-			</line>
+			<textField>
+				<reportElement x="145" y="0" width="135" height="20" uuid="e2c2f336-1219-4880-8dac-caa997f38b9b"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMMMMM-yyyy").format($F{ServiceDate})]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
-	<pageFooter>
-		<band height="32">
-			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="1" y="10" width="314" height="20" uuid="fc716b68-4a26-4deb-a774-da1b2be00336">
-					<property name="local_mesure_unity" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="Arial" size="10" isBold="false"/>
+	<columnFooter>
+		<band height="29">
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss">
+				<reportElement x="10" y="0" width="233" height="20" uuid="1c0b04e6-d39f-4f56-b05b-6fa9f7311219"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Report generated on - "+new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="397" y="10" width="100" height="20" uuid="9f87fd7d-1313-4837-b02f-15dcf91ddb21">
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Right">
-					<font fontName="Arial" size="10" isBold="false"/>
+				<reportElement x="432" y="0" width="80" height="20" uuid="a1ce4727-0cb5-4415-9185-7bf046e2e26e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="497" y="10" width="60" height="20" uuid="53381b85-7241-4e6f-9e82-e26526966a9d">
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Left">
-					<font fontName="Arial" size="10" isBold="false"/>
+				<reportElement x="512" y="0" width="38" height="20" uuid="439be163-31e2-45de-b723-a368bf694271"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
-	</pageFooter>
+	</columnFooter>
 </jasperReport>

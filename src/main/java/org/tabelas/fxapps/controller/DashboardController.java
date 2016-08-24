@@ -1,9 +1,12 @@
 package org.tabelas.fxapps.controller;
 
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -23,6 +26,8 @@ import org.controlsfx.glyphfont.Glyph;
 import org.tabelas.fxapps.App;
 import org.tabelas.fxapps.model.AnimalPojo;
 import org.tabelas.fxapps.persistence.JPAFacade;
+import org.tabelas.fxapps.util.DialogFactory;
+import org.tabelas.fxapps.util.ReportManager;
 
 public class DashboardController {
 
@@ -52,17 +57,23 @@ public class DashboardController {
 
     @FXML
     void print(ActionEvent event) {
+    	
+    	/*if(App.appcontroller.getBranch() == null){
+			DialogFactory.showErrorDialog("No branch has been selected.Please select branch to print report", null);
+			return;
+		}*/
+    	
     	if(event.getSource() == btnPrintSalvageList){
-    		PrinterJob printerJob = PrinterJob.createPrinterJob();
-    		if(printerJob.showPrintDialog(App.appcontroller.getStage().getOwner()) && printerJob.printPage(tableSalvageAnimalList)){
-    			printerJob.endJob();
-    		}
+    		Map<String, Object> map = new HashMap<>();
+			//map.put("branchName",  App.appcontroller.getBranch().getBranchName());
+			InputStream is3 = getClass().getResourceAsStream("/reports/SalvageAnimalReport2.jasper");
+			ReportManager.showReport(is3, map, "Salvage Due Animal List");
     	}
     	else if(event.getSource() == btnPrintServiceDueList){
-    		PrinterJob printerJob = PrinterJob.createPrinterJob();
-    		if(printerJob.showPrintDialog(App.appcontroller.getStage().getOwner()) && printerJob.printPage(tableServiceDueList)){
-    			printerJob.endJob();
-    		}
+    		Map<String, Object> map = new HashMap<>();
+			//map.put("branchName",  App.appcontroller.getBranch().getBranchName());
+			InputStream is3 = getClass().getResourceAsStream("/reports/ServiceDueReport2.jasper");
+			ReportManager.showReport(is3, map, "Service Due Animal List");
     	}
     }
     

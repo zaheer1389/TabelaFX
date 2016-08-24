@@ -24,6 +24,7 @@ import javax.persistence.EntityManager;
 
 import org.tabelas.fxapps.controller.AppController;
 import org.tabelas.fxapps.persistence.JPAFacade;
+import org.tabelas.fxapps.util.DialogFactory;
 
 public class App extends Application {
 
@@ -39,7 +40,7 @@ public class App extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
 		this.primaryStage = primaryStage;
-		
+		ClassLoader classLoader = App.class.getClassLoader();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AppView.fxml"));
 		VBox root = (VBox) loader.load();
 		AppController controller = loader.getController();
@@ -67,14 +68,10 @@ public class App extends Application {
 		return appcontroller;
 	}
 	
-	public static void refreshBranchList(){
-		
-	}
-	
 	public void connectDatabase(){
 		EntityManager em = JPAFacade.getEntityManager();		
 		if(em == null){
-			System.out.println("Database connection failed!!!!!!!!!!!!!!");
+			DialogFactory.showErrorDialog("Database connection failed!!!!!!!!!!!!!!", App.appcontroller.getStage());
 		}
 	}
 
@@ -115,7 +112,7 @@ public class App extends Application {
 			return connection;
 		}
 		catch(Exception e){			
-			//DialogFactory.showExceptionDialog(e, getStage());
+			DialogFactory.showExceptionDialog(e, App.appcontroller.getStage());
 			return null;
 		}
 	}

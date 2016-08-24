@@ -1,6 +1,9 @@
 package org.tabelas.fxapps.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -25,9 +28,12 @@ import javafx.util.StringConverter;
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.Glyph;
 import org.tabelas.fxapps.App;
+import org.tabelas.fxapps.dialog.AnimalServiceReportDialog;
+import org.tabelas.fxapps.dialog.LactationReportDialog;
 import org.tabelas.fxapps.model.Branch;
 import org.tabelas.fxapps.persistence.FacadeFactory;
 import org.tabelas.fxapps.util.DialogFactory;
+import org.tabelas.fxapps.util.ReportManager;
 
 public class AppController implements EventHandler<ActionEvent>{
 
@@ -40,7 +46,7 @@ public class AppController implements EventHandler<ActionEvent>{
     private MenuItem menuItemAnimal_ManageAnimal,menuItemAnimal_Lactation,menuItemAnimal_Service,menuItemAnimal_MilkWeight;
     
     @FXML
-    private MenuItem menuItemReport_Animal_List,menuItemReport_Animal_DetailedReport;
+    private MenuItem menuItemReport_Animal_List,menuItemReport_Animal_DetailedReport,menuItemReport_Animal_ServiceReport;
     
     @FXML
     private MenuBar menuBar;
@@ -193,6 +199,19 @@ public class AppController implements EventHandler<ActionEvent>{
 		else if(event.getSource() == menuItemAnimal_MilkWeight){
 			showView("/fxml/MilkWeightView.fxml");
 			lblPageCaption.setText("Manage Animal Milk Weights");
+		}
+		else if(event.getSource() == menuItemReport_Animal_List){
+			Map<String, Object> map = new HashMap<>();
+			map.put("bid", App.appcontroller.getBranch().getId());
+			map.put("bname",  App.appcontroller.getBranch().getBranchName());
+			InputStream is3 = getClass().getResourceAsStream("/reports/AnimalList.jasper");
+			ReportManager.showReport(is3, map, "Animal List");
+		}
+		else if(event.getSource() == menuItemReport_Animal_DetailedReport){
+			new LactationReportDialog().showDialog();
+		}
+		else if(event.getSource() == menuItemReport_Animal_ServiceReport){
+			new AnimalServiceReportDialog().showDialog();
 		}
 	}
     
