@@ -25,6 +25,8 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
+import org.controlsfx.glyphfont.FontAwesome;
+import org.controlsfx.glyphfont.Glyph;
 import org.tabelas.fxapps.App;
 import org.tabelas.fxapps.util.AppUtil;
 import org.tabelas.fxapps.util.DialogFactory;
@@ -98,7 +100,11 @@ public class AnimalServiceReportDialog extends VBox{
 		form.add(controlContiner, 1, 3);
 		
 		Button btnSave = new Button("Show Report");
+		btnSave.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.CHECK_CIRCLE).size(20));
+		
 		Button btnReset = new Button("Reset");
+		btnReset.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TIMES).size(20));
+		
 		
 		controlContiner.getChildren().addAll(btnSave,btnReset);
 		

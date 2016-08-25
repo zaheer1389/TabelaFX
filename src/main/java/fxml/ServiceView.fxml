@@ -25,27 +25,22 @@
                            <font>
                               <Font size="14.0" />
                            </font></Label>
+                           <ComboBox fx:id="cbAnimal" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
                         <Label text="Service Date : " GridPane.rowIndex="1">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
+                           <DatePicker fx:id="txtServiceDate" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        
                         <Label text="Male Animal No :" GridPane.rowIndex="2">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
+                           <TextField fx:id="txtMaleAnimalNo" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label text="Service Result : " GridPane.rowIndex="3">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
-                        <TextField fx:id="txtMaleAnimalNo" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                           <children>
-                              <Button fx:id="btnSave" mnemonicParsing="false" onAction="#save" text="Save" />
-                              <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#reset" text="Cancel" />
-                           </children>
-                        </HBox>
-                        <ComboBox fx:id="cbAnimal" prefWidth="150.0" GridPane.columnIndex="1" />
-                        <DatePicker fx:id="txtServiceDate" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <children>
                               <RadioButton fx:id="optEmpty" mnemonicParsing="false" text="Empty" />
@@ -54,7 +49,15 @@
                         </HBox>
                         <Label text="Remarks : " GridPane.rowIndex="4" />
                         <TextArea fx:id="txtRemarks" minHeight="70.0" prefHeight="70.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                     </children>
+                     
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                           <children>
+                              <Button fx:id="btnSave" minHeight="35.0" mnemonicParsing="false" onAction="#save" text="Save" />
+                              <Button fx:id="btnCancel" minHeight="35.0" mnemonicParsing="false" onAction="#reset" text="Cancel" />
+                           </children>
+                        </HBox>
+
+                        </children>
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -80,8 +83,8 @@
                   <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="40.0" prefHeight="50.0" prefWidth="600.0" spacing="20.0" styleClass="app-box" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="10.0">
                      <children>
                         <TextField fx:id="txtSearchAnimalNo" promptText="Enter Animal No" />
-                        <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#search" text="Search" />
-                        <Button fx:id="btnClearSearch" mnemonicParsing="false" onAction="#resetSearch" text="Clear" />
+                        <Button fx:id="btnSearch" minHeight="35.0" mnemonicParsing="false" onAction="#search" text="Search" />
+                        <Button fx:id="btnClearSearch" minHeight="35.0" mnemonicParsing="false" onAction="#resetSearch" text="Clear" />
                      </children>
                      <padding>
                         <Insets left="10.0" />

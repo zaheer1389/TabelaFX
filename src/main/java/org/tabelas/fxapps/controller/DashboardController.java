@@ -11,12 +11,16 @@ import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.print.PrinterJob;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.TextAlignment;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -47,10 +51,10 @@ public class DashboardController {
     private Button btnPrintServiceDueList;
     
     @FXML
-    private TableColumn<AnimalPojo, String> colAnimalNo,colAnimalNo2;
+    private TableColumn<AnimalPojo, String> colAnimalNo,colAnimalNo2,colBrnachName,colBrnachName2;
     
     @FXML
-    private TableColumn<AnimalPojo, String>  colDepartureDate,colExpectedArrivalDate;
+    private TableColumn<AnimalPojo, String>  colServiceDate2,colDepartureDate,colExpectedArrivalDate;
     
     @FXML
     private TableColumn<AnimalPojo, String>  colArrivalDate,colServiceDate;
@@ -79,8 +83,8 @@ public class DashboardController {
     
     @FXML
     void initialize() {
-    	btnPrintSalvageList.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.PRINT));
-    	btnPrintServiceDueList.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.PRINT));
+    	btnPrintSalvageList.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.PRINT).size(20));
+    	btnPrintServiceDueList.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.PRINT).size(20));
     	
     	setServiceDueTable();
     	setSalvageDueTable();
@@ -88,40 +92,65 @@ public class DashboardController {
     
     public void setServiceDueTable(){
     	colAnimalNo.setCellValueFactory(new PropertyValueFactory<AnimalPojo, String>("animalNo"));
+    	colBrnachName.setCellValueFactory(new PropertyValueFactory<AnimalPojo, String>("branchName"));
 		colArrivalDate.setCellValueFactory(new PropertyValueFactory<AnimalPojo, String>("arrivalDate"));
 		colServiceDate.setCellValueFactory(new PropertyValueFactory<AnimalPojo, String>("serviceDate"));
 		
+		for(TableColumn col : tableServiceDueList.getColumns()){
+			makeHeaderWrappable(col);
+		}
 		tableServiceDueList.setItems(FXCollections.observableArrayList(getServiceDueAnimals()));
     }
     
     public void setSalvageDueTable(){
     	colAnimalNo2.setCellValueFactory(new PropertyValueFactory<AnimalPojo, String>("animalNo"));
+    	colBrnachName2.setCellValueFactory(new PropertyValueFactory<AnimalPojo, String>("branchName"));
+    	colServiceDate2.setCellValueFactory(new PropertyValueFactory<AnimalPojo, String>("serviceDate"));
     	colDepartureDate.setCellValueFactory(new PropertyValueFactory<AnimalPojo, String>("departureDate"));
 		colExpectedArrivalDate.setCellValueFactory(new PropertyValueFactory<AnimalPojo, String>("expectedArrivalDate"));
 		
+		for(TableColumn col : tableSalvageAnimalList.getColumns()){
+			makeHeaderWrappable(col);
+		}
 		tableSalvageAnimalList.setItems(FXCollections.observableArrayList(getSalvageAnimals()));
+    }
+    
+    private void makeHeaderWrappable(TableColumn col) {
+        Label label = new Label(col.getText());
+        label.setStyle("-fx-padding: 2px;");
+        label.setWrapText(true);
+        label.setAlignment(Pos.CENTER);
+        label.setTextAlignment(TextAlignment.CENTER);
+     
+        StackPane stack = new StackPane();
+        stack.getChildren().add(label);
+        stack.prefWidthProperty().bind(col.widthProperty().subtract(5));
+        label.prefWidthProperty().bind(stack.prefWidthProperty());
+        col.setGraphic(stack);
     }
     
     public List<AnimalPojo> getServiceDueAnimals(){
 		List<AnimalPojo> list = new ArrayList<AnimalPojo>();
-		String queryStr = "Select AnimalNo,ArrivalDate From Animal a,Lactation l "
-				+ "where a.id = l.AnimalId "
-				+ "and DepartureDate IS NULL "
-				+ "and date('now') > date(l.ArrivalDate, '+60 day') "
-				+ "and l.CurrentLactation = 1 "
-				+ "and (select count(id) from AnimalService where lactationId = l.id) = 0";
+		String queryStr = "SELECT BranchName,AnimalNo,ArrivalDate From Animal a,Lactation l,Branch b "
+				+ "WHERE a.id = l.AnimalId "
+				+ "AND a.BranchId = b.id "
+				+ "AND DepartureDate IS NULL "
+				+ "AND date('now') > date(l.ArrivalDate, '+60 day') "
+				+ "AND l.CurrentLactation = 1 "
+				+ "AND (select count(id) from AnimalService where lactationId = l.id) = 0";
 		EntityManager em = JPAFacade.getEntityManager();
 		Query query = em.createNativeQuery(queryStr);
 		System.out.println(queryStr);
 		List<Object[]> data = query.getResultList();
 		for (Object[] objects : data) {
-			String animalNo = objects[0].toString();
-			Date dt = new Date((Long)objects[1]);
+			String branchName = objects[0].toString();
+			String animalNo = objects[1].toString();
+			Date dt = new Date((Long)objects[2]);
 			Date dt2 = new Date(dt.getTime()+(60L*24*60*60*1000));
 			System.out.println(dt);
 			System.out.println(dt2);
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMMMM-yyyy");
-			list.add(new AnimalPojo(animalNo, sdf.format(dt), "", sdf.format(dt2), ""));
+			list.add(new AnimalPojo(branchName, animalNo, sdf.format(dt), "", sdf.format(dt2), ""));
 		}
 		
 		return list;
@@ -129,29 +158,28 @@ public class DashboardController {
     
     public List<AnimalPojo> getSalvageAnimals(){
 		List<AnimalPojo> list = new ArrayList<AnimalPojo>();
-		String queryStr = "Select AnimalNo,DepartureDate,ServiceDate From Animal a, Lactation l, AnimalService s "
-				+ "where a.id = l.AnimalId "
-				+ "and l.id in (select max(id) from Lactation l "
-				+ "where AnimalId NOT IN (select AnimalId from Lactation "
-				+ "where CurrentLactation = 1) "
-				+ "and l.id = s.LactationId "
-				+ "and s.Result = 'PREGNANT' "
-				+ "Group By AnimalId "
-				+ "Order By DepartureDate Desc) ORDER BY l.id desc LIMIT 1";	
+		String queryStr = "Select BranchName,AnimalNo,DepartureDate,ServiceDate From Animal a, Lactation l, AnimalService s, Branch b "
+				+ "WHERE a.id = l.AnimalId "
+				+ "AND l.id = s.LactationId "
+				+ "AND a.BranchId = b.id "
+				+ "AND s.result = 'PREGNANT' "
+				+ "AND l.currentLactation = 0 "
+				+ "AND l.id IN (select max(id) from Lactation l where l.animalId = a.id)";	
 		System.out.println(queryStr);
 		EntityManager em = JPAFacade.getEntityManager();
 		Query query = em.createNativeQuery(queryStr);
 		
 		List<Object[]> data = query.getResultList();
 		for (Object[] objects : data) {
-			String animalNo = objects[0].toString();
-			Date dt = new Date((Long)objects[1]);
-			Date dtt = new Date((Long)objects[2]);
+			String branchName = objects[0].toString();
+			String animalNo = objects[1].toString();
+			Date dt = new Date((Long)objects[2]);
+			Date dtt = new Date((Long)objects[3]);
 			Date dt2 = new Date(dtt.getTime()+(320L*24*60*60*1000));
 			System.out.println(dt);
 			System.out.println(dt2);
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMMMM-yyyy");
-			list.add(new AnimalPojo(animalNo, "", sdf.format(dt), "", sdf.format(dt2)));
+			list.add(new AnimalPojo(branchName, animalNo, "", sdf.format(dt), sdf.format(dtt), sdf.format(dt2)));
 		}
 		
 		return list;

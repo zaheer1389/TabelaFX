@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version last-->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="600" pageHeight="842" columnWidth="560" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e97a7671-bf4a-4d2e-a9a6-2605c20f1675">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -9,17 +8,13 @@
 	<style name="Arial_Bold_12" fontName="Arial" fontSize="12"/>
 	<parameter name="branchName" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[Select * From Animal a, Lactation l, AnimalService s
-where a.id = l.AnimalId
-and l.id in (select max(id) from Lactation l
-where AnimalId NOT IN (select AnimalId from Lactation
-where CurrentLactation = 1)
-and DepartureDate IS NOT NULL
-and l.id = s.LactationId
-and s.Result = 'PREGNANT'
-Group By AnimalId
-Order By DepartureDate Desc)
-ORDER BY l.id desc LIMIT 1]]>
+		<![CDATA[Select * From Animal a, Lactation l, AnimalService s, Branch b
+WHERE a.id = l.AnimalId
+AND l.id = s.LactationId
+AND a.BranchId = b.id
+AND s.result = 'PREGNANT'
+AND l.currentLactation = 0
+AND l.id IN (select max(id) from Lactation l where l.animalId = a.id)]]>
 	</queryString>
 	<field name="ID" class="java.lang.Object"/>
 	<field name="AddedDate" class="java.lang.Object"/>
@@ -45,6 +40,7 @@ ORDER BY l.id desc LIMIT 1]]>
 	<field name="Result" class="java.lang.Object"/>
 	<field name="ServiceDate" class="java.lang.Object"/>
 	<field name="LactationId" class="java.lang.Object"/>
+	<field name="BranchName" class="java.lang.Object"/>
 	<background>
 		<band height="822" splitType="Stretch">
 			<frame>
@@ -75,7 +71,7 @@ ORDER BY l.id desc LIMIT 1]]>
 	<columnHeader>
 		<band height="27" splitType="Stretch">
 			<staticText>
-				<reportElement style="Arial_Bold_12" mode="Opaque" x="10" y="7" width="135" height="20" backcolor="#66CCFF" uuid="4422cc9b-3dda-45f4-ac07-0b60ab8f9b4c"/>
+				<reportElement style="Arial_Bold_12" mode="Opaque" x="10" y="7" width="110" height="20" backcolor="#66CCFF" uuid="4422cc9b-3dda-45f4-ac07-0b60ab8f9b4c"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -89,7 +85,7 @@ ORDER BY l.id desc LIMIT 1]]>
 				<text><![CDATA[Animal No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Arial_Bold_12" mode="Opaque" x="280" y="7" width="135" height="20" backcolor="#66CCFF" uuid="467fb320-30ff-4c24-899f-fe0eb66fdeff"/>
+				<reportElement style="Arial_Bold_12" mode="Opaque" x="328" y="7" width="110" height="20" backcolor="#66CCFF" uuid="467fb320-30ff-4c24-899f-fe0eb66fdeff"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -103,7 +99,7 @@ ORDER BY l.id desc LIMIT 1]]>
 				<text><![CDATA[Departure  Date]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Arial_Bold_12" mode="Opaque" x="415" y="7" width="135" height="20" backcolor="#66CCFF" uuid="985d100c-6fb8-43fb-abca-cf8290b51118"/>
+				<reportElement style="Arial_Bold_12" mode="Opaque" x="438" y="7" width="110" height="20" backcolor="#66CCFF" uuid="985d100c-6fb8-43fb-abca-cf8290b51118"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -117,7 +113,7 @@ ORDER BY l.id desc LIMIT 1]]>
 				<text><![CDATA[Expected Arrival Date]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Arial_Bold_12" mode="Opaque" x="145" y="7" width="135" height="20" backcolor="#66CCFF" uuid="efa6b800-d065-45a7-b378-0ba63b3e81a2"/>
+				<reportElement style="Arial_Bold_12" mode="Opaque" x="218" y="7" width="110" height="20" backcolor="#66CCFF" uuid="efa6b800-d065-45a7-b378-0ba63b3e81a2"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -130,12 +126,26 @@ ORDER BY l.id desc LIMIT 1]]>
 				</textElement>
 				<text><![CDATA[Pregnant Date]]></text>
 			</staticText>
+			<staticText>
+				<reportElement style="Arial_Bold_12" mode="Opaque" x="120" y="7" width="98" height="20" backcolor="#66CCFF" uuid="c44d3536-ed01-4854-a932-795a88ae9ba5"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Branch]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="10" y="0" width="135" height="20" uuid="0e919d79-2f35-408f-a00c-821e4a60ff93"/>
+				<reportElement x="10" y="0" width="110" height="20" uuid="0e919d79-2f35-408f-a00c-821e4a60ff93"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -149,7 +159,7 @@ ORDER BY l.id desc LIMIT 1]]>
 				<textFieldExpression><![CDATA[""+$F{AnimalNo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="280" y="0" width="135" height="20" uuid="0f2e453d-9590-4b46-b07f-2b992bdfd2e2"/>
+				<reportElement x="328" y="0" width="110" height="20" uuid="0f2e453d-9590-4b46-b07f-2b992bdfd2e2"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -163,7 +173,7 @@ ORDER BY l.id desc LIMIT 1]]>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMMMMM-yyyy").format($F{DepartureDate})]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="415" y="0" width="135" height="20" uuid="8a2fbffd-07b3-4d0b-8b73-51246633bac1"/>
+				<reportElement x="438" y="0" width="110" height="20" uuid="8a2fbffd-07b3-4d0b-8b73-51246633bac1"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -177,7 +187,7 @@ ORDER BY l.id desc LIMIT 1]]>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMMMMM-yyyy").format(new java.util.Date((Long)$F{ServiceDate}+(320L*24*60*60*1000)))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="145" y="0" width="135" height="20" uuid="e2c2f336-1219-4880-8dac-caa997f38b9b"/>
+				<reportElement x="218" y="0" width="110" height="20" uuid="e2c2f336-1219-4880-8dac-caa997f38b9b"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -189,6 +199,20 @@ ORDER BY l.id desc LIMIT 1]]>
 					<font fontName="SansSerif" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMMMMM-yyyy").format($F{ServiceDate})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="0" width="98" height="20" uuid="88088a34-30fa-429c-ac80-650380e5642c"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BranchName}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -115,10 +115,10 @@ public class LactationController implements View{
     	txtCowingDate.setConverter(AppUtil.getDatePickerFormatter());
     	txtDepartureDate.setConverter(AppUtil.getDatePickerFormatter());
     	
-    	btnSave.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.SAVE));
-    	btnCancel.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TIMES));
-    	btnSearch.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.SEARCH));
-    	btnClearSearch.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TIMES));
+    	btnSave.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.SAVE).size(17));
+    	btnCancel.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TIMES).size(17));
+    	btnSearch.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.SEARCH).size(17));
+    	btnClearSearch.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TIMES).size(17));
     	
     	cbAnimal.setItems(FXCollections.observableArrayList(AnimalController.getAnimalsByBranch()));
     	new AutoCompleteComboBoxListener<>(cbAnimal);
@@ -565,6 +565,13 @@ public class LactationController implements View{
     	Map<String, Object> parameters = new HashMap<String, Object>();
     	parameters.put("bid", App.appcontroller.getBranch());
     	parameters.put("no", no);
+    	return FacadeFactory.getFacade().list(queryStr, parameters);
+	}
+	
+	public static List<Animal> getCurerntAnimals(){
+		String queryStr = "Select a from Lactation as l join l.animal as a where a.branch = :bid AND l.departureDate IS NULL order by l.id desc";
+    	Map<String, Object> parameters = new HashMap<String, Object>();
+    	parameters.put("bid", App.appcontroller.getBranch());
     	return FacadeFactory.getFacade().list(queryStr, parameters);
 	}
 

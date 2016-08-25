@@ -28,8 +28,10 @@ import javafx.util.StringConverter;
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.Glyph;
 import org.tabelas.fxapps.App;
+import org.tabelas.fxapps.control.FXOptionPane.Response;
 import org.tabelas.fxapps.dialog.AnimalServiceReportDialog;
 import org.tabelas.fxapps.dialog.LactationReportDialog;
+import org.tabelas.fxapps.enums.DialogType;
 import org.tabelas.fxapps.model.Branch;
 import org.tabelas.fxapps.persistence.FacadeFactory;
 import org.tabelas.fxapps.util.DialogFactory;
@@ -72,7 +74,7 @@ public class AppController implements EventHandler<ActionEvent>{
     @FXML
     void initialize() {
     	
-    	btnDashboard.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.DASHBOARD));
+    	btnDashboard.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.DASHBOARD).size(17));
     	
     	cbBranch.setCellFactory(new Callback<ListView<Branch>, ListCell<Branch>>() {
 
@@ -171,7 +173,10 @@ public class AppController implements EventHandler<ActionEvent>{
 		// TODO Auto-generated method stub
 		
 		if(event.getSource() == menuItemFile_Exit){
-			
+			Response response = DialogFactory.showConfirmationDialog("Do you really want to exit TABELAS?",DialogType.YESNOCANCEL, null);
+			if(response == Response.YES){
+				System.exit(0);
+			}	
 		}
 		else if(event.getSource() == menuItemFile_ManageBranch){
 			showView("/fxml/BranchView.fxml");

@@ -14,15 +14,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import javax.persistence.EntityManager;
 
+import org.tabelas.fxapps.control.FXOptionPane.Response;
 import org.tabelas.fxapps.controller.AppController;
+import org.tabelas.fxapps.enums.DialogType;
 import org.tabelas.fxapps.persistence.JPAFacade;
 import org.tabelas.fxapps.util.DialogFactory;
 
@@ -40,6 +44,20 @@ public class App extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
 		this.primaryStage = primaryStage;
+		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			
+			@Override
+			public void handle(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				Response response = DialogFactory.showConfirmationDialog("Do you really want to exit TABELAS?",DialogType.YESNOCANCEL, null);
+				if(response == Response.YES){
+					System.exit(0);
+				}else{
+					arg0.consume();
+				}
+			}
+		});
+
 		ClassLoader classLoader = App.class.getClassLoader();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AppView.fxml"));
 		VBox root = (VBox) loader.load();

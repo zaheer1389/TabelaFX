@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AnimalWeightReport" columnCount="3" printOrder="Horizontal" pageWidth="555" pageHeight="802" columnWidth="185" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0f3d6c00-47d7-43be-b8e5-c66195b1b6ea">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AnimalWeightReport" columnCount="3" printOrder="Horizontal" pageWidth="555" pageHeight="802" whenNoDataType="BlankPage" columnWidth="181" leftMargin="0" rightMargin="10" topMargin="0" bottomMargin="0" uuid="0f3d6c00-47d7-43be-b8e5-c66195b1b6ea">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -47,6 +47,9 @@
 			<pen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
+	<style name="Arial_Bold_14" fontName="Arial" fontSize="14"/>
+	<style name="Arial_Bold_24" fontName="Arial" fontSize="24"/>
+	<style name="Arial_Bold_12" fontName="Arial" fontSize="12"/>
 	<parameter name="lid" class="java.lang.Long"/>
 	<parameter name="fromDate" class="java.util.Date"/>
 	<parameter name="toDate" class="java.util.Date"/>
@@ -83,12 +86,12 @@
 	<title>
 		<band height="20">
 			<staticText>
-				<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="555" height="20" forecolor="#0066FF" backcolor="#FFFFFF" uuid="c7395db3-4987-4bf1-ad0d-e220ed7c21be">
+				<reportElement style="Arial_Bold_14" positionType="Float" mode="Opaque" x="0" y="0" width="555" height="20" forecolor="#0066FF" backcolor="#FFFFFF" uuid="c7395db3-4987-4bf1-ad0d-e220ed7c21be">
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="11" isBold="true"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="SansSerif" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Animal Milk Weight Detail]]></text>
 			</staticText>
@@ -99,41 +102,41 @@
 			<property name="local_mesure_unitheight" value="pixel"/>
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<staticText>
-				<reportElement mode="Opaque" x="1" y="0" width="120" height="20" backcolor="#FFFFFF" uuid="af4b8da2-447c-4df3-b965-95db4ae7f0d6">
+				<reportElement mode="Opaque" x="1" y="0" width="120" height="20" backcolor="#66CCFF" uuid="af4b8da2-447c-4df3-b965-95db4ae7f0d6">
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<box>
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="11" isBold="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
 					<paragraph leftIndent="10" rightIndent="10"/>
 				</textElement>
 				<text><![CDATA[Observed Date]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="121" y="0" width="65" height="20" backcolor="#FFFFFF" uuid="b117cd32-4ff0-49a5-9249-2f313aa6e646">
+				<reportElement mode="Opaque" x="121" y="0" width="65" height="20" backcolor="#66CCFF" uuid="b117cd32-4ff0-49a5-9249-2f313aa6e646">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="local_mesure_unitwidth" value="pixel"/>
 				</reportElement>
 				<box>
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Arial" size="11" isBold="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
 					<paragraph leftIndent="10" rightIndent="10"/>
 				</textElement>
-				<text><![CDATA[Milk Weight]]></text>
+				<text><![CDATA[Milk Weight(Ltrs)]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -148,14 +151,14 @@
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<box>
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
 					<paragraph leftIndent="10" rightIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMMMMMMM-yyyy").format($F{WeightDate})]]></textFieldExpression>
@@ -168,14 +171,14 @@
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<box>
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Arial"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
 					<paragraph leftIndent="10" rightIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Weight}]]></textFieldExpression>
@@ -192,21 +195,21 @@
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="11" isBold="true"/>
+					<font fontName="SansSerif" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Total Days in Tabelas: "+$V{totalDays}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="365" y="5" width="185" height="20" backcolor="#FFFFFF" uuid="c7588cf5-23ac-4ae7-95df-bca2fd40dc84"/>
+				<reportElement mode="Opaque" x="365" y="5" width="180" height="20" backcolor="#FFFFFF" uuid="c7588cf5-23ac-4ae7-95df-bca2fd40dc84"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="11" isBold="true"/>
+					<font fontName="SansSerif" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Total Milk Given : "+new DecimalFormat("#0.00").format($V{avgMilk}*$V{totalDays})+" Ltr"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement mode="Opaque" x="1" y="5" width="185" height="20" backcolor="#FFFFFF" uuid="8345f526-8332-4baa-962c-2f9c17b35815"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="11" isBold="true"/>
+					<font fontName="SansSerif" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Avg Milk : "+ new DecimalFormat("#0.00").format($V{avgMilk})+" Ltr"]]></textFieldExpression>
 			</textField>

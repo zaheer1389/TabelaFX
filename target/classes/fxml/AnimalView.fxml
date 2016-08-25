@@ -25,26 +25,26 @@
                            <font>
                               <Font size="14.0" />
                            </font></Label>
+                           <TextField fx:id="txtAnimalNo" GridPane.columnIndex="1" />
                         <Label text="Owner Name : " GridPane.rowIndex="1">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
+                            <TextField fx:id="txtOwnerName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label text="Purchase Price : " GridPane.rowIndex="2">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
+                           <TextField fx:id="txtPurchasePrice" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label text="Purchase Date : " GridPane.rowIndex="3">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
-                        <TextField fx:id="txtAnimalNo" GridPane.columnIndex="1" />
-                        <TextField fx:id="txtOwnerName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="txtPurchasePrice" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <DatePicker fx:id="txtPurchasedDate" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <DatePicker fx:id="txtPurchasedDate" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <children>
-                              <Button fx:id="btnSave" mnemonicParsing="false" onAction="#save" text="Save" />
-                              <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#reset" text="Cancel" />
+                              <Button fx:id="btnSave" minHeight="35.0" mnemonicParsing="false" onAction="#save" text="Save" />
+                              <Button fx:id="btnCancel" minHeight="35.0" mnemonicParsing="false" onAction="#reset" text="Cancel" />
                            </children>
                         </HBox>
                      </children>
@@ -72,8 +72,8 @@
                   <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="40.0" prefHeight="50.0" prefWidth="600.0" spacing="20.0" styleClass="app-box" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="10.0">
                      <children>
                         <TextField fx:id="txtSearchAnimalNo" promptText="Enter Animal No" />
-                        <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#search" text="Search" />
-                        <Button fx:id="btnClearSearch" mnemonicParsing="false" onAction="#resetSearch" text="Clear" />
+                        <Button fx:id="btnSearch" minHeight="35.0" mnemonicParsing="false" onAction="#search" text="Search" />
+                        <Button fx:id="btnClearSearch" minHeight="35.0" mnemonicParsing="false" onAction="#resetSearch" text="Clear" />
                      </children>
                      <padding>
                         <Insets left="10.0" />

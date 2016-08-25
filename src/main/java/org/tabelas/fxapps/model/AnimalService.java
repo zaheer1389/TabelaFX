@@ -83,7 +83,7 @@ public class AnimalService extends AbstractPojo implements Serializable{
 
 	public String getRemarks() {
 		try {
-			return new String(remarks,"UTF-8");
+			return new String((remarks!=null?remarks:"".getBytes()),"UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

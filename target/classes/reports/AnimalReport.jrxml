@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AnimalReport" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6a155131-9f79-4c10-851a-925e294a670d">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AnimalReport" pageWidth="600" pageHeight="842" columnWidth="560" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6a155131-9f79-4c10-851a-925e294a670d">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -56,6 +56,9 @@
 			<style backcolor="#F3F7F8"/>
 		</conditionalStyle>
 	</style>
+	<style name="Arial_Bold_14" fontName="Arial" fontSize="18"/>
+	<style name="Arial_Bold_24" fontName="Arial" fontSize="24"/>
+	<style name="Arial_Bold_12" fontName="Arial" fontSize="12"/>
 	<parameter name="animalNo" class="java.lang.String"/>
 	<parameter name="branchId" class="java.lang.Long"/>
 	<parameter name="branchName" class="java.lang.String"/>
@@ -99,12 +102,23 @@
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<background>
-		<band splitType="Stretch"/>
+		<band height="802" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="0" width="560" height="802" uuid="3917ec9d-a6e8-4c89-af1d-3d08fc2dc273"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+			</frame>
+		</band>
 	</background>
 	<title>
 		<band height="72" splitType="Stretch">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="70" width="555" height="1" uuid="517e325d-ce91-4d53-9132-109cddcaacea">
+				<reportElement positionType="FixRelativeToBottom" x="0" y="70" width="560" height="1" uuid="517e325d-ce91-4d53-9132-109cddcaacea">
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
@@ -113,9 +127,9 @@
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement style="Title" x="0" y="2" width="320" height="33" uuid="81e6ba4f-f2d5-462f-8dca-33696f0aa3e7"/>
+				<reportElement style="Arial_Bold_14" x="0" y="2" width="320" height="33" uuid="81e6ba4f-f2d5-462f-8dca-33696f0aa3e7"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="none">
-					<font size="20" isPdfEmbedded="true"/>
+					<font fontName="SansSerif" size="18" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Animal Deatiled Report]]></text>
@@ -123,92 +137,92 @@
 			<textField>
 				<reportElement x="0" y="35" width="320" height="20" uuid="9367ea46-470c-44a3-9b30-e445ea908b4a"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="14" isBold="true" isPdfEmbedded="true"/>
+					<font fontName="SansSerif" size="14" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{branchName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="450" y="3" width="105" height="15" uuid="ea6a682a-4008-4ca2-abe3-c96bf21d5d5e">
+				<reportElement x="455" y="3" width="105" height="15" uuid="ea6a682a-4008-4ca2-abe3-c96bf21d5d5e">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Justified">
-					<font fontName="Arial" size="11" isBold="false"/>
+					<font fontName="SansSerif" size="11" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{animalNo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="360" y="3" width="90" height="15" uuid="8be3d608-22ca-4cd6-8973-76cb7dce49d6">
+				<reportElement x="333" y="3" width="117" height="15" uuid="8be3d608-22ca-4cd6-8973-76cb7dce49d6">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Justified">
-					<font fontName="Arial" size="11" isBold="true" isPdfEmbedded="true"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="11" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[Animal No :]]></text>
+				<text><![CDATA[Animal No  - ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="450" y="18" width="105" height="15" uuid="51e65352-34a0-4120-89d6-ff0b2c062c76">
+				<reportElement x="455" y="18" width="105" height="15" uuid="51e65352-34a0-4120-89d6-ff0b2c062c76">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Justified">
-					<font fontName="Arial" size="11" isBold="false"/>
+					<font fontName="SansSerif" size="11" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{purchaseDate}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="360" y="18" width="90" height="15" uuid="da192ec5-61ed-4dd0-b264-b87b8dc7e7f0">
+				<reportElement x="333" y="18" width="117" height="15" uuid="da192ec5-61ed-4dd0-b264-b87b8dc7e7f0">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Justified">
-					<font fontName="Arial" size="11" isBold="true" isPdfEmbedded="true"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="11" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[Purchase Date :]]></text>
+				<text><![CDATA[Purchase Date  - ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="450" y="33" width="105" height="15" uuid="378ae630-2236-4721-b2a0-ace1fec1cad3">
+				<reportElement x="455" y="33" width="105" height="15" uuid="378ae630-2236-4721-b2a0-ace1fec1cad3">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Justified">
-					<font fontName="Arial" size="11" isBold="false"/>
+					<font fontName="SansSerif" size="11" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{purchasePrice}+""]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="360" y="33" width="90" height="15" uuid="dc4cbae0-12dc-4310-948e-02962ecd18fb">
+				<reportElement x="333" y="33" width="117" height="15" uuid="dc4cbae0-12dc-4310-948e-02962ecd18fb">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Justified">
-					<font fontName="Arial" size="11" isBold="true" isPdfEmbedded="true"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="11" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[Purchase Price :]]></text>
+				<text><![CDATA[Purchase Price  - ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="450" y="48" width="105" height="15" uuid="489f9608-984e-4e63-af6c-fcf4eda1da17">
+				<reportElement x="455" y="48" width="105" height="15" uuid="489f9608-984e-4e63-af6c-fcf4eda1da17">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Justified">
-					<font fontName="Arial" size="11" isBold="false"/>
+					<font fontName="SansSerif" size="11" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{owner}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="360" y="48" width="90" height="15" uuid="1c9b8b6f-3dda-46de-8f3f-964456ce0f68">
+				<reportElement x="333" y="48" width="117" height="15" uuid="1c9b8b6f-3dda-46de-8f3f-964456ce0f68">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Justified">
-					<font fontName="Arial" size="11" isBold="true" isPdfEmbedded="true"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="11" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[Owner :]]></text>
+				<text><![CDATA[Owner  - ]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -217,7 +231,7 @@
 			<property name="local_mesure_unitheight" value="pixel"/>
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<subreport>
-				<reportElement positionType="Float" x="0" y="45" width="555" height="10" uuid="75c08e7b-db61-4057-96b0-e3fac9245b3e">
+				<reportElement positionType="Float" x="5" y="45" width="550" height="10" uuid="75c08e7b-db61-4057-96b0-e3fac9245b3e">
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
@@ -228,7 +242,7 @@
 				<subreportExpression><![CDATA[$P{serviceSubReport}]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement positionType="Float" x="0" y="60" width="555" height="10" uuid="f3c71ad6-febe-4281-8068-4ee2c399e706">
+				<reportElement positionType="Float" x="5" y="60" width="550" height="10" uuid="f3c71ad6-febe-4281-8068-4ee2c399e706">
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
@@ -245,17 +259,16 @@
 				<subreportExpression><![CDATA[$P{milkWeightSubReport}]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement positionType="Float" mode="Opaque" x="0" y="20" width="90" height="20" backcolor="#FFFFFF" uuid="dd2c2c0f-08f9-40ab-8b58-67be9366b736"/>
+				<reportElement positionType="Float" mode="Opaque" x="5" y="20" width="90" height="20" backcolor="#FFFFFF" uuid="dd2c2c0f-08f9-40ab-8b58-67be9366b736"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="11" isBold="true" isPdfEmbedded="true"/>
-					<paragraph leftIndent="2" rightIndent="2"/>
+					<font fontName="SansSerif" size="11" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[Cowing Date :-]]></text>
+				<text><![CDATA[Cowing Date - ]]></text>
 			</staticText>
 			<textField>
 				<reportElement positionType="Float" mode="Opaque" x="77" y="20" width="105" height="20" backcolor="#FFFFFF" uuid="218e5ca9-5d53-4175-8c7e-9a709e2cd9fb"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" isPdfEmbedded="true"/>
+					<font fontName="SansSerif" isPdfEmbedded="true"/>
 					<paragraph leftIndent="2" rightIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMM-yyyy").format($F{CowingDate})]]></textFieldExpression>
@@ -263,15 +276,15 @@
 			<staticText>
 				<reportElement positionType="Float" mode="Opaque" x="192" y="20" width="90" height="20" backcolor="#FFFFFF" uuid="68454945-0a92-4130-bc20-7c2818089faf"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="11" isBold="true" isPdfEmbedded="true"/>
+					<font fontName="SansSerif" size="11" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					<paragraph leftIndent="2" rightIndent="2"/>
 				</textElement>
-				<text><![CDATA[Start Date :-]]></text>
+				<text><![CDATA[Start Date -]]></text>
 			</staticText>
 			<textField>
 				<reportElement positionType="Float" mode="Opaque" x="263" y="20" width="105" height="20" backcolor="#FFFFFF" uuid="eb12b59d-a51b-453a-be06-717b8f5af6d7"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" isPdfEmbedded="true"/>
+					<font fontName="SansSerif" isPdfEmbedded="true"/>
 					<paragraph leftIndent="2" rightIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMM-yyyy").format($F{ArrivalDate})]]></textFieldExpression>
@@ -279,21 +292,21 @@
 			<staticText>
 				<reportElement positionType="Float" mode="Opaque" x="371" y="20" width="90" height="20" backcolor="#FFFFFF" uuid="3d693a50-26e3-47c0-9a54-313a56ee36db"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="11" isBold="true" isPdfEmbedded="true"/>
+					<font fontName="SansSerif" size="11" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					<paragraph leftIndent="2" rightIndent="2"/>
 				</textElement>
-				<text><![CDATA[End Date :-]]></text>
+				<text><![CDATA[End Date -]]></text>
 			</staticText>
 			<textField>
-				<reportElement positionType="Float" mode="Opaque" x="445" y="20" width="105" height="20" backcolor="#FFFFFF" uuid="307e670a-495f-4b2e-9f54-5898d859b310"/>
+				<reportElement positionType="Float" mode="Opaque" x="445" y="20" width="110" height="20" backcolor="#FFFFFF" uuid="307e670a-495f-4b2e-9f54-5898d859b310"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" isPdfEmbedded="true"/>
+					<font fontName="SansSerif" isPdfEmbedded="true"/>
 					<paragraph leftIndent="2" rightIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DepartureDate} == null ? "Active Lactation" : new SimpleDateFormat("dd-MMM-yyyy").format($F{DepartureDate})]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement positionType="Float" x="0" y="80" width="555" height="1" uuid="355c37dd-5b39-432c-a095-15d7c0800b17">
+				<reportElement positionType="Float" x="0" y="80" width="560" height="1" uuid="355c37dd-5b39-432c-a095-15d7c0800b17">
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
@@ -302,16 +315,16 @@
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="555" height="20" backcolor="#FFFFFF" uuid="08fe21ec-1e45-48a6-aee7-8ab4b0743be9">
+				<reportElement positionType="Float" mode="Opaque" x="5" y="0" width="555" height="20" backcolor="#FFFFFF" uuid="08fe21ec-1e45-48a6-aee7-8ab4b0743be9">
 					<property name="local_mesure_unitx" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="11" isBold="true" isPdfEmbedded="true"/>
+					<font fontName="SansSerif" size="11" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Lactation No : "+$V{REPORT_COUNT}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Lactation No - "+$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -328,7 +341,7 @@
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="0" y="0" width="263" height="20" uuid="2ff4c735-95e9-4817-94f4-d0bc10489a59"/>
+				<reportElement x="5" y="0" width="263" height="20" uuid="2ff4c735-95e9-4817-94f4-d0bc10489a59"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA["Report generated on - "+new java.util.Date()]]></textFieldExpression>
 			</textField>

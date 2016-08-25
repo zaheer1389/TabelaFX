@@ -2,10 +2,11 @@ package org.tabelas.fxapps.model;
 
 public class AnimalPojo {
 	
-	String animalNo,arrivalDate,departureDate,serviceDate,expectedArrivalDate;
+	String branchName,animalNo,arrivalDate,departureDate,serviceDate,expectedArrivalDate;
 	
-	public AnimalPojo(String animalNo, String arrivalDate, String departureDate
+	public AnimalPojo(String branchName, String animalNo, String arrivalDate, String departureDate
 			,String serviceDate,String expectedArrivalDate){
+		this.branchName = branchName;
 		this.animalNo = animalNo;
 		this.arrivalDate = arrivalDate;
 		this.departureDate = departureDate;
@@ -51,6 +52,14 @@ public class AnimalPojo {
 
 	public void setExpectedArrivalDate(String expectedArrivalDate) {
 		this.expectedArrivalDate = expectedArrivalDate;
+	}
+
+	public String getBranchName() {
+		return branchName;
+	}
+
+	public void setBranchName(String branchName) {
+		this.branchName = branchName;
 	}
 	
 	

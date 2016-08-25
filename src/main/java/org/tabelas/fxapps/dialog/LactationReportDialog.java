@@ -27,6 +27,8 @@ import javafx.util.StringConverter;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
 
+import org.controlsfx.glyphfont.FontAwesome;
+import org.controlsfx.glyphfont.Glyph;
 import org.tabelas.fxapps.App;
 import org.tabelas.fxapps.control.AutoCompleteComboBoxListener;
 import org.tabelas.fxapps.controller.AnimalController;
@@ -121,7 +123,10 @@ public class LactationReportDialog extends VBox{
 		form.add(controlContiner, 1, 1);
 		
 		Button btnSave = new Button("Show Report");
+		btnSave.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.CHECK_CIRCLE).size(20));
+		
 		Button btnReset = new Button("Reset");
+		btnReset.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TIMES).size(20));
 		
 		controlContiner.getChildren().addAll(btnSave,btnReset);
 		
@@ -161,7 +166,7 @@ public class LactationReportDialog extends VBox{
 					map.put("purchasePrice", animal.getPurchasePrice().toString());
 					
 					InputStream is3 = getClass().getResourceAsStream("/reports/AnimalReport.jasper");
-					ReportManager.showReport(is3, map, "Animal Detailed Report");
+					ReportManager.showReport("/reports/AnimalReport.jrxml", map, "Animal Detailed Report");
 					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -175,7 +180,7 @@ public class LactationReportDialog extends VBox{
 			@Override
 			public void handle(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				
+				cbAnimal.setValue(null);
 			}
 		});
 	}

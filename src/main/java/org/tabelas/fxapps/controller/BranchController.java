@@ -79,8 +79,10 @@ public class BranchController implements View{
 		// TODO Auto-generated constructor stub
     	txtBranchNo.requestFocus();
     	
-    	btnSave.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.SAVE));
-    	btnCancel.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TIMES));
+    	btnSave.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.SAVE).size(17));
+    	btnCancel.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TIMES).size(17));
+    	//btnSearch.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.SEARCH).size(17));
+    	//btnClearSearch.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TIMES).size(17));
     	
     	setKeyboardHandle();
     	setTable(FacadeFactory.getFacade().list(Branch.class));

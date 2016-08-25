@@ -116,10 +116,10 @@ public class AnimalController implements View{
     	
     	txtPurchasedDate.setConverter(AppUtil.getDatePickerFormatter());
 
-    	btnSave.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.SAVE));
-    	btnCancel.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TIMES));
-    	btnSearch.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.SEARCH));
-    	btnClearSearch.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TIMES));
+    	btnSave.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.SAVE).size(17));
+    	btnCancel.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TIMES).size(17));
+    	btnSearch.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.SEARCH).size(17));
+    	btnClearSearch.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TIMES).size(17));
     	
     	setKeyboardHandle();
     	
