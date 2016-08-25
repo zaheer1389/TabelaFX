@@ -38,6 +38,7 @@ public class App extends Application {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Application.launch(args);
+		
 	}
 	
 	@Override
@@ -72,6 +73,7 @@ public class App extends Application {
 		primaryStage.getIcons().add(new Image(App.class.getResourceAsStream("/images/stageIcon.png")));
 		primaryStage.show();
 		primaryStage.setMaximized(true);
+		
 	}
 	
 	public Stage getStage(){

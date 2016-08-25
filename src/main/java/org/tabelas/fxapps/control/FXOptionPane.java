@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.scene.layout.Priority;
 
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.Glyph;
@@ -52,7 +53,7 @@ public class FXOptionPane {
 	    public Message( String msg ) {
 	        super( msg );
 	        setWrapText(true);
-	        setPadding(new Insets(10, 0, 0, 0));
+	        setPadding(new Insets(00, 0, 0, 0));
 	        setId("textArea");
 	        setEditable(false);	        
 	    }
@@ -115,9 +116,13 @@ public class FXOptionPane {
 	    buttons.setPrefHeight(35);
 	    
 	    HBox msg = new HBox();
+	    msg.setMaxHeight(Double.MAX_VALUE);
 	    msg.setSpacing( 5 );
+	    msg.setHgrow(message, Priority.ALWAYS);
 	    msg.getChildren().addAll( icon, message );
+	    
 	    vb.getChildren().addAll( msg, buttons );
+	    vb.setVgrow(msg, Priority.ALWAYS);
 	    
 	    EventHandler<KeyEvent> handler = new EventHandler<KeyEvent>() {
 			
@@ -176,9 +181,13 @@ public class FXOptionPane {
 	    buttons.setPrefHeight(35);
 	    
 	    HBox msg = new HBox();
+	    msg.setMaxHeight(Double.MAX_VALUE);
 	    msg.setSpacing( 5 );
+	    msg.setHgrow(message, Priority.ALWAYS);
 	    msg.getChildren().addAll( icon, message );
+	    
 	    vb.getChildren().addAll( msg, buttons );
+	    vb.setVgrow(msg, Priority.ALWAYS);
 	    
 	    EventHandler<KeyEvent> handler = new EventHandler<KeyEvent>() {
 			
