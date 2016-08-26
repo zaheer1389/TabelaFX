@@ -50,7 +50,7 @@ public class App extends Application {
 			@Override
 			public void handle(WindowEvent arg0) {
 				// TODO Auto-generated method stub
-				Response response = DialogFactory.showConfirmationDialog("Do you really want to exit TABELAS?",DialogType.YESNOCANCEL, null);
+				Response response = DialogFactory.showConfirmationDialog("Do you really want to exit TABELAS?",DialogType.YESNOCANCEL);
 				if(response == Response.YES){
 					System.exit(0);
 				}else{
@@ -91,7 +91,7 @@ public class App extends Application {
 	public void connectDatabase(){
 		EntityManager em = JPAFacade.getEntityManager();		
 		if(em == null){
-			DialogFactory.showErrorDialog("Database connection failed!!!!!!!!!!!!!!", App.appcontroller.getStage());
+			DialogFactory.showErrorDialog("Database connection failed!!!!!!!!!!!!!!");
 		}
 	}
 
@@ -132,7 +132,7 @@ public class App extends Application {
 			return connection;
 		}
 		catch(Exception e){			
-			DialogFactory.showExceptionDialog(e, App.appcontroller.getStage());
+			DialogFactory.showExceptionDialog(e);
 			return null;
 		}
 	}

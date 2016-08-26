@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -261,12 +262,12 @@ public class ServiceController implements View{
 					@Override
 					public void handle(ActionEvent arg0) {
 						// TODO Auto-generated method stub
-						Response response = DialogFactory.showConfirmationDialog("Do you want to delete this record?", DialogType.YESNOCANCEL, null);
+						Response response = DialogFactory.showConfirmationDialog("Do you want to delete this record?", DialogType.YESNOCANCEL);
 						if(response == Response.YES){
 							int selectdIndex = deleteButton.getRowIndex();
 							AnimalService service = tableView.getItems().get(selectdIndex);
 							FacadeFactory.getFacade().delete(service);
-							DialogFactory.showInformationDialog("Animal Service details deleted succssfully", App.appcontroller.stage);
+							DialogFactory.showInformationDialog("Animal Service details deleted succssfully");
 					    	setPagePanel(getAnimalServicesByBranch());
 					    	reset();
 						}
@@ -306,7 +307,11 @@ public class ServiceController implements View{
 		int totalPages = (int) Math.ceil((double)data.size() / (double)PAGE_SIZE);
 		int pageFrom = 1;
 		int pageTo = totalPages > 10 ? 10 : totalPages;   
-		navigationBox.getChildren().add(getPagination(pageFrom, pageTo, totalPages));
+		
+		HBox pagination = getPagination(pageFrom, pageTo, totalPages);
+		pagination.getChildren().get(1).getStyleClass().add("navigation-current-page");
+	
+		navigationBox.getChildren().add(pagination);
 		
 		int showFrom = currentPageIndex*PAGE_SIZE;
 		int showTo = (showFrom + PAGE_SIZE) <= data.size() ? (showFrom + PAGE_SIZE) : data.size();
@@ -316,6 +321,7 @@ public class ServiceController implements View{
 	
 	public HBox getPagination(final int from, final int to, final int totalPages){
 		HBox pagecontainer = new HBox();
+		pagecontainer.getStyleClass().add("page-nav");
 		pagecontainer.setAlignment(Pos.CENTER_RIGHT);
 		
 		Hyperlink prev = new Hyperlink("<<");
@@ -330,6 +336,10 @@ public class ServiceController implements View{
 				@Override
 				public void handle(ActionEvent arg0) {
 					// TODO Auto-generated method stub
+					for(Node node : pagecontainer.getChildren()){
+						node.getStyleClass().remove("navigation-current-page");
+					}
+					link.getStyleClass().add("navigation-current-page");
 					currentPageIndex = Integer.parseInt(((Hyperlink)(arg0.getSource())).getId()) - 1;
 					List<AnimalService> data = getAnimalServicesByBranch();
 					int showFrom = currentPageIndex*PAGE_SIZE;
@@ -352,7 +362,11 @@ public class ServiceController implements View{
 				navigationBox.getChildren().remove(0);
 				int showFrom = from-10 <= 1 ? 1 : from-10;
 				int showTo = showFrom+9 > totalPages ? totalPages : showFrom+9;
-				navigationBox.getChildren().add(getPagination(showFrom, showTo, totalPages));
+				
+				HBox pagination = getPagination(pageFrom, pageTo, totalPages);
+				
+				navigationBox.getChildren().add(pagination);
+				
 			}
 		});
 		
@@ -364,7 +378,11 @@ public class ServiceController implements View{
 				navigationBox.getChildren().remove(0);
 				int showFrom = to+1;
 				int showTo = showFrom+9 > totalPages ? totalPages  : showFrom+9;
-				navigationBox.getChildren().add(getPagination(showFrom, showTo, totalPages));
+				
+				HBox pagination = getPagination(pageFrom, pageTo, totalPages);
+				
+				navigationBox.getChildren().add(pagination);
+				
 			}
 		});
 		
@@ -382,10 +400,10 @@ public class ServiceController implements View{
 		// TODO Auto-generated method stub
 		if(isValidForm()){
 			if(LactationController.getCurrentLactation(cbAnimal.getValue().getAnimalNo()) == null){
-    			DialogFactory.showErrorDialog("Animal is not present in tabela,You are not allowed to add service record.", null);
+    			DialogFactory.showErrorDialog("Animal is not present in tabela,You are not allowed to add service record.");
     			return;
     		}
-    		Response response = DialogFactory.showConfirmationDialog("Do you want to save details?", DialogType.YESNOCANCEL, null);
+    		Response response = DialogFactory.showConfirmationDialog("Do you want to save details?", DialogType.YESNOCANCEL);
     		if(response == Response.YES){
     			AnimalService service;
     			if(id == null){
@@ -407,7 +425,7 @@ public class ServiceController implements View{
     				service.setResult(AnimalServiceResult.EMPTY.toString());
     			}
     			FacadeFactory.getFacade().store(service);
-    			DialogFactory.showInformationDialog("Details saved successfully.", null);
+    			DialogFactory.showInformationDialog("Details saved successfully.");
     			
     			List<AnimalService> data = getAnimalServicesByBranch();
     	    	setPagePanel(data);
@@ -442,12 +460,12 @@ public class ServiceController implements View{
 	public void search() {
 		// TODO Auto-generated method stub
 		if(txtSearchAnimalNo.getText().length() == 0){
-    		DialogFactory.showErrorDialog("Please enter Animal No to be search", null);
+    		DialogFactory.showErrorDialog("Please enter Animal No to be search");
     		return;
     	}
     	List<AnimalService> data = getAnimalServicesByBranch(txtSearchAnimalNo.getText());
     	if(data.size() == 0){
-    		DialogFactory.showInformationDialog("No record found,Please try with different no", null);
+    		DialogFactory.showInformationDialog("No record found,Please try with different no");
     	}
 
 		currentPageIndex = 0;
@@ -466,12 +484,12 @@ public class ServiceController implements View{
 	public boolean isValidForm() {
 		// TODO Auto-generated method stub
 		if(cbAnimal.getValue() == null){
-    		DialogFactory.showErrorDialog("Please select animal", null);
+    		DialogFactory.showErrorDialog("Please select animal");
     		cbAnimal.requestFocus();
     		return false;
     	}
     	else if(txtServiceDate.getValue() == null){
-    		DialogFactory.showErrorDialog("Please select animal service date", null);
+    		DialogFactory.showErrorDialog("Please select animal service date");
     		txtServiceDate.requestFocus();
     		return false;
     	}

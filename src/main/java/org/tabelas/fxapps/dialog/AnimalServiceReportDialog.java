@@ -122,11 +122,11 @@ public class AnimalServiceReportDialog extends VBox{
 			public void handle(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				if(txtFromDate.getValue() == null){
-		    		DialogFactory.showErrorDialog("Please select from date", App.appcontroller.getStage());
+		    		DialogFactory.showErrorDialog("Please select from date");
 		    		return;
 		    	}
 				else if(txtToDate.getValue() == null){
-		    		DialogFactory.showErrorDialog("Please select to date", App.appcontroller.getStage());
+		    		DialogFactory.showErrorDialog("Please select to date");
 		    		return;
 		    	}
 				try {										
@@ -177,7 +177,7 @@ public class AnimalServiceReportDialog extends VBox{
 					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
-					DialogFactory.showExceptionDialog(e, App.appcontroller.getStage());
+					DialogFactory.showExceptionDialog(e);
 				}
 			}
 		});

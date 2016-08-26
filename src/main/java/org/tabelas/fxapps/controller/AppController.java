@@ -173,9 +173,10 @@ public class AppController implements EventHandler<ActionEvent>{
 		// TODO Auto-generated method stub
 		
 		if(event.getSource() == menuItemFile_Exit){
-			Response response = DialogFactory.showConfirmationDialog("Do you really want to exit TABELAS?",DialogType.YESNOCANCEL, null);
+			Response response = DialogFactory.showConfirmationDialog("Do you really want to exit TABELAS?",DialogType.YESNOCANCEL);
 			if(response == Response.YES){
 				System.exit(0);
+				return;
 			}	
 		}
 		else if(event.getSource() == menuItemFile_ManageBranch){
@@ -186,7 +187,7 @@ public class AppController implements EventHandler<ActionEvent>{
 		
 		//Branch Specific actions, So checking branch selection before calling action
 		if(cbBranch.getValue() == null){
-			DialogFactory.showErrorDialog("No branch has been selected.Please select branch to add/edit records", null);
+			DialogFactory.showErrorDialog("No branch has been selected.Please select branch to add/edit records");
 			return;
 		}
 		else if(event.getSource() == menuItemAnimal_ManageAnimal){

@@ -33,11 +33,11 @@ public class FXOptionPane {
 	private static ImageView icon = new ImageView();
 
 	static class Dialog extends Stage {
-	    public Dialog( String title, Stage owner, Scene scene, String iconFile ) {
+	    public Dialog( String title, Scene scene, String iconFile ) {
 	        setTitle( title );
 	        initStyle( StageStyle.UTILITY );
 	        initModality( Modality.APPLICATION_MODAL );
-	        initOwner( owner );
+	        initOwner( App.appcontroller.getStage() );
 	        setResizable( false );
 	        setScene( scene );
 	        icon.setImage( new Image( getClass().getResourceAsStream( iconFile ) ) );
@@ -59,23 +59,23 @@ public class FXOptionPane {
 	    }
 	}
 	
-	public static void showInformationDialog( Stage owner, String message, String title ) {
-	    showMessageDialog( owner, new Message( message ), title, DialogType.INFORMATION);
+	public static void showInformationDialog( String message, String title ) {
+	    showMessageDialog( new Message( message ), title, DialogType.INFORMATION);
 	}
 	
-	public static void showErrorDialog( Stage owner, String message, String title ) {
-	    showMessageDialog( owner, new Message( message ), title, DialogType.ERROR);
+	public static void showErrorDialog( String message, String title ) {
+	    showMessageDialog( new Message( message ), title, DialogType.ERROR);
 	}
 	
-	public static void showWarningDialog( Stage owner, String message, String title ) {
-	    showMessageDialog( owner, new Message( message ), title, DialogType.WARNING);
+	public static void showWarningDialog( String message, String title ) {
+	    showMessageDialog( new Message( message ), title, DialogType.WARNING);
 	}
 	
-	public static void showExceptionDialog( Stage owner, Throwable e, String title ) {
-		showExceptionDialog( owner, new Message( App.getException(e) ), title, DialogType.ERROR);
+	public static void showExceptionDialog( Throwable e, String title ) {
+		showExceptionDialog( new Message( App.getException(e) ), title, DialogType.ERROR);
 	}
 	
-	private static void showMessageDialog( Stage owner, Node message, String title, DialogType type ) {
+	private static void showMessageDialog( Node message, String title, DialogType type ) {
 	    VBox vb = new VBox();
 	    vb.setPadding( new Insets(10,10,10,10) );
 	    vb.setSpacing( 10 );
@@ -95,7 +95,7 @@ public class FXOptionPane {
 	    	image = "/images/dialog-warning.png";
 	    }
 	    
-	    final Dialog dial = new Dialog( title, owner, scene,  image);
+	    final Dialog dial = new Dialog( title, scene, image);
 	    
 	    Button okButton = new Button( "OK" );
 	    okButton.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.CHECK_CIRCLE).size(18));
@@ -140,7 +140,7 @@ public class FXOptionPane {
 	    dial.showDialog();
 	}
 	
-	private static void showExceptionDialog( Stage owner, Node message, String title, DialogType type ) {
+	private static void showExceptionDialog( Node message, String title, DialogType type ) {
 	    VBox vb = new VBox();
 	    vb.setPadding( new Insets(10,10,10,10) );
 	    vb.setSpacing( 10 );
@@ -160,7 +160,7 @@ public class FXOptionPane {
 	    	image = "/images/dialog-warning.png";
 	    }
 	    
-	    final Dialog dial = new Dialog( title, owner, scene,  image);
+	    final Dialog dial = new Dialog( title, scene, image);
 	    
 	    Button okButton = new Button( "OK" );
 	    okButton.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.CHECK_CIRCLE).size(18));
@@ -208,7 +208,7 @@ public class FXOptionPane {
 	    
 	}
 	
-	public static Response showConfirmDialog( Stage owner, String message, String title ) {
+	public static Response showConfirmDialog( String message, String title ) {
 	    VBox vb = new VBox();
 	    vb.getStylesheets().add("/theme/theme.css");
 	    vb.setPadding( new Insets(10,10,10,10) );
@@ -217,7 +217,7 @@ public class FXOptionPane {
 	    
 	    Scene scene = new Scene( vb , 400, 130);
 	    
-	    final Dialog dial = new Dialog( title, owner, scene, "/images/dialog-information.png" );
+	    final Dialog dial = new Dialog( title, scene, "/images/dialog-information.png" );
 	    
 	    Button yesButton = new Button( "Yes" );
 	    yesButton.setMinHeight(30);
@@ -256,10 +256,17 @@ public class FXOptionPane {
 	    buttons.setPadding(new Insets(0,20,0,0));
 	    buttons.setPrefHeight(55);
 	    
+	    TextArea msgg = new TextArea(message);
+	    
 	    HBox msg = new HBox();
+	    msg.setMaxHeight(Double.MAX_VALUE);
 	    msg.setSpacing( 5 );
-	    msg.getChildren().addAll( icon, new Message( message ) );
+	    msg.setHgrow(msgg, Priority.ALWAYS);
+	    msg.getChildren().addAll( icon,  msgg);
+	    
 	    vb.getChildren().addAll( msg, buttons );
+	    vb.setVgrow(msg, Priority.ALWAYS);
+	    
 	    
 	    EventHandler<KeyEvent> handler = new EventHandler<KeyEvent>() {
 			

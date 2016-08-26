@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -273,12 +274,12 @@ public class LactationController implements View{
 					@Override
 					public void handle(ActionEvent arg0) {
 						// TODO Auto-generated method stub
-						Response response = DialogFactory.showConfirmationDialog("Do you want to delete this record?", DialogType.YESNOCANCEL, null);
+						Response response = DialogFactory.showConfirmationDialog("Do you want to delete this record?", DialogType.YESNOCANCEL);
 						if(response == Response.YES){
 							int selectdIndex = deleteButton.getRowIndex();
 							Lactation animal = tableView.getItems().get(selectdIndex);
 							FacadeFactory.getFacade().delete(animal);
-							DialogFactory.showInformationDialog("Lactation details deleted succssfully", App.appcontroller.stage);
+							DialogFactory.showInformationDialog("Lactation details deleted succssfully");
 					    	setPagePanel(getLactationsByBranch());
 					    	reset();
 						}
@@ -342,7 +343,11 @@ public class LactationController implements View{
 		int totalPages = (int) Math.ceil((double)data.size() / (double)PAGE_SIZE);
 		int pageFrom = 1;
 		int pageTo = totalPages > 10 ? 10 : totalPages;   
-		navigationBox.getChildren().add(getPagination(pageFrom, pageTo, totalPages));
+
+		HBox pagination = getPagination(pageFrom, pageTo, totalPages);
+		pagination.getChildren().get(1).getStyleClass().add("navigation-current-page");
+		
+		navigationBox.getChildren().add(pagination);
 		
 		int showFrom = currentPageIndex*PAGE_SIZE;
 		int showTo = (showFrom + PAGE_SIZE) <= data.size() ? (showFrom + PAGE_SIZE) : data.size();
@@ -352,6 +357,7 @@ public class LactationController implements View{
 	
 	public HBox getPagination(final int from, final int to, final int totalPages){
 		HBox pagecontainer = new HBox();
+		pagecontainer.getStyleClass().add("page-nav");
 		pagecontainer.setAlignment(Pos.CENTER_RIGHT);
 		
 		Hyperlink prev = new Hyperlink("<<");
@@ -366,6 +372,11 @@ public class LactationController implements View{
 				@Override
 				public void handle(ActionEvent arg0) {
 					// TODO Auto-generated method stub
+					for(Node node : pagecontainer.getChildren()){
+						node.getStyleClass().remove("navigation-current-page");
+					}
+					link.getStyleClass().add("navigation-current-page");
+					
 					currentPageIndex = Integer.parseInt(((Hyperlink)(arg0.getSource())).getId()) - 1;
 					List<Lactation> data = getLactationsByBranch();
 					int showFrom = currentPageIndex*PAGE_SIZE;
@@ -388,7 +399,11 @@ public class LactationController implements View{
 				navigationBox.getChildren().remove(0);
 				int showFrom = from-10 <= 1 ? 1 : from-10;
 				int showTo = showFrom+9 > totalPages ? totalPages : showFrom+9;
-				navigationBox.getChildren().add(getPagination(showFrom, showTo, totalPages));
+				
+				HBox pagination = getPagination(pageFrom, pageTo, totalPages);
+				
+				navigationBox.getChildren().add(pagination);
+				
 			}
 		});
 		
@@ -400,7 +415,11 @@ public class LactationController implements View{
 				navigationBox.getChildren().remove(0);
 				int showFrom = to+1;
 				int showTo = showFrom+9 > totalPages ? totalPages  : showFrom+9;
-				navigationBox.getChildren().add(getPagination(showFrom, showTo, totalPages));
+				
+				HBox pagination = getPagination(pageFrom, pageTo, totalPages);
+				
+				navigationBox.getChildren().add(pagination);
+				
 			}
 		});
 		
@@ -417,13 +436,13 @@ public class LactationController implements View{
 	public void save() {
 		// TODO Auto-generated method stub
 		if(isValidForm()){
-			Response response = DialogFactory.showConfirmationDialog("Do you really want to save details?", DialogType.YESNOCANCEL, App.appcontroller.getStage());
+			Response response = DialogFactory.showConfirmationDialog("Do you really want to save details?", DialogType.YESNOCANCEL);
     		if(response == Response.YES){
     			completeLactation = chCompleteLactation.isSelected();
     			if(lactation == null){
     				//Trying to add new lactation , while there is an open lactation
     				if(getCurrentLactation(cbAnimal.getValue().getAnimalNo()) != null){
-    					DialogFactory.showErrorDialog("Animal is present in tabela,you are not allowed to start new lactation.Please mark complete , old lactation first.", null);
+    					DialogFactory.showErrorDialog("Animal is present in tabela,you are not allowed to start new lactation.Please mark complete , old lactation first.");
     					return;
     				}
     				lactation = new Lactation();
@@ -438,7 +457,7 @@ public class LactationController implements View{
     				lactation.setDepartureVehicleNo("");
     				lactation.setCurrentLactation(true);
     				FacadeFactory.getFacade().store(lactation);
-    				DialogFactory.showInformationDialog("Lactation details save successfully", null);
+    				DialogFactory.showInformationDialog("Lactation details save successfully");
     			}
     			else{
     				//Mark existing lactation as complete(update lactation)
@@ -446,7 +465,7 @@ public class LactationController implements View{
     				lactation.setDepartureVehicleNo(txtDepartureVehicleNo.getText().toUpperCase());
     				lactation.setCurrentLactation(false);
     				FacadeFactory.getFacade().store(lactation);
-    				DialogFactory.showInformationDialog("Lactation mark completed successfully", null);
+    				DialogFactory.showInformationDialog("Lactation mark completed successfully");
     			}
     			
     			List<Lactation> data = getLactationsByBranch();
@@ -491,7 +510,7 @@ public class LactationController implements View{
 	public void search() {
 		// TODO Auto-generated method stub
 		if(txtSearchAnimalNo.getText().length() == 0){
-    		DialogFactory.showErrorDialog("Please enter animal no to search records", null);
+    		DialogFactory.showErrorDialog("Please enter animal no to search records");
     		txtSearchAnimalNo.requestFocus();
     		return;
     	}
@@ -513,23 +532,23 @@ public class LactationController implements View{
 	public boolean isValidForm() {
 		// TODO Auto-generated method stub
 		if(cbAnimal.getValue() == null){
-    		DialogFactory.showErrorDialog("Please Select Animal", null);
+    		DialogFactory.showErrorDialog("Please Select Animal");
     		cbAnimal.requestFocus();
     		return false;
     	}
     	if(txtArrivalDate.getValue() == null){
-    		DialogFactory.showErrorDialog("Please Select Animal Arrival Date", null);
+    		DialogFactory.showErrorDialog("Please Select Animal Arrival Date");
     		txtArrivalDate.requestFocus();
     		return false;
     	}
     	if(txtCowingDate.getValue() == null){
-    		DialogFactory.showErrorDialog("Please Select Animal Cowing Date", null);
+    		DialogFactory.showErrorDialog("Please Select Animal Cowing Date");
     		txtCowingDate.requestFocus();
     		return false;
     	}
     	if(completeLactation){
     		if(txtDepartureDate.getValue() == null){
-    			DialogFactory.showErrorDialog("Please Select Animal Departure Date", null);
+    			DialogFactory.showErrorDialog("Please Select Animal Departure Date");
     			txtDepartureDate.requestFocus();
         		return false;
     		}

@@ -1,5 +1,7 @@
 package org.tabelas.fxapps.control;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -29,6 +31,21 @@ public class AutoCompleteComboBoxListener<T> implements EventHandler<KeyEvent> {
             }
         });
         this.comboBox.setOnKeyReleased(AutoCompleteComboBoxListener.this);
+        
+        this.comboBox.focusedProperty().addListener(new ChangeListener<Boolean>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Boolean> arg0,
+					Boolean oldPropertyValue, Boolean newPropertyValue) {
+				// TODO Auto-generated method stub
+				if(!newPropertyValue){
+					if(comboBox.getValue() == null){
+						comboBox.getEditor().setText("");
+					}
+				}
+			}
+        	
+		});
     }
 
     @Override

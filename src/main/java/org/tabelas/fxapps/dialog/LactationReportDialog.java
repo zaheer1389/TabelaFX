@@ -144,7 +144,7 @@ public class LactationReportDialog extends VBox{
 			public void handle(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				if(cbAnimal.getValue() == null){
-		    		DialogFactory.showErrorDialog("Please select animal", App.appcontroller.getStage());
+		    		DialogFactory.showErrorDialog("Please select animal");
 		    		return;
 		    	}
 				try {
@@ -170,7 +170,7 @@ public class LactationReportDialog extends VBox{
 					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
-					DialogFactory.showExceptionDialog(e, App.appcontroller.getStage());
+					DialogFactory.showExceptionDialog(e);
 				}
 			}
 		});

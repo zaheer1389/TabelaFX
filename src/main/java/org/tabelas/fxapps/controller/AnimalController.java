@@ -30,6 +30,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
+import javafx.scene.Node;
 
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.Glyph;
@@ -202,12 +203,16 @@ public class AnimalController implements View{
 					@Override
 					public void handle(ActionEvent arg0) {
 						// TODO Auto-generated method stub
-						Response response = DialogFactory.showConfirmationDialog("Do you want to delete this record?", DialogType.YESNOCANCEL, null);
-						if(response == Response.YES){
-							int selectdIndex = deleteButton.getRowIndex();
-							Animal animal = tableView.getItems().get(selectdIndex);
+						int selectdIndex = deleteButton.getRowIndex();
+						Animal animal = tableView.getItems().get(selectdIndex);
+						if(LactationController.getLactationsByBranchAnimal(animal.getAnimalNo()).size() > 0){
+							DialogFactory.showErrorDialog("Animal can not be delete from tabelas as it has previous records.");
+							return;
+						}
+						Response response = DialogFactory.showConfirmationDialog("Do you want to delete this record?", DialogType.YESNOCANCEL);
+						if(response == Response.YES){							
 							FacadeFactory.getFacade().delete(animal);
-							DialogFactory.showInformationDialog("Animal details deleted succssfully", App.appcontroller.stage);
+							DialogFactory.showInformationDialog("Animal details deleted succssfully");
 					    	setPagePanel(getAnimalsByBranch());
 					    	reset();
 						}
@@ -229,7 +234,11 @@ public class AnimalController implements View{
 		int totalPages = (int) Math.ceil((double)data.size() / (double)PAGE_SIZE);
 		int pageFrom = 1;
 		int pageTo = totalPages > 10 ? 10 : totalPages;   
-		navigationBox.getChildren().add(getPagination(pageFrom, pageTo, totalPages));
+
+		HBox pagination = getPagination(pageFrom, pageTo, totalPages);
+		pagination.getChildren().get(1).getStyleClass().add("navigation-current-page");
+		
+		navigationBox.getChildren().add(pagination);
 		
 		int showFrom = currentPageIndex*PAGE_SIZE;
 		int showTo = (showFrom + PAGE_SIZE) <= data.size() ? (showFrom + PAGE_SIZE) : data.size();
@@ -239,6 +248,7 @@ public class AnimalController implements View{
 	
 	public HBox getPagination(final int from, final int to, final int totalPages){
 		HBox pagecontainer = new HBox();
+		pagecontainer.getStyleClass().add("page-nav");
 		pagecontainer.setAlignment(Pos.CENTER_RIGHT);
 		
 		Hyperlink prev = new Hyperlink("<<");
@@ -253,6 +263,10 @@ public class AnimalController implements View{
 				@Override
 				public void handle(ActionEvent arg0) {
 					// TODO Auto-generated method stub
+					for(Node node : pagecontainer.getChildren()){
+						node.getStyleClass().remove("navigation-current-page");
+					}
+					link.getStyleClass().add("navigation-current-page");
 					currentPageIndex = Integer.parseInt(((Hyperlink)(arg0.getSource())).getId()) - 1;
 					List<Animal> data = getAnimalsByBranch();
 					int showFrom = currentPageIndex*PAGE_SIZE;
@@ -275,7 +289,11 @@ public class AnimalController implements View{
 				navigationBox.getChildren().remove(0);
 				int showFrom = from-10 <= 1 ? 1 : from-10;
 				int showTo = showFrom+9 > totalPages ? totalPages : showFrom+9;
-				navigationBox.getChildren().add(getPagination(showFrom, showTo, totalPages));
+				
+				HBox pagination = getPagination(pageFrom, pageTo, totalPages);
+				
+				navigationBox.getChildren().add(pagination);
+				
 			}
 		});
 		
@@ -287,7 +305,11 @@ public class AnimalController implements View{
 				navigationBox.getChildren().remove(0);
 				int showFrom = to+1;
 				int showTo = showFrom+9 > totalPages ? totalPages  : showFrom+9;
-				navigationBox.getChildren().add(getPagination(showFrom, showTo, totalPages));
+				
+				HBox pagination = getPagination(pageFrom, pageTo, totalPages);
+				
+				navigationBox.getChildren().add(pagination);
+				
 			}
 		});
 		
@@ -305,10 +327,10 @@ public class AnimalController implements View{
 		// TODO Auto-generated method stub
 		if(isValidForm()){
 			if(id == null && getAnimalByNumber(txtAnimalNo.getText()) != null){
-				DialogFactory.showErrorDialog("Animal with same number already present,Please choose some other number.", null);
+				DialogFactory.showErrorDialog("Animal with same number already present,Please choose some other number.");
 				return;
 			}
-			Response response = DialogFactory.showConfirmationDialog("Do you want to save animal details?", DialogType.YESNOCANCEL, null);
+			Response response = DialogFactory.showConfirmationDialog("Do you want to save animal details?", DialogType.YESNOCANCEL);
 			if(response == Response.YES){
 				Animal animal = null;							
 				if(id == null){
@@ -328,7 +350,7 @@ public class AnimalController implements View{
 				List<Animal> data = getAnimalsByBranch();
 		    	setPagePanel(data);
 		    	
-				DialogFactory.showInformationDialog("Animal details saved successfully", null);
+				DialogFactory.showInformationDialog("Animal details saved successfully");
 				reset();
 			}
 		}
@@ -353,7 +375,7 @@ public class AnimalController implements View{
 	public void search() {
 		// TODO Auto-generated method stub
 		if(txtSearchAnimalNo.getText().length() == 0){
-    		DialogFactory.showErrorDialog("Please enter animal no to search records", null);
+    		DialogFactory.showErrorDialog("Please enter animal no to search records");
     		txtSearchAnimalNo.requestFocus();
     		return;
     	}
@@ -375,27 +397,27 @@ public class AnimalController implements View{
 	public boolean isValidForm() {
 		// TODO Auto-generated method stub
 		if(txtAnimalNo.getText().length() == 0){
-    		DialogFactory.showErrorDialog("Please enter Animal No", null);
+    		DialogFactory.showErrorDialog("Please enter Animal No");
     		txtAnimalNo.requestFocus();
     		return false;
     	}
 		if(txtOwnerName.getText().length() == 0){
-    		DialogFactory.showErrorDialog("Please enter Merchant name", null);
+    		DialogFactory.showErrorDialog("Please enter Merchant name");
     		txtOwnerName.requestFocus();
     		return false;
     	}
     	if(txtPurchasePrice.getText().length() == 0){
-    		DialogFactory.showErrorDialog("Please enter Animal Purchase Price", null);
+    		DialogFactory.showErrorDialog("Please enter Animal Purchase Price");
     		txtPurchasePrice.requestFocus();
     		return false;
     	}
     	if(!AppUtil.isNumeric(txtPurchasePrice.getText())){
-    		DialogFactory.showErrorDialog("Please enter only number in Purchase Price", null);
+    		DialogFactory.showErrorDialog("Please enter only number in Purchase Price");
     		txtPurchasePrice.requestFocus();
     		return false;
     	}
     	if(txtPurchasedDate.getValue() == null){
-    		DialogFactory.showErrorDialog("Please select Animal Purchase Date", null);
+    		DialogFactory.showErrorDialog("Please select Animal Purchase Date");
     		txtPurchasedDate.requestFocus();
     		return false;
     	}

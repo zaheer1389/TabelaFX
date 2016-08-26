@@ -41,7 +41,7 @@
 
 .date-picker-popup > * > .spinner > .button{
 	-fx-max-width: 30px !important;
-	-fx-color: orangered !important;
+	-fx-color: #197de1 !important;
 }
 
 .text-field{
@@ -158,4 +158,19 @@
 	-fx-text-fill: #FFFFFF;
 } */
 
+.page-nav .hyperlink{
+	-fx-font-size: 13px;
+	-fx-font-weight: bold;
+	-fx-font-family: 'Material Icons';
+	-fx-background-color: #add8e6 ;	
+    -fx-border-width: 2px 2px 2px 2px;
+    -fx-border-color: #FFF;
+}
 
+.hyperlink:visited {
+    -fx-text-fill: #0083C9;
+}
+
+.navigation-current-page{
+	-fx-text-fill: #e08a1a !important;
+}

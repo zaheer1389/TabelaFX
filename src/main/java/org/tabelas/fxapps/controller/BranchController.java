@@ -164,12 +164,12 @@ public class BranchController implements View{
 					@Override
 					public void handle(ActionEvent arg0) {
 						// TODO Auto-generated method stub
-						Response response = DialogFactory.showConfirmationDialog("Do you want to delete record?", DialogType.YESNOCANCEL, null);
+						Response response = DialogFactory.showConfirmationDialog("Do you want to delete record?", DialogType.YESNOCANCEL);
 						if(response == Response.YES){
 							int selectdIndex = deleteButton.getRowIndex();
 							Branch branch = tableView.getItems().get(selectdIndex);
 							FacadeFactory.getFacade().delete(branch);
-							DialogFactory.showInformationDialog("Branch details deleted succssfully", App.appcontroller.stage);
+							DialogFactory.showInformationDialog("Branch details deleted succssfully");
 					    	setTable(FacadeFactory.getFacade().list(Branch.class));
 					    	App.appcontroller.updateBranchList();
 					    	reset();
@@ -190,19 +190,19 @@ public class BranchController implements View{
 	public void save() {
 		// TODO Auto-generated method stub
 		if(txtBranchNo.getText().length() == 0){
-    		DialogFactory.showErrorDialog("Please enter branch number", null);
+    		DialogFactory.showErrorDialog("Please enter branch number");
     		return;
     	}
     	else if(!AppUtil.isNumeric(txtBranchNo.getText())){
-    		DialogFactory.showErrorDialog("Branch number should not contains characters", null);
+    		DialogFactory.showErrorDialog("Branch number should not contains characters");
     		return;
     	}
     	else if(txtBranchName.getText().length() == 0){
-    		DialogFactory.showErrorDialog("Please enter branch name", null);
+    		DialogFactory.showErrorDialog("Please enter branch name");
     		return;
     	}
     	
-    	Response response = DialogFactory.showConfirmationDialog("Do you want to save Branch?",DialogType.YESNOCANCEL,null);
+    	Response response = DialogFactory.showConfirmationDialog("Do you want to save Branch?",DialogType.YESNOCANCEL);
     	
     	if(response == Response.YES){
 	    	Long id = Long.parseLong(txtBranchNo.getText());
@@ -214,7 +214,7 @@ public class BranchController implements View{
 	    	}
 	    	branch.setBranchName(txtBranchName.getText().toUpperCase());
 	    	FacadeFactory.getFacade().store(branch);
-	    	DialogFactory.showInformationDialog("Branch details saved succssfully", App.appcontroller.stage);
+	    	DialogFactory.showInformationDialog("Branch details saved succssfully");
 	    	setTable(FacadeFactory.getFacade().list(Branch.class));
 	    	App.appcontroller.updateBranchList();
 	    	reset();

@@ -27,7 +27,7 @@ public class ReportManager {
 	
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			DialogFactory.showExceptionDialog(e, null);
+			DialogFactory.showExceptionDialog(e);
 		}
 	}
 	
@@ -43,7 +43,7 @@ public class ReportManager {
 			viewer.toFront();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			DialogFactory.showExceptionDialog(e, null);
+			DialogFactory.showExceptionDialog(e);
 		}
 	}
 
