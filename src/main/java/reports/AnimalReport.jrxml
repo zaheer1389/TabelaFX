@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version last-->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AnimalReport" pageWidth="600" pageHeight="842" columnWidth="560" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6a155131-9f79-4c10-851a-925e294a670d">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -129,7 +130,7 @@
 			<staticText>
 				<reportElement style="Arial_Bold_14" x="0" y="2" width="320" height="33" uuid="81e6ba4f-f2d5-462f-8dca-33696f0aa3e7"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="none">
-					<font fontName="SansSerif" size="18" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					<font fontName="SansSerif" size="16" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Animal Deatiled Report]]></text>
@@ -315,11 +316,13 @@
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement positionType="Float" mode="Opaque" x="5" y="0" width="555" height="20" backcolor="#FFFFFF" uuid="08fe21ec-1e45-48a6-aee7-8ab4b0743be9">
+				<reportElement positionType="Float" mode="Opaque" x="5" y="0" width="550" height="20" backcolor="#FFFFFF" uuid="08fe21ec-1e45-48a6-aee7-8ab4b0743be9">
 					<property name="local_mesure_unitx" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="11" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>

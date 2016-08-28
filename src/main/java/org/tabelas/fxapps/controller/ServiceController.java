@@ -31,6 +31,7 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -113,6 +114,9 @@ public class ServiceController implements View{
     @FXML
     void initialize() {
 		// TODO Auto-generated constructor stub
+    	
+    	ToggleGroup toggleGroup = new ToggleGroup();
+   		toggleGroup.getToggles().addAll(optEmpty,optPregnant);
     	
     	txtServiceDate.setConverter(AppUtil.getDatePickerFormatter());
     	
@@ -354,14 +358,14 @@ public class ServiceController implements View{
 		Hyperlink next = new Hyperlink(">>");
 		pagecontainer.getChildren().add(next);
 		
-		prev.setOnAction(new EventHandler<ActionEvent>() {
+prev.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				navigationBox.getChildren().remove(0);
-				int showFrom = from-10 <= 1 ? 1 : from-10;
-				int showTo = showFrom+9 > totalPages ? totalPages : showFrom+9;
+				int pageFrom = from-10 <= 1 ? 1 : from-10;
+				int pageTo = pageFrom+9 > totalPages ? totalPages : pageFrom+9;
 				
 				HBox pagination = getPagination(pageFrom, pageTo, totalPages);
 				
@@ -376,8 +380,8 @@ public class ServiceController implements View{
 			public void handle(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				navigationBox.getChildren().remove(0);
-				int showFrom = to+1;
-				int showTo = showFrom+9 > totalPages ? totalPages  : showFrom+9;
+				int pageFrom = to+1;
+				int pageTo = pageFrom+9 > totalPages ? totalPages  : pageFrom+9;
 				
 				HBox pagination = getPagination(pageFrom, pageTo, totalPages);
 				

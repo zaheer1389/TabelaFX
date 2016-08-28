@@ -92,15 +92,17 @@
 	-fx-table-header-border-color: transparent;
 }
 
-.table-view .column-header-background {
-	-fx-base: #077caf;
+/* .table-view .column-header-background {
+	-fx-base: #00ff00,
+        linear-gradient(#fafdfe, #e8f5fc),
+        linear-gradient(#eaf6fd 0%, #d9f0fc 49%, #bee6fd 50%, #a7d9f5 100%);
 	-fx-text-fill: #08c;
-}
+} */
 
-.table-view .column-header,.table-view .filler {
-	-fx-border-width: 1 1 1 1;
-	-fx-border-color: transparent transparent derive(-fx-base, 80%)
-		transparent;
+.table-view .column-header,
+.table-view .column-header .filler,
+.table-view .column-header-background .filler {
+    -fx-background-color: linear-gradient(#3b679e 0%,#2b88d9 50%,#207cca 51%,#7db9e8 100%);
 }
 
 .table-row-cell {
@@ -162,13 +164,14 @@
 	-fx-font-size: 13px;
 	-fx-font-weight: bold;
 	-fx-font-family: 'Material Icons';
-	-fx-background-color: #add8e6 ;	
+	-fx-background-color: linear-gradient(#3b679e 0%,#2b88d9 50%,#207cca 51%,#7db9e8 100%);	
     -fx-border-width: 2px 2px 2px 2px;
     -fx-border-color: #FFF;
+    -fx-text-fill: #FFFFFF;
 }
 
 .hyperlink:visited {
-    -fx-text-fill: #0083C9;
+    -fx-text-fill: #FFFFFF;
 }
 
 .navigation-current-page{

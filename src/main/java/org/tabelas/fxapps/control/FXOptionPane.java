@@ -40,6 +40,7 @@ public class FXOptionPane {
 	        initOwner( App.appcontroller.getStage() );
 	        setResizable( false );
 	        setScene( scene );
+	        getIcons().add(new Image(App.class.getResourceAsStream("/images/stageIcon.png")));
 	        icon.setImage( new Image( getClass().getResourceAsStream( iconFile ) ) );
 	    }
 	    public void showDialog() {

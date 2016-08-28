@@ -391,14 +391,14 @@ public class LactationController implements View{
 		Hyperlink next = new Hyperlink(">>");
 		pagecontainer.getChildren().add(next);
 		
-		prev.setOnAction(new EventHandler<ActionEvent>() {
+prev.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				navigationBox.getChildren().remove(0);
-				int showFrom = from-10 <= 1 ? 1 : from-10;
-				int showTo = showFrom+9 > totalPages ? totalPages : showFrom+9;
+				int pageFrom = from-10 <= 1 ? 1 : from-10;
+				int pageTo = pageFrom+9 > totalPages ? totalPages : pageFrom+9;
 				
 				HBox pagination = getPagination(pageFrom, pageTo, totalPages);
 				
@@ -413,8 +413,8 @@ public class LactationController implements View{
 			public void handle(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				navigationBox.getChildren().remove(0);
-				int showFrom = to+1;
-				int showTo = showFrom+9 > totalPages ? totalPages  : showFrom+9;
+				int pageFrom = to+1;
+				int pageTo = pageFrom+9 > totalPages ? totalPages  : pageFrom+9;
 				
 				HBox pagination = getPagination(pageFrom, pageTo, totalPages);
 				
