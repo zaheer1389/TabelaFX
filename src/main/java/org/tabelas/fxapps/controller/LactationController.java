@@ -391,7 +391,7 @@ public class LactationController implements View{
 		Hyperlink next = new Hyperlink(">>");
 		pagecontainer.getChildren().add(next);
 		
-prev.setOnAction(new EventHandler<ActionEvent>() {
+		prev.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
