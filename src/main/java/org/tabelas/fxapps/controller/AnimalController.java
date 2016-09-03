@@ -17,6 +17,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -29,6 +30,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Callback;
 import javafx.scene.Node;
 
@@ -103,17 +106,7 @@ public class AnimalController implements View{
     @FXML
     void initialize() {
 		// TODO Auto-generated constructor stub
-    	/*for(int i = 0; i<= 1000; i++){
-    		Animal animal = new Animal();
-    		if(getAnimalByNumber(i+"") == null){
-    			animal.setAnimalNo(i+"");
-    			animal.setOwnerName("Owenr "+i);
-    			animal.setPurchasePrice(new Random().nextDouble());
-    			animal.setPurchaseDate(new Timestamp(new Date().getTime()));
-    			animal.setBranch(App.appcontroller.getBranch());
-    			FacadeFactory.getFacade().store(animal);
-    		}
-    	}*/
+    	
     	
     	txtPurchasedDate.setConverter(AppUtil.getDatePickerFormatter());
 
@@ -225,6 +218,25 @@ public class AnimalController implements View{
 		});
 		
 		tableView.setItems(FXCollections.observableArrayList(data));
+		
+		for(TableColumn col : tableView.getColumns()){
+			makeHeaderWrappable(col);
+		}
+    }
+    
+
+    private void makeHeaderWrappable(TableColumn col) {
+        Label label = new Label(col.getText());
+        label.setStyle("-fx-padding: 2px;");
+        label.setWrapText(true);
+        label.setAlignment(Pos.CENTER);
+        label.setTextAlignment(TextAlignment.CENTER);
+     
+        StackPane stack = new StackPane();
+        stack.getChildren().add(label);
+        stack.prefWidthProperty().bind(col.widthProperty().subtract(5));
+        label.prefWidthProperty().bind(stack.prefWidthProperty());
+        col.setGraphic(stack);
     }
     
 	public void setPagePanel(List<Animal> data){

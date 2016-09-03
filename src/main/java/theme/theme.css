@@ -105,6 +105,8 @@
 .table-view .column-header .filler,
 .table-view .column-header-background .filler {
     -fx-background-color: linear-gradient(#3b679e 0%,#2b88d9 50%,#207cca 51%,#7db9e8 100%);
+    -fx-border-width: 0 2 0 0;
+    -fx-border-color: #FFFFFF;
 }
 
 .table-row-cell {
