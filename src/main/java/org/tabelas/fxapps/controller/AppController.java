@@ -31,6 +31,7 @@ import org.tabelas.fxapps.App;
 import org.tabelas.fxapps.control.FXOptionPane.Response;
 import org.tabelas.fxapps.dialog.AnimalServiceReportDialog;
 import org.tabelas.fxapps.dialog.LactationReportDialog;
+import org.tabelas.fxapps.dialog.MilkWeightReportDialog;
 import org.tabelas.fxapps.enums.DialogType;
 import org.tabelas.fxapps.model.Branch;
 import org.tabelas.fxapps.persistence.FacadeFactory;
@@ -48,7 +49,7 @@ public class AppController implements EventHandler<ActionEvent>{
     private MenuItem menuItemAnimal_ManageAnimal,menuItemAnimal_Lactation,menuItemAnimal_Service,menuItemAnimal_MilkWeight;
     
     @FXML
-    private MenuItem menuItemReport_Animal_List,menuItemReport_Animal_DetailedReport,menuItemReport_Animal_ServiceReport;
+    private MenuItem menuItemReport_Animal_List,menuItemReport_Animal_DetailedReport,menuItemReport_Animal_ServiceReport,menuItemReport_Animal_MilkWeightReport;
     
     @FXML
     private MenuBar menuBar;
@@ -121,6 +122,7 @@ public class AppController implements EventHandler<ActionEvent>{
     	for(Menu menu : menuBar.getMenus()){
     		setMenuActions(menu);
     	}
+    	//menuItemReport_Animal_MilkWeightReport.setOnAction(this);
     	
     	updateBranchList();
     	showDashboard();
@@ -218,6 +220,10 @@ public class AppController implements EventHandler<ActionEvent>{
 		}
 		else if(event.getSource() == menuItemReport_Animal_ServiceReport){
 			new AnimalServiceReportDialog().showDialog();
+		}
+		else if(event.getSource() == menuItemReport_Animal_MilkWeightReport){
+			System.out.println("Click");
+			new MilkWeightReportDialog().showDialog();
 		}
 	}
     
