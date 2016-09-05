@@ -49,7 +49,8 @@ public class AppController implements EventHandler<ActionEvent>{
     private MenuItem menuItemAnimal_ManageAnimal,menuItemAnimal_Lactation,menuItemAnimal_Service,menuItemAnimal_MilkWeight,menuItemAnimal_Sold;
     
     @FXML
-    private MenuItem menuItemReport_Animal_List,menuItemReport_Animal_DetailedReport,menuItemReport_Animal_ServiceReport,menuItemReport_Animal_MilkWeightReport;
+    private MenuItem menuItemReport_Animal_List,menuItemReport_Animal_DetailedReport,menuItemReport_Animal_ServiceReport
+    			,menuItemReport_Animal_MilkWeightReport,menuItemReport_Animal_SoldAnimalReport;
     
     @FXML
     private MenuBar menuBar;
@@ -123,6 +124,8 @@ public class AppController implements EventHandler<ActionEvent>{
     		setMenuActions(menu);
     	}
     	//menuItemReport_Animal_MilkWeightReport.setOnAction(this);
+    	menuItemAnimal_Sold.setOnAction(this);
+    	menuItemReport_Animal_SoldAnimalReport.setOnAction(this);
     	
     	updateBranchList();
     	showDashboard();
@@ -228,6 +231,13 @@ public class AppController implements EventHandler<ActionEvent>{
 		else if(event.getSource() == menuItemReport_Animal_MilkWeightReport){
 			System.out.println("Click");
 			new MilkWeightReportDialog().showDialog();
+		}
+		else if(event.getSource() == menuItemReport_Animal_SoldAnimalReport){
+			Map<String, Object> map = new HashMap<>();
+			map.put("bid", App.appcontroller.getBranch().getId());
+			map.put("bname",  App.appcontroller.getBranch().getBranchName());
+			InputStream is3 = getClass().getResourceAsStream("/reports/SoldAnimalList.jasper");
+			ReportManager.showReport("/reports/SoldAnimalList.jrxml", map, "Sold Animal List");
 		}
 	}
     

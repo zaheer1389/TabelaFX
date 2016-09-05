@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version last-->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="600" pageHeight="842" columnWidth="560" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e97a7671-bf4a-4d2e-a9a6-2605c20f1675">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -57,7 +56,7 @@
 		</band>
 	</background>
 	<title>
-		<band height="40" splitType="Stretch">
+		<band height="60" splitType="Stretch">
 			<staticText>
 				<reportElement mode="Opaque" x="0" y="0" width="560" height="22" forecolor="#FFFFFF" backcolor="#0099FF" uuid="d979ab40-9ac2-489a-8571-306c5c89ee60"/>
 				<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
@@ -71,6 +70,13 @@
 					<font size="13" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{bname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="SanSerif_Bold_Italic_10" x="10" y="45" width="540" height="15" uuid="643f4316-05df-42b7-b27e-ffca81ecedc4"/>
+				<textElement markup="styled">
+					<font isBold="true" isItalic="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Report from "+new SimpleDateFormat("dd-MMM-yyyy").format($P{fromDate})+" to "+new SimpleDateFormat("dd-MMM-yyyy").format($P{toDate})]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>

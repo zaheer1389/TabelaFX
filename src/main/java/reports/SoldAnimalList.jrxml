@@ -6,15 +6,14 @@
 	<style name="Arial_Bold_14" fontName="Arial" fontSize="14"/>
 	<style name="Arial_Bold_24" fontName="Arial" fontSize="24"/>
 	<style name="Arial_Bold_12" fontName="Arial" fontSize="12"/>
-	<parameter name="branchName" class="java.lang.String"/>
+	<parameter name="bname" class="java.lang.String"/>
+	<parameter name="bid" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[SELECT * From Animal a,Lactation l,Branch b
-WHERE a.id = l.AnimalId
-AND a.BranchId = b.id
-AND DepartureDate IS NULL
-AND date('now') > date(l.ArrivalDate, '+60 day')
-AND l.CurrentLactation = 1
-AND (select count(id) from AnimalService where lactationId = l.id) = 0]]>
+		<![CDATA[Select * From Animal
+where BranchId = $P{bid}
+AND Sold = 1]]>
 	</queryString>
 	<field name="ID" class="java.lang.Object"/>
 	<field name="AddedDate" class="java.lang.Object"/>
@@ -28,14 +27,6 @@ AND (select count(id) from AnimalService where lactationId = l.id) = 0]]>
 	<field name="SoldDate" class="java.lang.Object"/>
 	<field name="SoldPrice" class="java.lang.Object"/>
 	<field name="BranchId" class="java.lang.Object"/>
-	<field name="ArrivalDate" class="java.lang.Object"/>
-	<field name="CowingDate" class="java.lang.Object"/>
-	<field name="CurrentLactation" class="java.lang.Object"/>
-	<field name="DepartureDate" class="java.lang.Object"/>
-	<field name="DepartureVehicleNo" class="java.lang.Object"/>
-	<field name="VehicleNo" class="java.lang.Object"/>
-	<field name="AnimalId" class="java.lang.Object"/>
-	<field name="BranchName" class="java.lang.Object"/>
 	<background>
 		<band height="822" splitType="Stretch">
 			<frame>
@@ -51,18 +42,23 @@ AND (select count(id) from AnimalService where lactationId = l.id) = 0]]>
 		</band>
 	</background>
 	<title>
-		<band height="42" splitType="Stretch">
-			<property name="local_mesure_unitheight" value="pixel"/>
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		<band height="60" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="560" height="22" forecolor="#FFFFFF" backcolor="#0099FF" uuid="d979ab40-9ac2-489a-8571-306c5c89ee60"/>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font size="16" isBold="true" pdfFontName="Helvetica-Bold"/>
+				<reportElement style="Arial_Bold_24" mode="Opaque" x="0" y="0" width="560" height="23" forecolor="#FFFFFF" backcolor="#0099FF" uuid="d979ab40-9ac2-489a-8571-306c5c89ee60"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
+					<font size="17" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<text><![CDATA[Animal Service Due Report]]></text>
+				<text><![CDATA[Sold Animal List]]></text>
 			</staticText>
+			<textField>
+				<reportElement style="Arial_Bold_14" mode="Opaque" x="0" y="22" width="560" height="18" forecolor="#FFFFFF" backcolor="#0099FF" uuid="c9c9398b-9759-4afb-a4f2-0982d86c1e6d"/>
+				<textElement textAlignment="Center" markup="styled">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{bname}]]></textFieldExpression>
+			</textField>
 			<textField pattern="EEE, d MMM yyyy HH:mm:ss Z">
-				<reportElement style="Arial_Bold_12" x="10" y="27" width="540" height="15" uuid="ed550149-a444-4b06-a512-87a0aa8890f0"/>
+				<reportElement style="Arial_Bold_12" x="10" y="45" width="540" height="15" uuid="7f055648-eb46-4704-b8f4-c07b4674bb33"/>
 				<textElement markup="styled">
 					<font isBold="true" isItalic="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
@@ -87,7 +83,7 @@ AND (select count(id) from AnimalService where lactationId = l.id) = 0]]>
 				<text><![CDATA[Animal No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Arial_Bold_12" mode="Opaque" x="415" y="7" width="135" height="20" backcolor="#66CCFF" uuid="985d100c-6fb8-43fb-abca-cf8290b51118"/>
+				<reportElement style="Arial_Bold_12" mode="Opaque" x="145" y="7" width="135" height="20" backcolor="#66CCFF" uuid="467fb320-30ff-4c24-899f-fe0eb66fdeff"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -98,10 +94,10 @@ AND (select count(id) from AnimalService where lactationId = l.id) = 0]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<text><![CDATA[Service Due Date]]></text>
+				<text><![CDATA[Sold Date]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Arial_Bold_12" mode="Opaque" x="280" y="7" width="135" height="20" backcolor="#66CCFF" uuid="efa6b800-d065-45a7-b378-0ba63b3e81a2"/>
+				<reportElement style="Arial_Bold_12" mode="Opaque" x="280" y="7" width="135" height="20" backcolor="#66CCFF" uuid="985d100c-6fb8-43fb-abca-cf8290b51118"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -112,10 +108,10 @@ AND (select count(id) from AnimalService where lactationId = l.id) = 0]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<text><![CDATA[Arrival Date]]></text>
+				<text><![CDATA[Sold Price]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Arial_Bold_12" mode="Opaque" x="145" y="7" width="135" height="20" backcolor="#66CCFF" uuid="6d9be339-e4bf-46e0-aeae-97a731abb7be"/>
+				<reportElement style="Arial_Bold_12" mode="Opaque" x="415" y="7" width="135" height="20" backcolor="#66CCFF" uuid="ec4a18dd-f6bd-4003-a5a6-a0c5caab0219"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -126,7 +122,7 @@ AND (select count(id) from AnimalService where lactationId = l.id) = 0]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<text><![CDATA[Branch]]></text>
+				<text><![CDATA[Buyer Name]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -147,7 +143,7 @@ AND (select count(id) from AnimalService where lactationId = l.id) = 0]]>
 				<textFieldExpression><![CDATA[""+$F{AnimalNo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="415" y="0" width="135" height="20" uuid="8a2fbffd-07b3-4d0b-8b73-51246633bac1"/>
+				<reportElement x="145" y="0" width="135" height="20" uuid="0f2e453d-9590-4b46-b07f-2b992bdfd2e2"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -158,10 +154,10 @@ AND (select count(id) from AnimalService where lactationId = l.id) = 0]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMMMMM-yyyy").format(new java.util.Date((Long)$F{ArrivalDate}+(60L*24*60*60*1000)))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMM-yyyy").format($F{SoldDate})]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="280" y="0" width="135" height="20" uuid="e2c2f336-1219-4880-8dac-caa997f38b9b"/>
+				<reportElement x="280" y="0" width="135" height="20" uuid="8a2fbffd-07b3-4d0b-8b73-51246633bac1"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -172,10 +168,10 @@ AND (select count(id) from AnimalService where lactationId = l.id) = 0]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMMMMM-yyyy").format($F{ArrivalDate})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[""+$F{SoldPrice}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="145" y="0" width="135" height="20" uuid="433ef524-85ab-4d98-aed2-46190a8377d4"/>
+				<reportElement x="415" y="0" width="135" height="20" uuid="6f237b91-d115-43dc-9fb2-6e67b934d174"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -186,7 +182,7 @@ AND (select count(id) from AnimalService where lactationId = l.id) = 0]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{BranchName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[""+$F{BuyerName}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -215,4 +211,15 @@ AND (select count(id) from AnimalService where lactationId = l.id) = 0]]>
 			</textField>
 		</band>
 	</columnFooter>
+	<summary>
+		<band height="21">
+			<textField>
+				<reportElement x="334" y="1" width="216" height="19" uuid="b67a2738-4a1b-4d63-8eb6-033cb1c150dc"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Animal - "+$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
 </jasperReport>

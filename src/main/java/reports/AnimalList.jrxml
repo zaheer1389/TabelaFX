@@ -41,9 +41,9 @@ where BranchId = $P{bid}]]>
 		</band>
 	</background>
 	<title>
-		<band height="40" splitType="Stretch">
+		<band height="60" splitType="Stretch">
 			<staticText>
-				<reportElement style="Arial_Bold_24" mode="Opaque" x="0" y="0" width="560" height="22" forecolor="#FFFFFF" backcolor="#0099FF" uuid="d979ab40-9ac2-489a-8571-306c5c89ee60"/>
+				<reportElement style="Arial_Bold_24" mode="Opaque" x="0" y="0" width="560" height="23" forecolor="#FFFFFF" backcolor="#0099FF" uuid="d979ab40-9ac2-489a-8571-306c5c89ee60"/>
 				<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
 					<font size="17" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
@@ -55,6 +55,13 @@ where BranchId = $P{bid}]]>
 					<font size="13" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{bname}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss Z">
+				<reportElement style="Arial_Bold_12" x="10" y="45" width="540" height="15" uuid="ab8ca7db-d8ea-4822-bce4-9093847c20b3"/>
+				<textElement markup="styled">
+					<font isBold="true" isItalic="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Report generated on : "+new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
