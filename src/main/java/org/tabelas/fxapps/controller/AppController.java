@@ -46,7 +46,7 @@ public class AppController implements EventHandler<ActionEvent>{
     private MenuItem menuItemFile_ManageBranch,menuItemFile_Exit,menuItemHelp_Help;
     
     @FXML
-    private MenuItem menuItemAnimal_ManageAnimal,menuItemAnimal_Lactation,menuItemAnimal_Service,menuItemAnimal_MilkWeight;
+    private MenuItem menuItemAnimal_ManageAnimal,menuItemAnimal_Lactation,menuItemAnimal_Service,menuItemAnimal_MilkWeight,menuItemAnimal_Sold;
     
     @FXML
     private MenuItem menuItemReport_Animal_List,menuItemReport_Animal_DetailedReport,menuItemReport_Animal_ServiceReport,menuItemReport_Animal_MilkWeightReport;
@@ -207,6 +207,10 @@ public class AppController implements EventHandler<ActionEvent>{
 		else if(event.getSource() == menuItemAnimal_MilkWeight){
 			showView("/fxml/MilkWeightView.fxml");
 			lblPageCaption.setText("Manage Animal Milk Weights");
+		}
+		else if(event.getSource() == menuItemAnimal_Sold){
+			showView("/fxml/SoldAnimalView.fxml");
+			lblPageCaption.setText("Manage Sold Animal");
 		}
 		else if(event.getSource() == menuItemReport_Animal_List){
 			Map<String, Object> map = new HashMap<>();

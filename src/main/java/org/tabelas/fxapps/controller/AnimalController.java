@@ -446,7 +446,7 @@ public class AnimalController implements View{
 
 	public static List<Animal> getAnimalsByNumber(String no) {
 		String queryStr = "Select a from Animal as a where a.branch = :bid "
-				+ "and a.animalNo = :no order by a.id desc";
+				+ "and a.sold = false   and a.animalNo = :no order by a.id desc";
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("bid", App.appcontroller.getBranch());
 		parameters.put("no", no);

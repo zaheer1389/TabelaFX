@@ -26,6 +26,8 @@
             <MenuItem fx:id="menuItemAnimal_Lactation" mnemonicParsing="false" text="Lactation" />
             <MenuItem fx:id="menuItemAnimal_Service" mnemonicParsing="false" text="Animal Service" />
             <MenuItem fx:id="menuItemAnimal_MilkWeight" mnemonicParsing="false" text="Manage Milk Weight" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="menuItemAnimal_Sold" mnemonicParsing="false" text="Sold Animal" />
           </items>
         </Menu>
             <Menu fx:id="menuReport" mnemonicParsing="false" text="Report">

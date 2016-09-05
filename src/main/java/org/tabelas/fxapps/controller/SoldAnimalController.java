@@ -5,18 +5,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Hyperlink;
@@ -39,6 +37,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
+import javafx.scene.Node;
 
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.Glyph;
@@ -49,6 +48,7 @@ import org.tabelas.fxapps.control.EditButton;
 import org.tabelas.fxapps.control.FXOptionPane.Response;
 import org.tabelas.fxapps.enums.DialogType;
 import org.tabelas.fxapps.model.Animal;
+import org.tabelas.fxapps.model.Branch;
 import org.tabelas.fxapps.model.Lactation;
 import org.tabelas.fxapps.persistence.FacadeFactory;
 import org.tabelas.fxapps.util.AppUtil;
@@ -56,45 +56,46 @@ import org.tabelas.fxapps.util.DialogFactory;
 import org.tabelas.fxapps.view.View;
 
 
-public class LactationController implements View{
+public class SoldAnimalController implements View{
 
 	private Long id;
 	private int PAGE_SIZE = 20;
 	private int currentPageIndex;
 	private int pageFrom;
 	private int pageTo;
-	private boolean completeLactation;    
-    private Lactation lactation;
 	
     @FXML
-    private Button btnSave,btnCancel,btnSearch,btnClearSearch;
+    private Button btnSearch,btnClearSearch;
 
     @FXML
     private ComboBox<Animal> cbAnimal;
 
     @FXML
-    private TableColumn<Animal, String> colAnimalNo,colArrivalDate,colCowingDate,colVehicleNo,colDepartureDate,colDepartureVehicleNo;
+    private TableColumn<Animal, String> colAnimalNo,colBuyerName,colPrice,colDate;
     
     @FXML
-    private TableColumn<Object, String> colEdit,colCompleteLactation,colDelete;
+    private TableColumn<Object, String> colEdit,colDelete;
 
     @FXML
-    private TextField txtVehicleNo,txtDepartureVehicleNo;
-    
+    private TextField txtSoldPrice;
+
     @FXML
-    private DatePicker txtArrivalDate,txtCowingDate,txtDepartureDate;
-    
+    private Button btnCancel;
+
     @FXML
-    private Label lblLactationCompleted,lblDepartureDate,lblDepartureVehicleNo; 
-    
+    private Button btnSave;
+
     @FXML
-    private CheckBox chCompleteLactation;
+    private TextField txtBuyerName;
+
+    @FXML
+    private DatePicker txtSoldDate;
 
     @FXML
     private TextField txtSearchAnimalNo;
     
     @FXML
-    private TableView<Lactation> tableView;
+    private TableView<Animal> tableView;
     
     @FXML
     private AnchorPane leftPane,rightPane;
@@ -103,7 +104,7 @@ public class LactationController implements View{
     private SplitPane splitPane;
     
     @FXML
-    private HBox navigationBox,controls;
+    private HBox navigationBox;
     
     @FXML
     private GridPane form;
@@ -112,10 +113,9 @@ public class LactationController implements View{
     void initialize() {
 		// TODO Auto-generated constructor stub
     	
-    	txtArrivalDate.setConverter(AppUtil.getDatePickerFormatter());
-    	txtCowingDate.setConverter(AppUtil.getDatePickerFormatter());
-    	txtDepartureDate.setConverter(AppUtil.getDatePickerFormatter());
     	
+    	txtSoldDate.setConverter(AppUtil.getDatePickerFormatter());
+
     	btnSave.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.SAVE).size(17));
     	btnCancel.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TIMES).size(17));
     	btnSearch.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.SEARCH).size(17));
@@ -167,21 +167,10 @@ public class LactationController implements View{
 			}
 		});
     	
-    	chCompleteLactation.selectedProperty().addListener(new ChangeListener<Boolean>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				// TODO Auto-generated method stub
-				txtDepartureDate.setDisable(!newValue);
-				txtDepartureVehicleNo.setDisable(!newValue);
-			}
-    		
-		});
     	
     	setKeyboardHandle();
-    	hideCompleteLactationForm();
     	
-    	List<Lactation> data = getLactationsByBranch();
+    	List<Animal> data = getAnimalsByBranch();
     	setPagePanel(data);
 	}
     
@@ -204,16 +193,12 @@ public class LactationController implements View{
 		form.requestFocus();
     }
     
-    public void setTable(List<Lactation> data){
-
-		colAnimalNo.setCellValueFactory(new PropertyValueFactory<Animal, String>("animalNo"));
-		colArrivalDate.setCellValueFactory(new PropertyValueFactory<Animal, String>("strArrivalDate"));
-		colCowingDate.setCellValueFactory(new PropertyValueFactory<Animal, String>("strCowingDate"));
-		colVehicleNo.setCellValueFactory(new PropertyValueFactory<Animal, String>("vehicleNo"));
-		colDepartureDate.setCellValueFactory(new PropertyValueFactory<Animal, String>("strDepartureDate"));
-		colDepartureVehicleNo.setCellValueFactory(new PropertyValueFactory<Animal, String>("departureVehicleNo"));
-		
-		
+    public void setTable(List<Animal> data){
+    	colAnimalNo.setCellValueFactory(new PropertyValueFactory<Animal, String>("animalNo"));
+    	colBuyerName.setCellValueFactory(new PropertyValueFactory<Animal, String>("buyerName"));
+		colDate.setCellValueFactory(new PropertyValueFactory<Animal, String>("strSoldDate"));
+		colPrice.setCellValueFactory(new PropertyValueFactory<Animal, String>("soldPrice"));
+		 
 		colEdit.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Object, String>, ObservableValue<String>>() {
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Object, String> arg0) {
@@ -233,23 +218,15 @@ public class LactationController implements View{
 					public void handle(ActionEvent arg0) {
 						// TODO Auto-generated method stub
 						int selectdIndex = editButton.getRowIndex();
-						lactation = tableView.getItems().get(selectdIndex);
-						cbAnimal.setValue(lactation.getAnimal());
-						txtArrivalDate.setValue(AppUtil.toLocalDate(new Date(lactation.getArrivalDate().getTime())));
-						txtCowingDate.setValue(AppUtil.toLocalDate(new Date(lactation.getCowingDate().getTime())));
-						txtVehicleNo.setText(lactation.getVehicleNo());
+						Animal animal = tableView.getItems().get(selectdIndex);
+						cbAnimal.getItems().add(animal);
+						id = animal.getId();
+						
+						cbAnimal.setValue(animal);
 						cbAnimal.setDisable(true);
-						
-						showCompleteLactationForm();
-						
-						if(lactation.getDepartureDate() != null){
-							chCompleteLactation.setSelected(true);
-							txtDepartureDate.setValue(AppUtil.toLocalDate(new Date(lactation.getDepartureDate().getTime())));
-							txtDepartureVehicleNo.setText(lactation.getDepartureVehicleNo());
-							
-							txtDepartureDate.setDisable(false);
-							txtDepartureVehicleNo.setDisable(false);
-						}
+						txtBuyerName.setText(animal.getBuyerName());
+						txtSoldPrice.setText(animal.getSoldPrice()+"");
+						txtSoldDate.setValue(AppUtil.toLocalDate(new Date(animal.getSoldDate().getTime())));
 					}
 				});
 				return editButton;
@@ -274,13 +251,29 @@ public class LactationController implements View{
 					@Override
 					public void handle(ActionEvent arg0) {
 						// TODO Auto-generated method stub
+						int selectdIndex = deleteButton.getRowIndex();
+						Animal animal = tableView.getItems().get(selectdIndex);
+						
 						Response response = DialogFactory.showConfirmationDialog("Do you want to delete this record?", DialogType.YESNOCANCEL);
 						if(response == Response.YES){
-							int selectdIndex = deleteButton.getRowIndex();
-							Lactation animal = tableView.getItems().get(selectdIndex);
-							FacadeFactory.getFacade().delete(animal);
-							DialogFactory.showInformationDialog("Lactation details deleted succssfully");
-					    	setPagePanel(getLactationsByBranch());
+							animal.setSold(false);
+							animal.setSoldDate(null);
+							animal.setBuyerName(null);
+							animal.setSoldPrice(null);
+							FacadeFactory.getFacade().store(animal);
+							
+							/*List<Lactation> lactations = LactationController.getLactationsByBranchAnimal(animal.getAnimalNo());
+							Lactation lactation = lactations.get(0);
+							if(lactation != null){
+								//Reverting lactation as animal deleted from sold history
+								lactation.setDepartureDate(null);
+			    				lactation.setDepartureVehicleNo("");
+			    				lactation.setCurrentLactation(true);
+			    				FacadeFactory.getFacade().store(lactation);
+							}*/
+							
+							DialogFactory.showInformationDialog("Animal succssfully reverted");
+					    	setPagePanel(getAnimalsByBranch());
 					    	reset();
 						}
 						
@@ -291,13 +284,14 @@ public class LactationController implements View{
 			}
 		});
 		
+		tableView.setItems(FXCollections.observableArrayList(data));
+		
 		for(TableColumn col : tableView.getColumns()){
 			makeHeaderWrappable(col);
 		}
-		
-		tableView.setItems(FXCollections.observableArrayList(data));
     }
     
+
     private void makeHeaderWrappable(TableColumn col) {
         Label label = new Label(col.getText());
         label.setStyle("-fx-padding: 2px;");
@@ -312,31 +306,7 @@ public class LactationController implements View{
         col.setGraphic(stack);
     }
     
-    public void showCompleteLactationForm(){
-    	form.add(lblLactationCompleted, 0, 4);
-    	form.add(chCompleteLactation, 1, 4);
-    	form.add(lblDepartureDate, 0, 5);
-    	form.add(txtDepartureDate, 1, 5);
-    	form.add(lblDepartureVehicleNo, 0, 6);
-    	form.add(txtDepartureVehicleNo, 1, 6);
-		GridPane.setRowIndex(controls, 7);
-		//form.setPrefHeight(400);
-    }
-    
-    public void hideCompleteLactationForm(){
-    	if(form.getChildren().size() >= 5){
-    		form.getChildren().remove(lblLactationCompleted);
-    		form.getChildren().remove(chCompleteLactation);
-    		form.getChildren().remove(lblDepartureDate);
-    		form.getChildren().remove(txtDepartureDate);
-    		form.getChildren().remove(lblDepartureVehicleNo);
-    		form.getChildren().remove(txtDepartureVehicleNo);
-    		GridPane.setRowIndex(controls, 4);
-    		//form.setPrefHeight(270);
-		}
-    }
-    
-	public void setPagePanel(List<Lactation> data){
+	public void setPagePanel(List<Animal> data){
 		if(navigationBox.getChildren().size() > 0){
 			navigationBox.getChildren().remove(0);
 		}
@@ -351,7 +321,7 @@ public class LactationController implements View{
 		
 		int showFrom = currentPageIndex*PAGE_SIZE;
 		int showTo = (showFrom + PAGE_SIZE) <= data.size() ? (showFrom + PAGE_SIZE) : data.size();
-		List<Lactation> subList = data.subList(showFrom, showTo);
+		List<Animal> subList = data.subList(showFrom, showTo);
 		setTable(FXCollections.observableArrayList(subList));
 	}
 	
@@ -376,13 +346,12 @@ public class LactationController implements View{
 						node.getStyleClass().remove("navigation-current-page");
 					}
 					link.getStyleClass().add("navigation-current-page");
-					
 					currentPageIndex = Integer.parseInt(((Hyperlink)(arg0.getSource())).getId()) - 1;
-					List<Lactation> data = getLactationsByBranch();
+					List<Animal> data = getAnimalsByBranch();
 					int showFrom = currentPageIndex*PAGE_SIZE;
 					int showTo = (showFrom + PAGE_SIZE) <= data.size() ? (showFrom + PAGE_SIZE) : data.size();
 					System.err.println("[from:"+showFrom+",to:"+showTo+"]");
-					List<Lactation> subList = data.subList(showFrom, showTo);
+					List<Animal> subList = data.subList(showFrom, showTo);
 					setTable(FXCollections.observableArrayList(subList));
 				}
 			});
@@ -436,44 +405,30 @@ public class LactationController implements View{
 	public void save() {
 		// TODO Auto-generated method stub
 		if(isValidForm()){
-			Response response = DialogFactory.showConfirmationDialog("Do you really want to save details?", DialogType.YESNOCANCEL);
-    		if(response == Response.YES){
-    			completeLactation = chCompleteLactation.isSelected();
-    			if(lactation == null){
-    				//Trying to add new lactation , while there is an open lactation
-    				if(getCurrentLactation(cbAnimal.getValue().getAnimalNo()) != null){
-    					DialogFactory.showErrorDialog("Animal is present in tabela,you are not allowed to start new lactation.Please mark complete , old lactation first.");
-    					return;
-    				}
-    				lactation = new Lactation();
-    				lactation.setAnimal(cbAnimal.getValue());
-    			}
-    			
-    			if(!completeLactation){
-    				lactation.setArrivalDate(new Timestamp(AppUtil.toUtilDate(txtArrivalDate.getValue()).getTime()));
-    				lactation.setCowingDate(new Timestamp(AppUtil.toUtilDate(txtCowingDate.getValue()).getTime()));
-    				lactation.setVehicleNo(txtVehicleNo.getText().toUpperCase());
-    				lactation.setDepartureDate(null);
+			Response response = DialogFactory.showConfirmationDialog("Do you want to save animal details?", DialogType.YESNOCANCEL);
+			if(response == Response.YES){
+				Animal animal = cbAnimal.getValue();
+				animal.setSold(true);
+				animal.setBuyerName(txtBuyerName.getText().toUpperCase());
+				animal.setSoldDate(new Timestamp(AppUtil.toUtilDate(txtSoldDate.getValue()).getTime()));
+				animal.setSoldPrice(Double.parseDouble(txtSoldPrice.getText()));
+				FacadeFactory.getFacade().store(animal);
+				
+				/*Lactation lactation = LactationController.getCurrentLactation(animal.getAnimalNo());
+				if(lactation != null){
+					//Marking lactation end if any present
+					lactation.setDepartureDate(new Timestamp(AppUtil.toUtilDate(txtSoldDate.getValue()).getTime()));
     				lactation.setDepartureVehicleNo("");
-    				lactation.setCurrentLactation(true);
-    				FacadeFactory.getFacade().store(lactation);
-    				DialogFactory.showInformationDialog("Lactation details save successfully");
-    			}
-    			else if(!SoldAnimalController.isAnimalSold(cbAnimal.getValue().getAnimalNo())){
-    				//Mark existing lactation as complete(update lactation) only if animal not sold
-    				lactation.setDepartureDate(new Timestamp(AppUtil.toUtilDate(txtDepartureDate.getValue()).getTime()));
-    				lactation.setDepartureVehicleNo(txtDepartureVehicleNo.getText().toUpperCase());
     				lactation.setCurrentLactation(false);
     				FacadeFactory.getFacade().store(lactation);
-    				DialogFactory.showInformationDialog("Lactation mark completed successfully");
-    			}
-    			
-    			List<Lactation> data = getLactationsByBranch();
+				}*/
+				
+				List<Animal> data = getAnimalsByBranch();
 		    	setPagePanel(data);
-
+		    	
+				DialogFactory.showInformationDialog("Animal details saved successfully");
 				reset();
-    			
-    		}
+			}
 		}
 	}
 
@@ -482,26 +437,12 @@ public class LactationController implements View{
 	public void reset() {
 		// TODO Auto-generated method stub
 		id = null;
-    	lactation = null;
-    	
-    	txtDepartureDate.setValue(null);
-    	txtDepartureVehicleNo.setText("");
-    	hideCompleteLactationForm();
-    	
-    	cbAnimal.setValue(null);
-    	txtArrivalDate.setValue(null);
-    	txtCowingDate.setValue(null);
-    	txtVehicleNo.setText("");
-    	
     	cbAnimal.setDisable(false);
-		txtArrivalDate.setDisable(false);
-		txtCowingDate.setDisable(false);
-		txtVehicleNo.setDisable(false);
-    	
-    	id = null;
-    	lactation = null;
-    	completeLactation = false;
-    	
+    	cbAnimal.setValue(null);
+    	txtSoldDate.setValue(null);
+    	txtSoldPrice.setText("");
+    	txtBuyerName.setText("");
+    	txtSearchAnimalNo.setText("");
     	cbAnimal.requestFocus();
 	}
 
@@ -514,7 +455,7 @@ public class LactationController implements View{
     		txtSearchAnimalNo.requestFocus();
     		return;
     	}
-		List<Lactation> data = getLactationsByBranchAnimal(txtSearchAnimalNo.getText());
+		List<Animal> data = getAnimalsByNumber(txtSearchAnimalNo.getText());
 		currentPageIndex = 0;
     	setPagePanel(data);
 	}
@@ -522,76 +463,67 @@ public class LactationController implements View{
 	@Override
 	@FXML
 	public void resetSearch() {
-		List<Lactation> data = getLactationsByBranch();
-    	setPagePanel(data);
-
 		reset();
+		
+		List<Animal> data = getAnimalsByBranch();
+    	setPagePanel(data);
 	}
 
 	@Override
 	public boolean isValidForm() {
 		// TODO Auto-generated method stub
 		if(cbAnimal.getValue() == null){
-    		DialogFactory.showErrorDialog("Please Select Animal");
+    		DialogFactory.showErrorDialog("Please select Animal No");
     		cbAnimal.requestFocus();
     		return false;
     	}
-    	if(txtArrivalDate.getValue() == null){
-    		DialogFactory.showErrorDialog("Please Select Animal Arrival Date");
-    		txtArrivalDate.requestFocus();
+		if(txtBuyerName.getText().length() == 0){
+    		DialogFactory.showErrorDialog("Please enter buyer name");
+    		txtBuyerName.requestFocus();
     		return false;
     	}
-    	if(txtCowingDate.getValue() == null){
-    		DialogFactory.showErrorDialog("Please Select Animal Cowing Date");
-    		txtCowingDate.requestFocus();
+    	if(txtSoldPrice.getText().length() == 0){
+    		DialogFactory.showErrorDialog("Please enter Animal sold Price");
+    		txtSoldPrice.requestFocus();
     		return false;
     	}
-    	if(completeLactation){
-    		if(txtDepartureDate.getValue() == null){
-    			DialogFactory.showErrorDialog("Please Select Animal Departure Date");
-    			txtDepartureDate.requestFocus();
-        		return false;
-    		}
+    	if(!AppUtil.isNumeric(txtSoldPrice.getText())){
+    		DialogFactory.showErrorDialog("Please enter only number in sold Price");
+    		txtSoldPrice.requestFocus();
+    		return false;
+    	}
+    	if(txtSoldDate.getValue() == null){
+    		DialogFactory.showErrorDialog("Please select Animal sold Date");
+    		txtSoldDate.requestFocus();
+    		return false;
     	}
 		return true;
 	}
 	
-    public static Lactation getCurrentLactation(String no){
-		String queryStr = "Select l from Lactation as l join l.animal as a where a.branch = :bid and a.animalNo = :no and l.currentLactation=true";
+	public static List<Animal> getAnimalsByBranch() {
+		String queryStr = "Select a from Animal as a where a.branch = :bid "
+				+ "and a.sold = true  order by a.id desc";
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("bid", App.appcontroller.getBranch());
+		return FacadeFactory.getFacade().list(queryStr, parameters);
+	}
+
+	public static List<Animal> getAnimalsByNumber(String no) {
+		String queryStr = "Select a from Animal as a where a.branch = :bid "
+				+ "and a.animalNo = :no  and a.sold = true  order by a.id desc";
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("bid", App.appcontroller.getBranch());
 		parameters.put("no", no);
-		return FacadeFactory.getFacade().find(queryStr, parameters);
+		return FacadeFactory.getFacade().list(queryStr, parameters);
 	}
 	
-	public static long countLactation(String no){
-    	String queryStr = "Select count(l) from Lactation as l join l.animal as a where a.branch = :bid and a.animalNo = :no  order by l.id desc";
-    	Map<String, Object> parameters = new HashMap<String, Object>();
-    	parameters.put("bid", App.appcontroller.getBranch());
-    	parameters.put("no", no);
-    	return FacadeFactory.getFacade().count(queryStr, parameters);
-    }
-
-	public static List<Lactation> getLactationsByBranch(){
-		String queryStr = "Select l from Lactation as l join l.animal as a where a.branch = :bid  order by l.id desc";
-    	Map<String, Object> parameters = new HashMap<String, Object>();
-    	parameters.put("bid", App.appcontroller.getBranch());
-    	return FacadeFactory.getFacade().list(queryStr, parameters);
+	public static boolean isAnimalSold(String no) {
+		String queryStr = "Select a from Animal as a where a.branch = :bid "
+				+ "and a.animalNo = :no and a.sold = true order by a.id desc";
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("bid", App.appcontroller.getBranch());
+		parameters.put("no", no);
+		Animal animal = FacadeFactory.getFacade().find(queryStr, parameters);
+		return animal != null ? true :false;
 	}
-	
-	public static List<Lactation> getLactationsByBranchAnimal(String no){
-		String queryStr = "Select l from Lactation as l join l.animal as a where a.branch = :bid and a.animalNo = :no  order by l.id desc";
-    	Map<String, Object> parameters = new HashMap<String, Object>();
-    	parameters.put("bid", App.appcontroller.getBranch());
-    	parameters.put("no", no);
-    	return FacadeFactory.getFacade().list(queryStr, parameters);
-	}
-	
-	public static List<Animal> getCurerntAnimals(){
-		String queryStr = "Select a from Lactation as l join l.animal as a where a.branch = :bid AND a.sold = false AND l.departureDate IS NULL order by l.id desc";
-    	Map<String, Object> parameters = new HashMap<String, Object>();
-    	parameters.put("bid", App.appcontroller.getBranch());
-    	return FacadeFactory.getFacade().list(queryStr, parameters);
-	}
-	
 }

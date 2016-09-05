@@ -47,7 +47,7 @@ public class Animal extends AbstractPojo implements Serializable{
 	private Double soldPrice;
 
 	@Transient
-	private String strPurchaseDate;
+	private String strPurchaseDate,strSoldDate;
 	
 
 	public String getStrPurchaseDate() {
@@ -56,6 +56,16 @@ public class Animal extends AbstractPojo implements Serializable{
 
 	public void setStrPurchaseDate(String strPurchaseDate) {
 		this.strPurchaseDate = strPurchaseDate;
+	}
+	
+	
+
+	public String getStrSoldDate() {
+		return new SimpleDateFormat("dd-MMMMMM-yyyy").format(soldDate);
+	}
+
+	public void setStrSoldDate(String strSoldDate) {
+		this.strSoldDate = strSoldDate;
 	}
 
 	public Branch getBranch() {

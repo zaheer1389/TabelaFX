@@ -164,6 +164,10 @@ public class LactationReportDialog extends VBox{
 					map.put("purchaseDate", new SimpleDateFormat("dd-MMMMMMM-yyyy").format(animal.getPurchaseDate()));
 					map.put("owner", animal.getOwnerName());
 					map.put("purchasePrice", animal.getPurchasePrice().toString());
+					map.put("soldDate", animal.isSold() ? new SimpleDateFormat("dd-MMMMMMM-yyyy").format(animal.getPurchaseDate()) : "Not Sold");
+					map.put("buyer",  animal.isSold() ? animal.getOwnerName() : "Not Sold");
+					map.put("soldPrice",  animal.isSold() ? animal.getPurchasePrice().toString() : "Not Sold");
+					
 					
 					InputStream is3 = getClass().getResourceAsStream("/reports/AnimalReport.jasper");
 					ReportManager.showReport("/reports/AnimalReport.jrxml", map, "Animal Detailed Report");
