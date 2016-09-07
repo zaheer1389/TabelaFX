@@ -6,6 +6,7 @@
 	<style name="Arial_Bold_14" fontName="Arial" fontSize="14"/>
 	<style name="Arial_Bold_24" fontName="Arial" fontSize="24"/>
 	<style name="Arial_Bold_12" fontName="Arial" fontSize="12"/>
+	<style name="SanSerif_Bold_Italic_10" fontSize="10" isUnderline="false" isStrikeThrough="false"/>
 	<parameter name="branchName" class="java.lang.String"/>
 	<parameter name="bid" class="java.lang.Long"/>
 	<parameter name="bname" class="java.lang.String"/>
