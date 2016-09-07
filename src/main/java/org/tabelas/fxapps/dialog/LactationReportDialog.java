@@ -195,7 +195,14 @@ public class LactationReportDialog extends StackPane{
 								ReportManager.showReport("/reports/AnimalReport.jrxml", map, "Animal Detailed Report");
 							} catch (JRException e) {
 								// TODO Auto-generated catch block
-								DialogFactory.showExceptionDialog(e);
+								Platform.runLater(new Runnable() {
+									
+									@Override
+									public void run() {
+										// TODO Auto-generated method stub
+										DialogFactory.showExceptionDialog(e);
+									}
+								});
 							}
 							
 							Platform.runLater(new Runnable() {

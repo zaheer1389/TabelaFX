@@ -251,11 +251,25 @@ public class AppController implements EventHandler<ActionEvent>{
 			new MilkWeightReportDialog().showDialog();
 		}
 		else if(event.getSource() == menuItemReport_Animal_SoldAnimalReport){
-			Map<String, Object> map = new HashMap<>();
-			map.put("bid", App.appcontroller.getBranch().getId());
-			map.put("bname",  App.appcontroller.getBranch().getBranchName());
-			InputStream is3 = getClass().getResourceAsStream("/reports/SoldAnimalList.jasper");
-			ReportManager.showReport("/reports/SoldAnimalList.jrxml", map, "Sold Animal List");
+			ProgressDialog dialog = new ProgressDialog();
+            dialog.getDialogStage().show();
+            new Thread(){
+            	public void run() {
+            		Map<String, Object> map = new HashMap<>();
+        			map.put("bid", App.appcontroller.getBranch().getId());
+        			map.put("bname",  App.appcontroller.getBranch().getBranchName());
+        			InputStream is3 = getClass().getResourceAsStream("/reports/SoldAnimalList.jasper");
+        			ReportManager.showReport("/reports/SoldAnimalList.jrxml", map, "Sold Animal List");
+        			Platform.runLater(new Runnable() {
+						
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							dialog.getDialogStage().close();
+						}
+					});
+            	};
+            }.start();
 		}
 	}
     

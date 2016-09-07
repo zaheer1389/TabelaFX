@@ -3,6 +3,7 @@ package org.tabelas.fxapps.util;
 import java.io.InputStream;
 import java.util.Map;
 
+import javafx.application.Platform;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -45,7 +46,14 @@ public class ReportManager {
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			DialogFactory.showExceptionDialog(e);
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					DialogFactory.showExceptionDialog(e);
+				}
+			});
 		}
 	}
 

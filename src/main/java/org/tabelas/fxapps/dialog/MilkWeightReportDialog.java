@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
@@ -16,13 +18,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -33,22 +42,35 @@ import net.sf.jasperreports.view.JasperViewer;
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.Glyph;
 import org.tabelas.fxapps.App;
+import org.tabelas.fxapps.control.AutoCompleteComboBoxListener;
+import org.tabelas.fxapps.controller.AnimalController;
 import org.tabelas.fxapps.model.Animal;
 import org.tabelas.fxapps.util.AppUtil;
 import org.tabelas.fxapps.util.DialogFactory;
 import org.tabelas.fxapps.util.ReportManager;
 
-public class MilkWeightReportDialog extends VBox{
+public class MilkWeightReportDialog extends StackPane{
 	
 	private DatePicker txtFromDate,txtToDate;
 	Button btnSave,btnReset;
-	ProgressBar pb;
+	VBox root;
+	VBox loader;
 	
 	public MilkWeightReportDialog(){
-		setSpacing(20);
-		setPadding(new Insets(30));
-		getStylesheets().add("/theme/theme.css");
-		getStyleClass().add("reportform");
+		
+		root = new VBox();
+		root.setSpacing(20);
+		root.setPadding(new Insets(30));
+		root.getStylesheets().add("/theme/theme.css");
+		root.getStyleClass().add("reportform");
+		getChildren().add(root);
+		
+		ProgressIndicator pi = new ProgressIndicator();
+		loader = new VBox(pi);
+		loader.setAlignment(Pos.CENTER);
+		loader.setVisible(false);
+        getChildren().add(loader);
+        
 		setUI();
 	}
 	
@@ -57,23 +79,17 @@ public class MilkWeightReportDialog extends VBox{
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(App.appcontroller.getStage());   
         dialog.setResizable(false);
-        dialog.setTitle("Animal Milk Weight Report");
-        Scene dialogScene = new Scene(this, 450, 250);
+        dialog.setTitle("Animal Detailed Report");
+        Scene dialogScene = new Scene(this, 450, 200);
         dialog.setScene(dialogScene);
         dialog.show();
 	}
 	
 	public void setUI(){
-
-		pb = new ProgressBar(0);
-		pb.setPrefWidth(Double.MAX_VALUE);
-		pb.setVisible(false);
-		getChildren().add(pb);
-		
 		GridPane form = new GridPane();
 		form.setVgap(20);
 		form.setHgap(10);				
-		getChildren().add(form);
+		root.getChildren().add(form);
 		
 		Label lblAnimalNo = new Label("From Date");
 		form.add(lblAnimalNo, 0, 0);
@@ -131,10 +147,44 @@ public class MilkWeightReportDialog extends VBox{
 		    		return;
 		    	}
 				
-				btnSave.setDisable(true);
-				pb.setVisible(true);
+				loader.setVisible(true);
+				root.setDisable(true);
 				
-				processReport();
+				new Thread(){
+						public void run() {
+							try {
+								Map<String, Object> map = new HashMap<>();					
+								map.put("bid", App.appcontroller.getBranch().getId());
+								map.put("bname",  App.appcontroller.getBranch().getBranchName());
+								map.put("fromDate", AppUtil.toUtilDate(txtFromDate.getValue()));
+								map.put("toDate", AppUtil.toUtilDate(txtToDate.getValue()));
+								
+								InputStream is3 = getClass().getResourceAsStream("/reports/MilkWeightReport.jasper");
+								ReportManager.showReport("/reports/MilkWeightReport.jrxml", map, "Milk Weight Report");
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								Platform.runLater(new Runnable() {
+									
+									@Override
+									public void run() {
+										// TODO Auto-generated method stub
+										DialogFactory.showExceptionDialog(e);
+									}
+								});
+							}
+							
+							Platform.runLater(new Runnable() {
+								
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									loader.setVisible(false);
+									root.setDisable(false);
+								}
+							});
+						};
+					}.start();
+				
 			}
 		});
 		
@@ -147,52 +197,6 @@ public class MilkWeightReportDialog extends VBox{
 				txtToDate.setValue(null);
 			}
 		});
-	}
-	
-	public void processReport(){
-
-		//Task for generating report
-	    Task<Void> task = new Task<Void>() {
-	        @Override
-	        protected Void call() throws Exception {
-	        	try {
-	        		pb.setProgress(0.25f);
-	        		
-	        		Map<String, Object> map = new HashMap<>();					
-					map.put("bid", App.appcontroller.getBranch().getId());
-					map.put("bname",  App.appcontroller.getBranch().getBranchName());
-					map.put("fromDate", AppUtil.toUtilDate(txtFromDate.getValue()));
-					map.put("toDate", AppUtil.toUtilDate(txtToDate.getValue()));
-					
-					pb.setProgress(0.5f);
-					
-					InputStream is3 = getClass().getResourceAsStream("/reports/MilkWeightReport.jasper");
-					ReportManager.showReport("/reports/MilkWeightReport.jrxml", map, "Milk Weight Report");
-					
-					pb.setProgress(1f);
-					
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					DialogFactory.showExceptionDialog(e);
-				}
-	            return null;
-	        }
-	    };
-	    
-	    //stateProperty for Task:
-	    task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-			
-			@Override
-			public void handle(WorkerStateEvent arg0) {
-				// TODO Auto-generated method stub
-				btnSave.setDisable(false);
-                pb.setVisible(false);
-			}
-		});
-	    
-	    //start Task
-	    new Thread(task).start();
-	    
 	}
 	
 }
