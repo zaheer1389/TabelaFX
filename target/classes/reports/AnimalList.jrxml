@@ -68,7 +68,7 @@ where BranchId = $P{bid}]]>
 	<columnHeader>
 		<band height="27" splitType="Stretch">
 			<staticText>
-				<reportElement style="Arial_Bold_12" mode="Opaque" x="10" y="7" width="135" height="20" backcolor="#66CCFF" uuid="4422cc9b-3dda-45f4-ac07-0b60ab8f9b4c"/>
+				<reportElement style="Arial_Bold_12" mode="Opaque" x="10" y="7" width="110" height="20" backcolor="#66CCFF" uuid="4422cc9b-3dda-45f4-ac07-0b60ab8f9b4c"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -82,7 +82,7 @@ where BranchId = $P{bid}]]>
 				<text><![CDATA[Animal No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Arial_Bold_12" mode="Opaque" x="145" y="7" width="135" height="20" backcolor="#66CCFF" uuid="467fb320-30ff-4c24-899f-fe0eb66fdeff"/>
+				<reportElement style="Arial_Bold_12" mode="Opaque" x="120" y="7" width="110" height="20" backcolor="#66CCFF" uuid="467fb320-30ff-4c24-899f-fe0eb66fdeff"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -96,7 +96,7 @@ where BranchId = $P{bid}]]>
 				<text><![CDATA[Purchase Date]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Arial_Bold_12" mode="Opaque" x="280" y="7" width="135" height="20" backcolor="#66CCFF" uuid="985d100c-6fb8-43fb-abca-cf8290b51118"/>
+				<reportElement style="Arial_Bold_12" mode="Opaque" x="230" y="7" width="110" height="20" backcolor="#66CCFF" uuid="985d100c-6fb8-43fb-abca-cf8290b51118"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -110,7 +110,7 @@ where BranchId = $P{bid}]]>
 				<text><![CDATA[Purchase Price]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Arial_Bold_12" mode="Opaque" x="415" y="7" width="135" height="20" backcolor="#66CCFF" uuid="ec4a18dd-f6bd-4003-a5a6-a0c5caab0219"/>
+				<reportElement style="Arial_Bold_12" mode="Opaque" x="340" y="7" width="110" height="20" backcolor="#66CCFF" uuid="ec4a18dd-f6bd-4003-a5a6-a0c5caab0219"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -123,12 +123,26 @@ where BranchId = $P{bid}]]>
 				</textElement>
 				<text><![CDATA[Owner Name]]></text>
 			</staticText>
+			<staticText>
+				<reportElement style="Arial_Bold_12" mode="Opaque" x="450" y="7" width="100" height="20" backcolor="#66CCFF" uuid="52789e7a-32ed-4989-b826-c3865c8bc800"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Sold]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="10" y="0" width="135" height="20" uuid="0e919d79-2f35-408f-a00c-821e4a60ff93"/>
+				<reportElement x="10" y="0" width="110" height="20" uuid="0e919d79-2f35-408f-a00c-821e4a60ff93"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -142,7 +156,7 @@ where BranchId = $P{bid}]]>
 				<textFieldExpression><![CDATA[""+$F{AnimalNo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="145" y="0" width="135" height="20" uuid="0f2e453d-9590-4b46-b07f-2b992bdfd2e2"/>
+				<reportElement x="120" y="0" width="110" height="20" uuid="0f2e453d-9590-4b46-b07f-2b992bdfd2e2"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -156,7 +170,7 @@ where BranchId = $P{bid}]]>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMM-yyyy").format($F{PurchaseDate})]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="280" y="0" width="135" height="20" uuid="8a2fbffd-07b3-4d0b-8b73-51246633bac1"/>
+				<reportElement x="230" y="0" width="110" height="20" uuid="8a2fbffd-07b3-4d0b-8b73-51246633bac1"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -170,7 +184,7 @@ where BranchId = $P{bid}]]>
 				<textFieldExpression><![CDATA[""+$F{PurchasePrice}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="415" y="0" width="135" height="20" uuid="6f237b91-d115-43dc-9fb2-6e67b934d174"/>
+				<reportElement x="340" y="0" width="110" height="20" uuid="6f237b91-d115-43dc-9fb2-6e67b934d174"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -182,6 +196,20 @@ where BranchId = $P{bid}]]>
 					<font fontName="SansSerif" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$F{OwnerName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="0" width="100" height="20" uuid="190a9880-61e2-4700-9eda-160edcfe2d6d"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SoldDate} != null ? "Yes" : "No"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

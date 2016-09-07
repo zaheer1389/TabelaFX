@@ -121,7 +121,7 @@ public class LactationController implements View{
     	btnSearch.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.SEARCH).size(17));
     	btnClearSearch.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TIMES).size(17));
     	
-    	cbAnimal.setItems(FXCollections.observableArrayList(AnimalController.getAnimalsByBranch()));
+    	cbAnimal.setItems(FXCollections.observableArrayList(AnimalController.getUnsoldAnimalsByBranch()));
     	new AutoCompleteComboBoxListener<>(cbAnimal);
     	cbAnimal.setCellFactory(new Callback<ListView<Animal>, ListCell<Animal>>() {
 			
@@ -234,6 +234,10 @@ public class LactationController implements View{
 						// TODO Auto-generated method stub
 						int selectdIndex = editButton.getRowIndex();
 						lactation = tableView.getItems().get(selectdIndex);
+						if(lactation.getAnimal().isSold()){
+							DialogFactory.showErrorDialog("Animal has been sold.You are not allowed to edit/delete details once animal sold.");
+							return;
+						}
 						cbAnimal.setValue(lactation.getAnimal());
 						txtArrivalDate.setValue(AppUtil.toLocalDate(new Date(lactation.getArrivalDate().getTime())));
 						txtCowingDate.setValue(AppUtil.toLocalDate(new Date(lactation.getCowingDate().getTime())));
@@ -274,10 +278,14 @@ public class LactationController implements View{
 					@Override
 					public void handle(ActionEvent arg0) {
 						// TODO Auto-generated method stub
+						int selectdIndex = deleteButton.getRowIndex();
+						Lactation animal = tableView.getItems().get(selectdIndex);
+						if(animal.getAnimal().isSold()){
+							DialogFactory.showErrorDialog("Animal has been sold.You are not allowed to edit/delete details once animal sold.");
+							return;
+						}
 						Response response = DialogFactory.showConfirmationDialog("Do you want to delete this record?", DialogType.YESNOCANCEL);
 						if(response == Response.YES){
-							int selectdIndex = deleteButton.getRowIndex();
-							Lactation animal = tableView.getItems().get(selectdIndex);
 							FacadeFactory.getFacade().delete(animal);
 							DialogFactory.showInformationDialog("Lactation details deleted succssfully");
 					    	setPagePanel(getLactationsByBranch());
@@ -497,6 +505,8 @@ public class LactationController implements View{
 		txtArrivalDate.setDisable(false);
 		txtCowingDate.setDisable(false);
 		txtVehicleNo.setDisable(false);
+		
+		txtSearchAnimalNo.setText("");
     	
     	id = null;
     	lactation = null;

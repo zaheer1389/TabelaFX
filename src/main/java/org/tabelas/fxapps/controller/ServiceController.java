@@ -358,7 +358,7 @@ public class ServiceController implements View{
 		Hyperlink next = new Hyperlink(">>");
 		pagecontainer.getChildren().add(next);
 		
-prev.setOnAction(new EventHandler<ActionEvent>() {
+		prev.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -413,13 +413,13 @@ prev.setOnAction(new EventHandler<ActionEvent>() {
     			if(id == null){
     				service = new AnimalService();
     				service.setAddedDate(new Timestamp(new Date().getTime()));
-    				service.setServiceDate(new Timestamp(AppUtil.toUtilDate(txtServiceDate.getValue()).getTime()));
     				Lactation lactation = LactationController.getCurrentLactation(cbAnimal.getValue().getAnimalNo());
     				service.setLactation(lactation);
     			}
     			else{
     				service = FacadeFactory.getFacade().find(AnimalService.class, id);
     			}
+    			service.setServiceDate(new Timestamp(AppUtil.toUtilDate(txtServiceDate.getValue()).getTime()));
     			service.setGenderNo(txtMaleAnimalNo.getText());
     			service.setRemarks(txtRemarks.getText());
     			if(optPregnant.isSelected()){

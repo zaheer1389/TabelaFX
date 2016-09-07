@@ -335,7 +335,7 @@ public class MilkWeightController implements View{
 		Hyperlink next = new Hyperlink(">>");
 		pagecontainer.getChildren().add(next);
 		
-prev.setOnAction(new EventHandler<ActionEvent>() {
+		prev.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -390,13 +390,13 @@ prev.setOnAction(new EventHandler<ActionEvent>() {
     			if(id == null){
     				milkWeight = new AnimalMilkWeight();
     				milkWeight.setAddedDate(new Timestamp(new Date().getTime()));
-    				milkWeight.setWeightDate(new Timestamp(AppUtil.toUtilDate(txtObservedDate.getValue()).getTime()));
     				Lactation lactation = LactationController.getCurrentLactation(cbAnimal.getValue().getAnimalNo());
     				milkWeight.setLactation(lactation);
     			}
     			else{
     				milkWeight = FacadeFactory.getFacade().find(AnimalMilkWeight.class, id);
     			}
+    			milkWeight.setWeightDate(new Timestamp(AppUtil.toUtilDate(txtObservedDate.getValue()).getTime()));
     			milkWeight.setWeight(Double.parseDouble(txtResult.getText()));
     			FacadeFactory.getFacade().store(milkWeight);
     			DialogFactory.showInformationDialog("Milk weight record saved successfully");

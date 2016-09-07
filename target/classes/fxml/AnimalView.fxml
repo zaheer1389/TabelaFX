@@ -90,6 +90,7 @@
                       <TableColumn fx:id="colOwnerName" prefWidth="144.0" text="Owner" />
                         <TableColumn fx:id="colPrice" minWidth="6.0" prefWidth="115.0" text="Purchase Price" />
                         <TableColumn fx:id="colDate" minWidth="0.0" prefWidth="124.0" text="Purchase Date" />
+                        <TableColumn fx:id="colSold" prefWidth="75.0" text="Sold" />
                         <TableColumn fx:id="colEdit" minWidth="0.0" prefWidth="45.0" text="Edit" />
                         <TableColumn fx:id="colDelete" prefWidth="50.0" text="Delete" />
                     </columns>

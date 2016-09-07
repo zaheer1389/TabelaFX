@@ -41,6 +41,8 @@ public class ReportManager {
 			viewer.setTitle(title);
 			viewer.setVisible(true);
 			viewer.toFront();
+			viewer.setAlwaysOnTop(true);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			DialogFactory.showExceptionDialog(e);

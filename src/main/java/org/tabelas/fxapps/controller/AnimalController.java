@@ -65,7 +65,7 @@ public class AnimalController implements View{
     private TextField txtAnimalNo;
 
     @FXML
-    private TableColumn<Animal, String> colAnimalNo,colOwnerName,colPrice,colDate;
+    private TableColumn<Animal, String> colAnimalNo,colOwnerName,colPrice,colDate,colSold;
     
     @FXML
     private TableColumn<Object, String> colEdit,colDelete;
@@ -145,6 +145,7 @@ public class AnimalController implements View{
     	colOwnerName.setCellValueFactory(new PropertyValueFactory<Animal, String>("ownerName"));
 		colDate.setCellValueFactory(new PropertyValueFactory<Animal, String>("strPurchaseDate"));
 		colPrice.setCellValueFactory(new PropertyValueFactory<Animal, String>("purchasePrice"));
+		colSold.setCellValueFactory(new PropertyValueFactory<Animal, String>("strSold"));
 		 
 		colEdit.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Object, String>, ObservableValue<String>>() {
 			@Override
@@ -159,6 +160,7 @@ public class AnimalController implements View{
 			public TableCell<Object, String> call(TableColumn<Object, String> arg0) {
 				// TODO Auto-generated method stub
 				final EditButton editButton = new EditButton();
+				//editButton.setDisable(animal.isSold());
 				editButton.getButton().setOnAction(new EventHandler<ActionEvent>() {
 					
 					@Override
@@ -166,8 +168,8 @@ public class AnimalController implements View{
 						// TODO Auto-generated method stub
 						int selectdIndex = editButton.getRowIndex();
 						Animal animal = tableView.getItems().get(selectdIndex);
-						id = animal.getId();
 						
+						id = animal.getId();
 						txtAnimalNo.setText(animal.getAnimalNo());
 						txtOwnerName.setText(animal.getOwnerName());
 						txtPurchasePrice.setText(animal.getPurchasePrice()+"");
@@ -191,6 +193,8 @@ public class AnimalController implements View{
 			public TableCell<Object, String> call(TableColumn<Object, String> arg0) {
 				// TODO Auto-generated method stub
 				final DeleteButton deleteButton = new DeleteButton();
+				
+				//deleteButton.setDisable(animal.isSold());
 				deleteButton.getButton().setOnAction(new EventHandler<ActionEvent>() {
 					
 					@Override
@@ -438,7 +442,7 @@ public class AnimalController implements View{
 	
 	public static List<Animal> getAnimalsByBranch() {
 		String queryStr = "Select a from Animal as a where a.branch = :bid "
-				+ "and a.sold = false  order by a.id desc";
+				+ " order by a.id desc";
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("bid", App.appcontroller.getBranch());
 		return FacadeFactory.getFacade().list(queryStr, parameters);
@@ -446,7 +450,7 @@ public class AnimalController implements View{
 
 	public static List<Animal> getAnimalsByNumber(String no) {
 		String queryStr = "Select a from Animal as a where a.branch = :bid "
-				+ "and a.sold = false   and a.animalNo = :no order by a.id desc";
+				+ " and a.animalNo = :no order by a.id desc";
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("bid", App.appcontroller.getBranch());
 		parameters.put("no", no);
@@ -460,6 +464,14 @@ public class AnimalController implements View{
 		parameters.put("bid", App.appcontroller.getBranch());
 		parameters.put("no", no);
 		return FacadeFactory.getFacade().find(queryStr, parameters);
+	}
+	
+	public static List<Animal> getUnsoldAnimalsByBranch() {
+		String queryStr = "Select a from Animal as a where a.branch = :bid "
+				+ " AND a.sold = false order by a.id desc";
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("bid", App.appcontroller.getBranch());
+		return FacadeFactory.getFacade().list(queryStr, parameters);
 	}
 
 }

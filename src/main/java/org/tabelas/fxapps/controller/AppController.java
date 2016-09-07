@@ -5,7 +5,10 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -32,6 +35,7 @@ import org.tabelas.fxapps.control.FXOptionPane.Response;
 import org.tabelas.fxapps.dialog.AnimalServiceReportDialog;
 import org.tabelas.fxapps.dialog.LactationReportDialog;
 import org.tabelas.fxapps.dialog.MilkWeightReportDialog;
+import org.tabelas.fxapps.dialog.ProgressDialog;
 import org.tabelas.fxapps.enums.DialogType;
 import org.tabelas.fxapps.model.Branch;
 import org.tabelas.fxapps.persistence.FacadeFactory;
@@ -216,11 +220,25 @@ public class AppController implements EventHandler<ActionEvent>{
 			lblPageCaption.setText("Manage Sold Animal");
 		}
 		else if(event.getSource() == menuItemReport_Animal_List){
-			Map<String, Object> map = new HashMap<>();
-			map.put("bid", App.appcontroller.getBranch().getId());
-			map.put("bname",  App.appcontroller.getBranch().getBranchName());
-			InputStream is3 = getClass().getResourceAsStream("/reports/AnimalList.jasper");
-			ReportManager.showReport("/reports/AnimalList.jrxml", map, "Animal List");
+			ProgressDialog dialog = new ProgressDialog();
+            dialog.getDialogStage().show();
+            new Thread(){
+            	public void run() {
+            		Map<String, Object> map = new HashMap<>();
+        			map.put("bid", App.appcontroller.getBranch().getId());
+        			map.put("bname",  App.appcontroller.getBranch().getBranchName());
+        			InputStream is3 = getClass().getResourceAsStream("/reports/AnimalList.jasper");
+        			ReportManager.showReport("/reports/AnimalList.jrxml", map, "Animal List");
+        			Platform.runLater(new Runnable() {
+						
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							dialog.getDialogStage().close();
+						}
+					});
+            	};
+            }.start();
 		}
 		else if(event.getSource() == menuItemReport_Animal_DetailedReport){
 			new LactationReportDialog().showDialog();

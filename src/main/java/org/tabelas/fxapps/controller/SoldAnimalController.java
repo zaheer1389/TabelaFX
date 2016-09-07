@@ -121,7 +121,8 @@ public class SoldAnimalController implements View{
     	btnSearch.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.SEARCH).size(17));
     	btnClearSearch.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.TIMES).size(17));
     	
-    	cbAnimal.setItems(FXCollections.observableArrayList(AnimalController.getAnimalsByBranch()));
+    	cbAnimal.setPromptText("Select Animal");
+    	cbAnimal.setItems(FXCollections.observableArrayList(AnimalController.getUnsoldAnimalsByBranch()));
     	new AutoCompleteComboBoxListener<>(cbAnimal);
     	cbAnimal.setCellFactory(new Callback<ListView<Animal>, ListCell<Animal>>() {
 			
@@ -444,6 +445,7 @@ public class SoldAnimalController implements View{
     	txtBuyerName.setText("");
     	txtSearchAnimalNo.setText("");
     	cbAnimal.requestFocus();
+    	cbAnimal.setItems(FXCollections.observableArrayList(AnimalController.getUnsoldAnimalsByBranch()));
 	}
 
 	@Override

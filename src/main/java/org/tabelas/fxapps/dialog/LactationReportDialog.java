@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,14 +17,17 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
 
@@ -36,15 +40,27 @@ import org.tabelas.fxapps.model.Animal;
 import org.tabelas.fxapps.util.DialogFactory;
 import org.tabelas.fxapps.util.ReportManager;
 
-public class LactationReportDialog extends VBox{
+public class LactationReportDialog extends StackPane{
 	
 	private ComboBox<Animal> cbAnimal;
+	VBox root;
+	VBox loader;
 	
 	public LactationReportDialog(){
-		setSpacing(20);
-		setPadding(new Insets(30));
-		getStylesheets().add("/theme/theme.css");
-		getStyleClass().add("reportform");
+		
+		root = new VBox();
+		root.setSpacing(20);
+		root.setPadding(new Insets(30));
+		root.getStylesheets().add("/theme/theme.css");
+		root.getStyleClass().add("reportform");
+		getChildren().add(root);
+		
+		ProgressIndicator pi = new ProgressIndicator();
+		loader = new VBox(pi);
+		loader.setAlignment(Pos.CENTER);
+		loader.setVisible(false);
+        getChildren().add(loader);
+        
 		setUI();
 	}
 	
@@ -63,7 +79,7 @@ public class LactationReportDialog extends VBox{
 		GridPane form = new GridPane();
 		form.setVgap(20);
 		form.setHgap(10);				
-		getChildren().add(form);
+		root.getChildren().add(form);
 		
 		Label lblAnimalNo = new Label("Animal No");
 		form.add(lblAnimalNo, 0, 0);
@@ -147,35 +163,53 @@ public class LactationReportDialog extends VBox{
 		    		DialogFactory.showErrorDialog("Please select animal");
 		    		return;
 		    	}
-				try {
-					Animal animal = cbAnimal.getValue();
-					System.out.println("Animal"+animal.getAnimalNo());
-					Map<String, Object> map = new HashMap<>();
-					InputStream is = getClass().getResourceAsStream("/reports/AnimalServiceReport.jrxml");
-					JasperReport jr = JasperCompileManager.compileReport(is); 
-					InputStream is2 = getClass().getResourceAsStream("/reports/AnimalWeightReport.jrxml");
-					JasperReport jr2 = JasperCompileManager.compileReport(is2); 
-					map.put("serviceSubReport", jr);
-					map.put("milkWeightSubReport", jr2);
-					map.put("animalId",animal.getId());
-					map.put("animalNo", animal.getAnimalNo());
-					map.put("branchId", App.appcontroller.getBranch().getId());
-					map.put("branchName",  App.appcontroller.getBranch().getBranchName());
-					map.put("purchaseDate", new SimpleDateFormat("dd-MMMMMMM-yyyy").format(animal.getPurchaseDate()));
-					map.put("owner", animal.getOwnerName());
-					map.put("purchasePrice", animal.getPurchasePrice().toString());
-					map.put("soldDate", animal.isSold() ? new SimpleDateFormat("dd-MMMMMMM-yyyy").format(animal.getPurchaseDate()) : "Not Sold");
-					map.put("buyer",  animal.isSold() ? animal.getOwnerName() : "Not Sold");
-					map.put("soldPrice",  animal.isSold() ? animal.getPurchasePrice().toString() : "Not Sold");
-					
-					
-					InputStream is3 = getClass().getResourceAsStream("/reports/AnimalReport.jasper");
-					ReportManager.showReport("/reports/AnimalReport.jrxml", map, "Animal Detailed Report");
-					
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					DialogFactory.showExceptionDialog(e);
-				}
+				
+				loader.setVisible(true);
+				root.setDisable(true);
+				
+				new Thread(){
+						public void run() {
+							try {
+								Animal animal = cbAnimal.getValue();
+								System.out.println("Animal"+animal.getAnimalNo());
+								Map<String, Object> map = new HashMap<>();
+								InputStream is = getClass().getResourceAsStream("/reports/AnimalServiceReport.jrxml");
+								JasperReport jr = JasperCompileManager.compileReport(is); 
+								InputStream is2 = getClass().getResourceAsStream("/reports/AnimalWeightReport.jrxml");
+								JasperReport jr2 = JasperCompileManager.compileReport(is2); 
+								map.put("serviceSubReport", jr);
+								map.put("milkWeightSubReport", jr2);
+								map.put("animalId",animal.getId());
+								map.put("animalNo", animal.getAnimalNo());
+								map.put("branchId", App.appcontroller.getBranch().getId());
+								map.put("branchName",  App.appcontroller.getBranch().getBranchName());
+								map.put("purchaseDate", new SimpleDateFormat("dd-MMMMMMM-yyyy").format(animal.getPurchaseDate()));
+								map.put("owner", animal.getOwnerName());
+								map.put("purchasePrice", animal.getPurchasePrice().toString());
+								map.put("soldDate", animal.isSold() ? new SimpleDateFormat("dd-MMMMMMM-yyyy").format(animal.getSoldDate()) : "Not Sold");
+								map.put("buyer",  animal.isSold() ? animal.getBuyerName() : "Not Sold");
+								map.put("soldPrice",  animal.isSold() ? animal.getSoldPrice().toString() : "Not Sold");
+								
+								
+								InputStream is3 = getClass().getResourceAsStream("/reports/AnimalReport.jasper");
+								ReportManager.showReport("/reports/AnimalReport.jrxml", map, "Animal Detailed Report");
+							} catch (JRException e) {
+								// TODO Auto-generated catch block
+								DialogFactory.showExceptionDialog(e);
+							}
+							
+							Platform.runLater(new Runnable() {
+								
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									loader.setVisible(false);
+									root.setDisable(false);
+								}
+							});
+						};
+					}.start();
+				
 			}
 		});
 		
