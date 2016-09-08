@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version last-->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AnimalWeightReport" columnCount="3" printOrder="Horizontal" pageWidth="555" pageHeight="802" whenNoDataType="BlankPage" columnWidth="181" leftMargin="0" rightMargin="10" topMargin="0" bottomMargin="0" uuid="0f3d6c00-47d7-43be-b8e5-c66195b1b6ea">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AnimalWeightReport" columnCount="3" printOrder="Horizontal" pageWidth="555" pageHeight="802" whenNoDataType="NoDataSection" columnWidth="181" leftMargin="0" rightMargin="10" topMargin="0" bottomMargin="0" uuid="0f3d6c00-47d7-43be-b8e5-c66195b1b6ea">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -191,16 +190,6 @@
 			<property name="local_mesure_unitheight" value="pixel"/>
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<textField>
-				<reportElement mode="Opaque" x="186" y="5" width="179" height="20" backcolor="#FFFFFF" uuid="ab0f6313-4a4d-4366-b5fe-bb716d785b51">
-					<property name="local_mesure_unity" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Total Days in Tabelas: "+$V{totalDays}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement mode="Opaque" x="365" y="5" width="180" height="20" backcolor="#FFFFFF" uuid="c7588cf5-23ac-4ae7-95df-bca2fd40dc84"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
@@ -216,4 +205,25 @@
 			</textField>
 		</band>
 	</summary>
+	<noData>
+		<band height="40">
+			<staticText>
+				<reportElement x="18" y="20" width="522" height="20" uuid="281392a5-1693-4cff-8424-921136874b2d"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[No record of Milk weight found for this lactation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Arial_Bold_14" positionType="Float" mode="Opaque" x="1" y="0" width="540" height="20" forecolor="#0066FF" backcolor="#FFFFFF" uuid="0ea6ebcb-0463-4752-bdd3-c0f6e345007e">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="SansSerif" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Animal Milk Weight Detail]]></text>
+			</staticText>
+		</band>
+	</noData>
 </jasperReport>

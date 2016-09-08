@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version last-->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AnimalServiceReport" language="groovy" pageWidth="535" pageHeight="782" whenNoDataType="BlankPage" columnWidth="530" leftMargin="0" rightMargin="5" topMargin="0" bottomMargin="0" uuid="0f3d6c00-47d7-43be-b8e5-c66195b1b6ea">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AnimalServiceReport" language="groovy" pageWidth="535" pageHeight="782" whenNoDataType="NoDataSection" columnWidth="530" leftMargin="0" rightMargin="5" topMargin="0" bottomMargin="0" uuid="0f3d6c00-47d7-43be-b8e5-c66195b1b6ea">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -263,4 +262,25 @@
 			</textField>
 		</band>
 	</detail>
+	<noData>
+		<band height="40">
+			<staticText>
+				<reportElement style="Arial_Bold_14" positionType="Float" mode="Opaque" x="0" y="0" width="540" height="20" forecolor="#0066FF" backcolor="#FFFFFF" uuid="0805485c-bbad-4bfc-b2c1-a3efd768e7cc">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="SansSerif" size="11" isBold="true" isItalic="false" isUnderline="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Animal Services Details]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="20" width="522" height="20" uuid="1dae81f4-bfe4-47af-988f-713a18c8e43b"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[No record of Animal Service found for this lactation]]></text>
+			</staticText>
+		</band>
+	</noData>
 </jasperReport>
