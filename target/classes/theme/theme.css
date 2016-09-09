@@ -87,19 +87,19 @@
 
 /**************** Table ******************/
 
-.table-view {
+/* .table-view {
 	-fx-control-inner-background: whitesmoke;
 	-fx-font-size: 12px;
 	-fx-font-family: "Material Icons";
 	-fx-table-header-border-color: transparent;
 }
 
-/* .table-view .column-header-background {
+.table-view .column-header-background {
 	-fx-base: #00ff00,
         linear-gradient(#fafdfe, #e8f5fc),
         linear-gradient(#eaf6fd 0%, #d9f0fc 49%, #bee6fd 50%, #a7d9f5 100%);
 	-fx-text-fill: #08c;
-} */
+}
 
 .table-view .column-header,
 .table-view .column-header .filler,
@@ -116,7 +116,7 @@
 
 .table-view .column-header .label {
 	-fx-font-size: 12px;
-	/* -fx-font-weight: bold; */
+	-fx-font-weight: bold;
 	-fx-font-family: "Material Icons";
 	-fx-text-fill: #FFFFFF;
 	-fx-alignment: center-left;
@@ -129,7 +129,42 @@
 .table-view  .table-column {
   -fx-alignment: CENTER-LEFT;
   -fx-pref-height: 30px;
+} */
+
+.table-view {
+	-fx-control-inner-background: whitesmoke;
+	-fx-font-size: 13px;
+	-fx-font-family: "Segoe UI Semibold";
+	-fx-table-header-border-color: transparent;
 }
+
+.table-view .column-header-background {
+	-fx-base: #4D7A97;
+	-fx-text-fill: #FFFFFF;
+}
+
+.table-view .column-header,.table-view .filler {
+	-fx-border-width: 1 1 1 1;
+	-fx-border-color: transparent transparent derive(-fx-base, 80%)
+		transparent;
+}
+
+.table-row-cell {
+	-fx-cell-size: 23px;
+	-fx-alignment: center;
+}
+
+.table-view .column-header .label {
+	-fx-font-size: 11px;
+	-fx-font-family: "Segoe UI Semibold";
+	-fx-text-fill: white;
+	-fx-alignment: center-left;
+}
+
+.table-view .table-cell .button {
+	-fx-alignment: center;
+}
+
 
 /* .menu-bar {
 	-fx-background-color: #19bc9c ;	
