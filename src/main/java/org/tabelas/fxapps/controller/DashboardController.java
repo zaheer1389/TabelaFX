@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,6 +29,7 @@ import javax.persistence.Query;
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.Glyph;
 import org.tabelas.fxapps.App;
+import org.tabelas.fxapps.dialog.ProgressDialog;
 import org.tabelas.fxapps.model.AnimalPojo;
 import org.tabelas.fxapps.persistence.JPAFacade;
 import org.tabelas.fxapps.util.DialogFactory;
@@ -68,16 +70,46 @@ public class DashboardController {
 		}*/
     	
     	if(event.getSource() == btnPrintSalvageList){
-    		Map<String, Object> map = new HashMap<>();
-			//map.put("branchName",  App.appcontroller.getBranch().getBranchName());
-			InputStream is3 = getClass().getResourceAsStream("/reports/SalvageAnimalReport2.jasper");
-			ReportManager.showReport("/reports/SalvageAnimalReport2.jrxml", map, "Salvage Due Animal List");
+    		ProgressDialog dialog = new ProgressDialog();
+            dialog.getDialogStage().show();
+            new Thread(){
+            	public void run() {
+            		Map<String, Object> map = new HashMap<>();
+        			//map.put("branchName",  App.appcontroller.getBranch().getBranchName());
+        			InputStream is3 = getClass().getResourceAsStream("/reports/SalvageAnimalReport2.jasper");
+        			ReportManager.showReport("/reports/SalvageAnimalReport2.jrxml", map, "Salvage Due Animal List");
+        			Platform.runLater(new Runnable() {
+						
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							dialog.getDialogStage().close();
+						}
+					});
+            	};
+            }.start();
+    		
     	}
     	else if(event.getSource() == btnPrintServiceDueList){
-    		Map<String, Object> map = new HashMap<>();
-			//map.put("branchName",  App.appcontroller.getBranch().getBranchName());
-			InputStream is3 = getClass().getResourceAsStream("/reports/ServiceDueReport2.jasper");
-			ReportManager.showReport("/reports/ServiceDueReport2.jrxml", map, "Service Due Animal List");
+    		ProgressDialog dialog = new ProgressDialog();
+            dialog.getDialogStage().show();
+            new Thread(){
+            	public void run() {
+            		Map<String, Object> map = new HashMap<>();
+        			//map.put("branchName",  App.appcontroller.getBranch().getBranchName());
+        			InputStream is3 = getClass().getResourceAsStream("/reports/ServiceDueReport2.jasper");
+        			ReportManager.showReport("/reports/ServiceDueReport2.jrxml", map, "Service Due Animal List");
+        			Platform.runLater(new Runnable() {
+						
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							dialog.getDialogStage().close();
+						}
+					});
+            	};
+            }.start();
+    		
     	}
     }
     
