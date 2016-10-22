@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="600" pageHeight="842" columnWidth="560" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e97a7671-bf4a-4d2e-a9a6-2605c20f1675">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Arial_Bold_14" fontName="Arial" fontSize="14"/>
+	<style name="Arial_Bold_24" fontName="Arial" fontSize="24"/>
+	<style name="Arial_Bold_12" fontName="Arial" fontSize="12"/>
+	<style name="SanSerif_Bold_Italic_10" fontSize="10" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<style name="style1" pattern=""/>
+	<style name="sanserif_bold_12" fontSize="12" isBold="true" isItalic="false"/>
+	<parameter name="bname" class="java.lang.String"/>
+	<parameter name="bid" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fromDate" class="java.util.Date"/>
+	<parameter name="toDate" class="java.util.Date"/>
+	<parameter name="queryType" class="java.lang.String"/>
+	<parameter name="selectedAnimals" class="java.lang.String"/>
+	<parameter name="queryStr" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[$P!{queryStr}]]>
+	</queryString>
+	<field name="ID" class="java.lang.Object"/>
+	<field name="AddedDate" class="java.lang.Object"/>
+	<field name="CONSISTENCYVERSION" class="java.lang.Object"/>
+	<field name="Weight" class="java.lang.Object"/>
+	<field name="WeightDate" class="java.lang.Object"/>
+	<field name="LactationId" class="java.lang.Object"/>
+	<field name="ArrivalDate" class="java.lang.Object"/>
+	<field name="CowingDate" class="java.lang.Object"/>
+	<field name="CurrentLactation" class="java.lang.Object"/>
+	<field name="DepartureDate" class="java.lang.Object"/>
+	<field name="DepartureVehicleNo" class="java.lang.Object"/>
+	<field name="VehicleNo" class="java.lang.Object"/>
+	<field name="AnimalId" class="java.lang.Object"/>
+	<field name="AnimalNo" class="java.lang.Object"/>
+	<field name="BuyerName" class="java.lang.Object"/>
+	<field name="OwnerName" class="java.lang.Object"/>
+	<field name="PurchaseDate" class="java.lang.Object"/>
+	<field name="PurchasePrice" class="java.lang.Object"/>
+	<field name="Sold" class="java.lang.Object"/>
+	<field name="SoldDate" class="java.lang.Object"/>
+	<field name="SoldPrice" class="java.lang.Object"/>
+	<field name="BranchId" class="java.lang.Object"/>
+	<field name="sorID" class="java.lang.Object"/>
+	<title>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement style="Arial_Bold_24" mode="Opaque" x="0" y="0" width="560" height="23" forecolor="#FFFFFF" backcolor="#0099FF" uuid="d979ab40-9ac2-489a-8571-306c5c89ee60"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
+					<font size="17" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Milk Weight Report]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="Arial_Bold_14" mode="Opaque" x="0" y="22" width="560" height="18" forecolor="#FFFFFF" backcolor="#0099FF" uuid="c9c9398b-9759-4afb-a4f2-0982d86c1e6d"/>
+				<textElement textAlignment="Center" markup="styled">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{bname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="SanSerif_Bold_Italic_10" x="10" y="45" width="540" height="15" uuid="5843e9cf-6983-4a12-b0cc-8824fda64878"/>
+				<textElement markup="styled">
+					<font isBold="true" isItalic="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Report from "+new SimpleDateFormat("dd-MMM-yyyy").format($P{fromDate})+" to "+new SimpleDateFormat("dd-MMM-yyyy").format($P{toDate})]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<summary>
+		<band height="50">
+			<crosstab>
+				<reportElement x="0" y="0" width="560" height="50" uuid="2d7926f5-85ba-4ea6-95af-1932f4e23e7b"/>
+				<crosstabDataset isDataPreSorted="true"/>
+				<crosstabHeaderCell>
+					<cellContents>
+						<staticText>
+							<reportElement style="sanserif_bold_12" mode="Opaque" x="0" y="0" width="70" height="30" backcolor="#F0F8FF" uuid="8ab83988-93c2-47a5-abfe-1045c9125f32"/>
+							<box>
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement markup="styled"/>
+							<text><![CDATA[Animal No]]></text>
+						</staticText>
+					</cellContents>
+				</crosstabHeaderCell>
+				<rowGroup name="AnimalNo" width="70" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{AnimalNo}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="25" uuid="0b22fdcc-d96f-4074-b8e4-47bb3020f9e8"/>
+								<textFieldExpression><![CDATA[""+$V{AnimalNo}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="70" height="25" uuid="1cb96748-8af1-427e-b50e-efa9774a36d8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Total Avg]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="WeightDate" height="30">
+					<bucket class="java.lang.Long">
+						<bucketExpression><![CDATA[$F{WeightDate}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField isStretchWithOverflow="true">
+								<reportElement style="sanserif_bold_12" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="50" height="30" isPrintWhenDetailOverflows="true" uuid="7c3a686d-1c19-4935-beb4-f99756e8f406"/>
+								<textElement markup="styled"/>
+								<textFieldExpression><![CDATA[""+new SimpleDateFormat("dd-MMM-yyyy").format($V{WeightDate})]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="WeightMeasure" class="java.lang.Object">
+					<measureExpression><![CDATA[$F{Weight}]]></measureExpression>
+				</measure>
+				<crosstabCell width="50" height="25">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="1dfbe942-8e16-46cd-9355-94aa7a975cc9"/>
+							<textFieldExpression><![CDATA[$V{WeightMeasure} != null ? $V{WeightMeasure} : ""]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell height="25" rowTotalGroup="AnimalNo">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="f973cb85-0d9b-40fc-b7d8-6d70f6d5f11d"/>
+							<textFieldExpression><![CDATA[""+$V{WeightMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="50" columnTotalGroup="WeightDate">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="d942c4d4-1b7c-4ca7-bd6f-8f02fead44da"/>
+							<textFieldExpression><![CDATA[""+$V{WeightMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="AnimalNo" columnTotalGroup="WeightDate">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="de4bc784-364a-4750-8b7b-d49a23adb428"/>
+							<textFieldExpression><![CDATA[""+$V{WeightMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>

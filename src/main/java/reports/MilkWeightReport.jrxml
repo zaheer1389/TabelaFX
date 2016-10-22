@@ -18,7 +18,8 @@
 WHERE a.branchId = $P{bid}
 AND w.LactationId = l.ID
 AND l.AnimalId = a.ID
-AND w.WeightDate BETWEEN $P{fromDate} AND $P{toDate}]]>
+AND w.WeightDate BETWEEN $P{fromDate} AND $P{toDate}
+ORDER BY CAST(AnimalNo AS INTEGER)]]>
 	</queryString>
 	<field name="ID" class="java.lang.Object"/>
 	<field name="AddedDate" class="java.lang.Object"/>

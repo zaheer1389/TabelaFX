@@ -441,8 +441,9 @@ public class AnimalController implements View{
 	}
 	
 	public static List<Animal> getAnimalsByBranch() {
-		String queryStr = "Select a from Animal as a where a.branch = :bid "
-				+ " order by a.id desc";
+		String queryStr = "Select a "
+				+ "from Animal as a where a.branch = :bid "
+				+ " order by CAST(a.animalNo AS NUMERIC(10,2))";
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("bid", App.appcontroller.getBranch());
 		return FacadeFactory.getFacade().list(queryStr, parameters);

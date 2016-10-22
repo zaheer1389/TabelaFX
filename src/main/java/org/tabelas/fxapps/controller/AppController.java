@@ -35,6 +35,7 @@ import org.tabelas.fxapps.control.FXOptionPane.Response;
 import org.tabelas.fxapps.dialog.AnimalServiceReportDialog;
 import org.tabelas.fxapps.dialog.LactationReportDialog;
 import org.tabelas.fxapps.dialog.MilkWeightReportDialog;
+import org.tabelas.fxapps.dialog.MilkWeightSheetReportDialog;
 import org.tabelas.fxapps.dialog.ProgressDialog;
 import org.tabelas.fxapps.enums.DialogType;
 import org.tabelas.fxapps.model.Branch;
@@ -248,7 +249,7 @@ public class AppController implements EventHandler<ActionEvent>{
 		}
 		else if(event.getSource() == menuItemReport_Animal_MilkWeightReport){
 			System.out.println("Click");
-			new MilkWeightReportDialog().showDialog();
+			new MilkWeightSheetReportDialog().showDialog();
 		}
 		else if(event.getSource() == menuItemReport_Animal_SoldAnimalReport){
 			ProgressDialog dialog = new ProgressDialog();
