@@ -9,7 +9,7 @@
 	<style name="SanSerif_Bold_Italic_10" fontSize="10" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<style name="style1" pattern=""/>
-	<style name="sanserif_bold_12" fontSize="12" isBold="true" isItalic="false"/>
+	<style name="sanserif_bold_12" hAlign="Center" vAlign="Middle" fontSize="10" isBold="true" isItalic="false"/>
 	<parameter name="bname" class="java.lang.String"/>
 	<parameter name="bid" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -57,7 +57,7 @@
 			<textField>
 				<reportElement style="Arial_Bold_14" mode="Opaque" x="0" y="22" width="560" height="18" forecolor="#FFFFFF" backcolor="#0099FF" uuid="c9c9398b-9759-4afb-a4f2-0982d86c1e6d"/>
 				<textElement textAlignment="Center" markup="styled">
-					<font size="13" isBold="true"/>
+					<font size="13" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{bname}]]></textFieldExpression>
 			</textField>
@@ -74,11 +74,18 @@
 		<band height="50">
 			<crosstab>
 				<reportElement x="0" y="0" width="560" height="50" uuid="2d7926f5-85ba-4ea6-95af-1932f4e23e7b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
 				<crosstabDataset isDataPreSorted="true"/>
 				<crosstabHeaderCell>
 					<cellContents>
 						<staticText>
-							<reportElement style="sanserif_bold_12" mode="Opaque" x="0" y="0" width="70" height="30" backcolor="#F0F8FF" uuid="8ab83988-93c2-47a5-abfe-1045c9125f32"/>
+							<reportElement style="sanserif_bold_12" mode="Opaque" x="0" y="0" width="70" height="20" backcolor="#F0F8FF" uuid="8ab83988-93c2-47a5-abfe-1045c9125f32"/>
 							<box>
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -86,7 +93,9 @@
 								<bottomPen lineWidth="0.5"/>
 								<rightPen lineWidth="0.5"/>
 							</box>
-							<textElement markup="styled"/>
+							<textElement markup="styled">
+								<font pdfFontName="Helvetica-Bold"/>
+							</textElement>
 							<text><![CDATA[Animal No]]></text>
 						</staticText>
 					</cellContents>
@@ -101,7 +110,10 @@
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="25" uuid="0b22fdcc-d96f-4074-b8e4-47bb3020f9e8"/>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="20" uuid="0b22fdcc-d96f-4074-b8e4-47bb3020f9e8"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="20"/>
+								</textElement>
 								<textFieldExpression><![CDATA[""+$V{AnimalNo}]]></textFieldExpression>
 							</textField>
 						</cellContents>
@@ -112,14 +124,17 @@
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<staticText>
-								<reportElement x="0" y="0" width="70" height="25" uuid="1cb96748-8af1-427e-b50e-efa9774a36d8"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<reportElement style="sanserif_bold_12" x="0" y="0" width="70" height="20" uuid="1cb96748-8af1-427e-b50e-efa9774a36d8"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
+									<font pdfFontName="Helvetica-Bold"/>
+									<paragraph leftIndent="20"/>
+								</textElement>
 								<text><![CDATA[Total Avg]]></text>
 							</staticText>
 						</cellContents>
 					</crosstabTotalRowHeader>
 				</rowGroup>
-				<columnGroup name="WeightDate" height="30">
+				<columnGroup name="WeightDate" height="20">
 					<bucket class="java.lang.Long">
 						<bucketExpression><![CDATA[$F{WeightDate}]]></bucketExpression>
 					</bucket>
@@ -129,8 +144,10 @@
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textField isStretchWithOverflow="true">
-								<reportElement style="sanserif_bold_12" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="50" height="30" isPrintWhenDetailOverflows="true" uuid="7c3a686d-1c19-4935-beb4-f99756e8f406"/>
-								<textElement markup="styled"/>
+								<reportElement style="sanserif_bold_12" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="90" height="20" isPrintWhenDetailOverflows="true" uuid="7c3a686d-1c19-4935-beb4-f99756e8f406"/>
+								<textElement markup="styled">
+									<font pdfFontName="Helvetica-Bold"/>
+								</textElement>
 								<textFieldExpression><![CDATA[""+new SimpleDateFormat("dd-MMM-yyyy").format($V{WeightDate})]]></textFieldExpression>
 							</textField>
 						</cellContents>
@@ -142,24 +159,28 @@
 				<measure name="WeightMeasure" class="java.lang.Object">
 					<measureExpression><![CDATA[$F{Weight}]]></measureExpression>
 				</measure>
-				<crosstabCell width="50" height="25">
+				<crosstabCell width="90" height="20">
 					<cellContents>
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="1dfbe942-8e16-46cd-9355-94aa7a975cc9"/>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="90" height="20" uuid="1dfbe942-8e16-46cd-9355-94aa7a975cc9"/>
+							<textElement verticalAlignment="Middle"/>
 							<textFieldExpression><![CDATA[$V{WeightMeasure} != null ? $V{WeightMeasure} : ""]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell height="25" rowTotalGroup="AnimalNo">
+				<crosstabCell height="20" rowTotalGroup="AnimalNo">
 					<cellContents backcolor="#BFE1FF" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="f973cb85-0d9b-40fc-b7d8-6d70f6d5f11d"/>
+							<reportElement style="sanserif_bold_12" x="0" y="0" width="90" height="20" uuid="f973cb85-0d9b-40fc-b7d8-6d70f6d5f11d"/>
+							<textElement verticalAlignment="Middle" markup="styled">
+								<font pdfFontName="Helvetica-Bold"/>
+							</textElement>
 							<textFieldExpression><![CDATA[""+$V{WeightMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -170,7 +191,7 @@
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="d942c4d4-1b7c-4ca7-bd6f-8f02fead44da"/>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="20" uuid="d942c4d4-1b7c-4ca7-bd6f-8f02fead44da"/>
 							<textFieldExpression><![CDATA[""+$V{WeightMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -181,7 +202,7 @@
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="de4bc784-364a-4750-8b7b-d49a23adb428"/>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="20" uuid="de4bc784-364a-4750-8b7b-d49a23adb428"/>
 							<textFieldExpression><![CDATA[""+$V{WeightMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>

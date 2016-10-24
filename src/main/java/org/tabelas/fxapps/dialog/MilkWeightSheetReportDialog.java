@@ -4,8 +4,10 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.plaf.basic.BasicBorders.RadioButtonBorder;
 
@@ -70,6 +72,8 @@ public class MilkWeightSheetReportDialog extends StackPane{
 	ListView<Item> listView;
 	VBox root;
 	VBox loader;
+	
+	Set<Item> selectedItems = new HashSet<Item>();
 	
 	public MilkWeightSheetReportDialog(){
 		
@@ -175,6 +179,12 @@ public class MilkWeightSheetReportDialog extends StackPane{
             // observe item's on property and display message if it changes:
             item.onProperty().addListener((obs, wasOn, isNowOn) -> {
                 System.out.println(item.getName() + " changed on state from "+wasOn+" to "+isNowOn);
+                if(isNowOn){
+                	selectedItems.add(item);
+                }
+                else{
+                	selectedItems.remove(item);
+                }
             });
 
             listView.getItems().add(item);
@@ -262,7 +272,7 @@ public class MilkWeightSheetReportDialog extends StackPane{
 								"AND w.LactationId = l.ID "+
 								"AND l.AnimalId = a.ID "+
 								"AND w.WeightDate BETWEEN $P{fromDate} AND $P{toDate} "+
-								"AND a.AnimalNo IN  $P{selectedAnimals} "+
+								"AND a.AnimalNo IN  ("+selected+") "+
 								"ORDER BY sorID ";
 								
 								System.out.println(queryStr);
@@ -320,9 +330,9 @@ public class MilkWeightSheetReportDialog extends StackPane{
 	}
 	
 	public List<String> getSelectedItemAsString(){
-		List<Item> items = listView.getSelectionModel().getSelectedItems();
+		System.out.println("Selection size : "+selectedItems.size());
 		List<String> strings = new ArrayList<String>();
-		for(Item item : items){
+		for(Item item : selectedItems){
 			strings.add(item.getName());
 		}
 		return strings;
