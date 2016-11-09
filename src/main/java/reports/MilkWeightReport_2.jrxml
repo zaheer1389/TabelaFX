@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="600" pageHeight="842" columnWidth="560" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e97a7671-bf4a-4d2e-a9a6-2605c20f1675">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="842" pageHeight="600" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e97a7671-bf4a-4d2e-a9a6-2605c20f1675">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="144"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Arial_Bold_14" fontName="Arial" fontSize="14"/>
 	<style name="Arial_Bold_24" fontName="Arial" fontSize="24"/>
@@ -48,21 +48,21 @@
 	<title>
 		<band height="60" splitType="Stretch">
 			<staticText>
-				<reportElement style="Arial_Bold_24" mode="Opaque" x="0" y="0" width="560" height="23" forecolor="#FFFFFF" backcolor="#0099FF" uuid="d979ab40-9ac2-489a-8571-306c5c89ee60"/>
+				<reportElement style="Arial_Bold_24" mode="Opaque" x="0" y="0" width="802" height="23" forecolor="#FFFFFF" backcolor="#0099FF" uuid="d979ab40-9ac2-489a-8571-306c5c89ee60"/>
 				<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
 					<font size="17" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Milk Weight Report]]></text>
 			</staticText>
 			<textField>
-				<reportElement style="Arial_Bold_14" mode="Opaque" x="0" y="22" width="560" height="18" forecolor="#FFFFFF" backcolor="#0099FF" uuid="c9c9398b-9759-4afb-a4f2-0982d86c1e6d"/>
+				<reportElement style="Arial_Bold_14" mode="Opaque" x="0" y="22" width="802" height="18" forecolor="#FFFFFF" backcolor="#0099FF" uuid="c9c9398b-9759-4afb-a4f2-0982d86c1e6d"/>
 				<textElement textAlignment="Center" markup="styled">
 					<font size="13" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{bname}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="SanSerif_Bold_Italic_10" x="10" y="45" width="540" height="15" uuid="5843e9cf-6983-4a12-b0cc-8824fda64878"/>
+				<reportElement style="SanSerif_Bold_Italic_10" x="0" y="45" width="802" height="15" uuid="5843e9cf-6983-4a12-b0cc-8824fda64878"/>
 				<textElement markup="styled">
 					<font isBold="true" isItalic="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
@@ -73,7 +73,7 @@
 	<summary>
 		<band height="50">
 			<crosstab>
-				<reportElement x="0" y="0" width="560" height="50" uuid="2d7926f5-85ba-4ea6-95af-1932f4e23e7b"/>
+				<reportElement x="0" y="0" width="802" height="50" uuid="2d7926f5-85ba-4ea6-95af-1932f4e23e7b"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
